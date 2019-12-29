@@ -22,12 +22,13 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-          child: ListView.builder(
-              padding: const EdgeInsets.all(8),
+          child: ListView.separated(
               itemCount: todoProvider.entries.length,
+              separatorBuilder: (BuildContext context, int index) => Divider(),
               itemBuilder: (BuildContext context, int index) {
                 var todo = todoProvider.entries[index].todo;
-                return InkWell(
+                return ListTile(
+                  title: Text(todo.name),
                   onTap: () => {
                     Navigator.push(
                         context,
@@ -35,11 +36,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           builder: (context) => TodoPage(todo.name, todo),
                         ))
                   },
-                  child: Container(
-                    height: 70,
-                    color: Colors.amber[colorCodes[0]],
-                    child: Center(child: todoProvider.entries[index]),
-                  ),
                 );
               })),
       floatingActionButton: FloatingActionButton(
