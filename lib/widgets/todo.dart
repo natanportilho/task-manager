@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/model/TodoModel.dart';
 
 class Todo extends StatelessWidget {
-  TodoModel todo;
+  final TodoModel todo;
 
-  Todo(TodoModel todo) {
-    this.todo = todo;
-  }
-
+  Todo(this.todo);
 
   @override
   Widget build(BuildContext context) {

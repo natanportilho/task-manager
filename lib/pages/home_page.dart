@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 
@@ -14,7 +15,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final List<int> colorCodes = <int>[600, 500, 100];
     final TodoProvider todoProvider = Provider.of<TodoProvider>(context);
 
     return Scaffold(
@@ -39,7 +39,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               })),
       floatingActionButton: FloatingActionButton(
-        onPressed: todoProvider.addTodo,
+        onPressed: () => {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CreateTodoPage(),
+              ))
+        },
         tooltip: 'Create Todo',
         child: Icon(Icons.add),
       ),

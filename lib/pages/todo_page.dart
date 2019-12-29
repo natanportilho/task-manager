@@ -3,8 +3,8 @@ import 'package:task_manager/model/TodoModel.dart';
 
 class TodoPage extends StatefulWidget {
   TodoPage(this.title, this.todo);
-  String title;
-  TodoModel todo;
+  final String title;
+  final TodoModel todo;
 
   @override
   _TodoPageState createState() => _TodoPageState(todo);
@@ -20,13 +20,15 @@ class _TodoPageState extends State<TodoPage> {
       appBar: AppBar(
         title: Text(todo.name),
       ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go back!'),
-        ),
+      body: Column(
+        children: <Widget>[
+          Center(
+            child: Text(todo.category),
+          ),
+          Center(
+            child: Text(todo.description),
+          )
+        ],
       ),
     );
   }
