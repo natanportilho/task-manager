@@ -45,7 +45,8 @@ class _TodoPageState extends State<TodoPage> {
               IconButton(onPressed: () => {}, icon: Icon(Icons.play_arrow)),
               IconButton(onPressed: () => {}, icon: Icon(Icons.done)),
               IconButton(
-                  onPressed: () => {todoProvider.remove(todo)},
+                  onPressed: () =>
+                      {todoProvider.remove(todo), Navigator.pop(context)},
                   icon: Icon(Icons.delete)),
             ],
           ),
