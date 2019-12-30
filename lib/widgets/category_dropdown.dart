@@ -18,29 +18,33 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
         Provider.of<CategoryDropdownProvider>(context);
     return Row(
       children: <Widget>[
-        Text('Category:    '),
-        DropdownButton<String>(
-          value: categoryDropdownProvider.category,
-          icon: Icon(Icons.arrow_downward),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (String newValue) {
-            categoryDropdownProvider.updateCategory(newValue);
-          },
-          items: <String>['Personal', 'Work', 'Study']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
+        Text('Category:    ', style: TextStyle(fontSize: 16.0),),
+        buildDropdownButton(categoryDropdownProvider),
       ],
     );
+  }
+
+  DropdownButton<String> buildDropdownButton(CategoryDropdownProvider categoryDropdownProvider) {
+    return DropdownButton<String>(
+        value: categoryDropdownProvider.category,
+        icon: Icon(Icons.arrow_downward),
+        iconSize: 24,
+        elevation: 16,
+        style: TextStyle(color: Colors.deepPurple),
+        underline: Container(
+          height: 2,
+          color: Colors.deepPurpleAccent,
+        ),
+        onChanged: (String newValue) {
+          categoryDropdownProvider.updateCategory(newValue);
+        },
+        items: <String>['Personal', 'Work', 'Study']
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      );
   }
 }
