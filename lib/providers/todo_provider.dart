@@ -13,4 +13,16 @@ class TodoProvider extends ChangeNotifier {
     entries.remove(todo);
     notifyListeners();
   }
+
+  saveAdDone(TodoModel todo) {
+    int index = entries.indexOf(todo);
+    entries[index].done = true;
+    notifyListeners();
+  }
+
+  saveAsNotDone(TodoModel todo) {
+    int index = entries.indexOf(todo);
+    entries[index].done = false;
+    notifyListeners();
+  }
 }

@@ -43,7 +43,15 @@ class _TodoPageState extends State<TodoPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               IconButton(onPressed: () => {}, icon: Icon(Icons.play_arrow)),
-              IconButton(onPressed: () => {}, icon: Icon(Icons.done)),
+              IconButton(
+                onPressed: () => {
+                  todo.done
+                      ? todoProvider.saveAsNotDone(todo)
+                      : todoProvider.saveAdDone(todo),
+                },
+                icon: Icon(Icons.done),
+                color: todo.done ? Colors.green : Colors.indigo,
+              ),
               IconButton(
                   onPressed: () =>
                       {todoProvider.remove(todo), Navigator.pop(context)},
