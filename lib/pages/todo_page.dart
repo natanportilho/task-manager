@@ -23,16 +23,47 @@ class _TodoPageState extends State<TodoPage> {
       body: Column(
         children: <Widget>[
           Center(
-            child: Text(todo.category),
+            child: Text(
+              todo.name,
+              style: TextStyle(fontSize: 36),
+            ),
           ),
-          Center(
-            child: Text(todo.description),
+          _buildCircleAvatar(todo),
+          Divider(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Center(
+              child: Text(todo.description),
+            ),
           ),
-          Center(
-            child: Text(todo.done.toString()),
-          )
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              IconButton(onPressed: () => {}, icon: Icon(Icons.play_arrow)),
+              IconButton(onPressed: () => {}, icon: Icon(Icons.done)),
+              IconButton(onPressed: () => {}, icon: Icon(Icons.delete)),
+            ],
+          ),
         ],
       ),
+    );
+  }
+
+  CircleAvatar _buildCircleAvatar(TodoModel todo) {
+    String imageUrl = '';
+    print(todo.category);
+    if (todo.category == 'Work') {
+      imageUrl = 'https://images.unsplash.com/photo-1494498902093-87f291949d17?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60';
+    } else if (todo.category == 'Study') {
+      imageUrl = 'https://images.unsplash.com/photo-1537202108838-e7072bad1927?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=685&q=80';
+    } else {
+      imageUrl = 'https://images.unsplash.com/photo-1462926703708-44ab9e271d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80';
+    }
+
+    return CircleAvatar(
+      backgroundImage: NetworkImage(
+         imageUrl),
+      radius: 80,
     );
   }
 }
