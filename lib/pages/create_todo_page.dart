@@ -21,10 +21,12 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(''),
+          title: Text('Create todo'),
         ),
         body: Material(
-          child: _createTodoForm(context),
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: _createTodoForm(context)),
         ),
       ),
     );
@@ -36,6 +38,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          // padding: const EdgeInsets.symmetric(horizontal: 16.0),
           _createCateforyField(),
           _createNameField(),
           _createDescriptionField(),

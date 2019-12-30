@@ -27,6 +27,9 @@ class _TodoPageState extends State<TodoPage> {
           ),
           Center(
             child: Text(todo.description),
+          ),
+          Center(
+            child: Text(todo.done.toString()),
           )
         ],
       ),
