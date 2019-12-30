@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager/providers/category_dropdown_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
+import 'package:task_manager/widgets/category_dropdown.dart';
 
 class CreateTodoPage extends StatefulWidget {
   CreateTodoPage({Key key}) : super(key: key);
@@ -33,13 +35,17 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   }
 
   Form _createTodoForm(BuildContext context) {
+    final CategoryDropdownProvider categoryDropdownProvider =
+        Provider.of<CategoryDropdownProvider>(context, listen: false);
+    final TodoProvider todoProvider =
+        Provider.of<TodoProvider>(context, listen: false);
+
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          _createCateforyField(),
+          CategoryDropdown(),
           _createNameField(),
           _createDescriptionField(),
           Padding(
@@ -47,9 +53,8 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             child: RaisedButton(
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  final TodoProvider todoProvider =
-                      Provider.of<TodoProvider>(context, listen: false);
-                  todoProvider.addTodo(category, name, description);
+                  todoProvider.addTodo(
+                      categoryDropdownProvider.category, name, description);
                   Navigator.pop(context);
                 }
               },
@@ -86,21 +91,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
           return 'Please enter a name';
         }
         name = value;
-        return null;
-      },
-    );
-  }
-
-  TextFormField _createCateforyField() {
-    return TextFormField(
-      decoration: const InputDecoration(
-        hintText: 'Category',
-      ),
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Please enter a category';
-        }
-        category = value;
         return null;
       },
     );

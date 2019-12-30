@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager/providers/category_dropdown_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 
 import 'pages/home_page.dart';
 
-void main() => runApp(ChangeNotifierProvider<TodoProvider>(
-      create: (_) => TodoProvider(),
-      child: MyApp(),
-    ));
+void main() => runApp(MultiProvider(providers: [
+      ChangeNotifierProvider<TodoProvider>(create: (_) => TodoProvider()),
+      ChangeNotifierProvider<CategoryDropdownProvider>(
+          create: (_) => CategoryDropdownProvider())
+    ], child: MyApp()));
 
 class MyApp extends StatelessWidget {
   @override
