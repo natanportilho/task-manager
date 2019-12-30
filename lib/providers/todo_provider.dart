@@ -9,4 +9,9 @@ class TodoProvider extends ChangeNotifier {
     entries.add(Todo(TodoModel(category, name, description)));
     notifyListeners();
   }
+
+  remove(TodoModel todo) {
+    entries.remove(Todo(todo));
+    notifyListeners();
+  }
 }

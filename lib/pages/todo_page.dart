@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_manager/model/TodoModel.dart';
+import 'package:task_manager/providers/todo_provider.dart';
 
 class TodoPage extends StatefulWidget {
   TodoPage(this.title, this.todo);
@@ -16,6 +18,7 @@ class _TodoPageState extends State<TodoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final TodoProvider todoProvider = Provider.of<TodoProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(todo.name),
@@ -41,7 +44,9 @@ class _TodoPageState extends State<TodoPage> {
             children: <Widget>[
               IconButton(onPressed: () => {}, icon: Icon(Icons.play_arrow)),
               IconButton(onPressed: () => {}, icon: Icon(Icons.done)),
-              IconButton(onPressed: () => {}, icon: Icon(Icons.delete)),
+              IconButton(
+                  onPressed: () => {todoProvider.remove(todo)},
+                  icon: Icon(Icons.delete)),
             ],
           ),
         ],
@@ -53,16 +58,18 @@ class _TodoPageState extends State<TodoPage> {
     String imageUrl = '';
     print(todo.category);
     if (todo.category == 'Work') {
-      imageUrl = 'https://images.unsplash.com/photo-1494498902093-87f291949d17?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60';
+      imageUrl =
+          'https://images.unsplash.com/photo-1494498902093-87f291949d17?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60';
     } else if (todo.category == 'Study') {
-      imageUrl = 'https://images.unsplash.com/photo-1537202108838-e7072bad1927?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=685&q=80';
+      imageUrl =
+          'https://images.unsplash.com/photo-1537202108838-e7072bad1927?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=685&q=80';
     } else {
-      imageUrl = 'https://images.unsplash.com/photo-1462926703708-44ab9e271d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80';
+      imageUrl =
+          'https://images.unsplash.com/photo-1462926703708-44ab9e271d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80';
     }
 
     return CircleAvatar(
-      backgroundImage: NetworkImage(
-         imageUrl),
+      backgroundImage: NetworkImage(imageUrl),
       radius: 80,
     );
   }
