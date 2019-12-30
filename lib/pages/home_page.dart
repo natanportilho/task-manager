@@ -26,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
               itemCount: todoProvider.entries.length,
               separatorBuilder: (BuildContext context, int index) => Divider(),
               itemBuilder: (BuildContext context, int index) {
-                var todo = todoProvider.entries[index].todo;
+                var todo = todoProvider.entries[index];
                 return ListTile(
                   title: Text(todo.name),
                   onTap: () => {

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/model/TodoModel.dart';
-import 'package:task_manager/widgets/todo.dart';
 
 class TodoProvider extends ChangeNotifier {
-  final List<Todo> entries = <Todo>[];
+  final List<TodoModel> entries = <TodoModel>[];
 
   addTodo(String category, String name, String description) {
-    entries.add(Todo(TodoModel(category, name, description)));
+    entries.add(TodoModel(category, name, description));
     notifyListeners();
   }
 
   remove(TodoModel todo) {
-    entries.remove(Todo(todo));
+    entries.remove(todo);
     notifyListeners();
   }
 }
