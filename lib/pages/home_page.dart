@@ -27,15 +27,18 @@ class _MyHomePageState extends State<MyHomePage> {
               separatorBuilder: (BuildContext context, int index) => Divider(),
               itemBuilder: (BuildContext context, int index) {
                 var todo = todoProvider.entries[index];
-                return ListTile(
-                  title: Text(todo.name),
-                  onTap: () => {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TodoPage(todo.name, todo),
-                        ))
-                  },
+                return Container(
+                  color: todo.done ? Colors.green : Colors.white,
+                  child: ListTile(
+                    title: Text(todo.name),
+                    onTap: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TodoPage(todo.name, todo),
+                          ))
+                    },
+                  ),
                 );
               })),
       floatingActionButton: FloatingActionButton(
