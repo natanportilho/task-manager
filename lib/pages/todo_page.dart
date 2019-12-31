@@ -22,6 +22,7 @@ class _TodoPageState extends State<TodoPage> {
     final TodoProvider todoProvider = Provider.of<TodoProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.greenAccent[700],
         title: Text(todo.name),
       ),
       body: Column(

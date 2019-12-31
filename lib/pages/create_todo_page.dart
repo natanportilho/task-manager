@@ -23,6 +23,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.greenAccent[700],
           title: Text('Create todo'),
         ),
         body: Material(

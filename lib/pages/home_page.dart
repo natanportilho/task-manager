@@ -47,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   FloatingActionButton _createTodoButton(BuildContext context) {
     return FloatingActionButton(
+      backgroundColor: Colors.greenAccent[700],
       onPressed: () => {_goToCreateTodoPage(context)},
       tooltip: 'Create Todo',
       child: Icon(Icons.add),

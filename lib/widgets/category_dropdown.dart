@@ -33,7 +33,7 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
         style: TextStyle(color: Colors.deepPurple),
         underline: Container(
           height: 2,
-          color: Colors.deepPurpleAccent,
+          color: Colors.greenAccent[700],
         ),
         onChanged: (String newValue) {
           categoryDropdownProvider.updateCategory(newValue);
