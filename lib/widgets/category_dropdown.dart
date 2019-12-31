@@ -16,35 +16,31 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
   Widget build(BuildContext context) {
     final CategoryDropdownProvider categoryDropdownProvider =
         Provider.of<CategoryDropdownProvider>(context);
-    return Row(
-      children: <Widget>[
-        Text('Category:    ', style: TextStyle(fontSize: 16.0),),
-        buildDropdownButton(categoryDropdownProvider),
-      ],
-    );
+    return buildDropdownButton(categoryDropdownProvider);
   }
 
-  DropdownButton<String> buildDropdownButton(CategoryDropdownProvider categoryDropdownProvider) {
+  DropdownButton<String> buildDropdownButton(
+      CategoryDropdownProvider categoryDropdownProvider) {
     return DropdownButton<String>(
-        value: categoryDropdownProvider.category,
-        icon: Icon(Icons.arrow_downward),
-        iconSize: 24,
-        elevation: 16,
-        style: TextStyle(color: Colors.deepPurple),
-        underline: Container(
-          height: 2,
-          color: Colors.greenAccent[700],
-        ),
-        onChanged: (String newValue) {
-          categoryDropdownProvider.updateCategory(newValue);
-        },
-        items: <String>['Personal', 'Work', 'Study']
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-      );
+      value: categoryDropdownProvider.category,
+      icon: Icon(Icons.arrow_downward),
+      iconSize: 24,
+      elevation: 16,
+      style: TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.greenAccent[700],
+      ),
+      onChanged: (String newValue) {
+        categoryDropdownProvider.updateCategory(newValue);
+      },
+      items: <String>['Personal', 'Work', 'Study']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
   }
 }

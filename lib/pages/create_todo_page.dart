@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager/model/create_category_page.dart';
 import 'package:task_manager/providers/category_dropdown_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 import 'package:task_manager/widgets/category_dropdown.dart';
@@ -46,7 +47,20 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          CategoryDropdown(),
+          Row(
+            children: <Widget>[
+              Text(
+                'Category:    ',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              CategoryDropdown(),
+              IconButton(
+                icon: Icon(Icons.add),
+                color: Colors.purpleAccent[700],
+                onPressed: () => {_goToCreateCategoryPage(context)},
+              )
+            ],
+          ),
           _createNameField(),
           _createDescriptionField(),
           Padding(
@@ -95,5 +109,13 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
         return null;
       },
     );
+  }
+
+  Future _goToCreateCategoryPage(BuildContext context) {
+    return Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CreateCategoryPage(),
+        ));
   }
 }
