@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'create_category_second_step_page.dart';
+
 class CreateCategoryPage extends StatelessWidget {
   const CreateCategoryPage({Key key}) : super(key: key);
 
@@ -20,9 +22,18 @@ class CreateCategoryPage extends StatelessWidget {
               crossAxisCount: 4,
               children: List.generate(urlImages.length, (index) {
                 return Center(
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(urlImages[index]),
-                    maxRadius: 40,
+                  child: GestureDetector(
+                    onTap: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CreateCategorySecondStepPage(urlImages[index]),
+                          ))
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(urlImages[index]),
+                      maxRadius: 40,
+                    ),
                   ),
                 );
               }),
