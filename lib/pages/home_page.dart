@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager/model/TodoModel.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
 import 'package:task_manager/providers/todo_provider.dart';
@@ -18,42 +19,61 @@ class _MyHomePageState extends State<MyHomePage> {
     final TodoProvider todoProvider = Provider.of<TodoProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.greenAccent[700],
-        title: Text(widget.title),
-      ),
-      body: Center(
-          child: ListView.separated(
-              itemCount: todoProvider.entries.length,
-              separatorBuilder: (BuildContext context, int index) => Divider(),
-              itemBuilder: (BuildContext context, int index) {
-                var todo = todoProvider.entries[index];
-                return Container(
-                  color: todo.done ? Colors.greenAccent[100] : Colors.green[50],
-                  child: ListTile(
-                    title: Text(todo.name),
-                    onTap: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TodoPage(todo.name, todo),
-                          ))
-                    },
-                    subtitle: Text(todo.category),
-                  ),
-                );
-              })),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CreateTodoPage(),
-              ))
-        },
-        tooltip: 'Create Todo',
-        child: Icon(Icons.add),
-      ),
+      appBar: _buildAppBar(),
+      body: Center(child: _buildListView(todoProvider)),
+      floatingActionButton: _createTodoButton(context),
     );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      backgroundColor: Colors.greenAccent[700],
+      title: Text(widget.title),
+    );
+  }
+
+  ListView _buildListView(TodoProvider todoProvider) {
+    return ListView.separated(
+        itemCount: todoProvider.entries.length,
+        separatorBuilder: (BuildContext context, int index) => Divider(),
+        itemBuilder: (BuildContext context, int index) {
+          var todo = todoProvider.entries[index];
+          return Container(
+            color: todo.done ? Colors.greenAccent[100] : Colors.green[50],
+            child: _buildListTile(todo, context),
+          );
+        });
+  }
+
+  FloatingActionButton _createTodoButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () => {_goToCreateTodoPage(context)},
+      tooltip: 'Create Todo',
+      child: Icon(Icons.add),
+    );
+  }
+
+  Future _goToCreateTodoPage(BuildContext context) {
+    return Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CreateTodoPage(),
+        ));
+  }
+
+  ListTile _buildListTile(TodoModel todo, BuildContext context) {
+    return ListTile(
+      title: Text(todo.name),
+      onTap: () => {_goToTodoPage(context, todo)},
+      subtitle: Text(todo.category),
+    );
+  }
+
+  Future _goToTodoPage(BuildContext context, TodoModel todo) {
+    return Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TodoPage(todo.name, todo),
+        ));
   }
 }
