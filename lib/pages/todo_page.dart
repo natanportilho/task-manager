@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/model/TodoModel.dart';
 import 'package:task_manager/providers/todo_provider.dart';
@@ -32,11 +33,29 @@ class _TodoPageState extends State<TodoPage> {
             ),
           ),
           _buildCircleAvatar(todo),
+          Text(
+            todo.category,
+            style: GoogleFonts.ibarraRealNova(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              textStyle: TextStyle(letterSpacing: .5),
+            ),
+          ),
           Divider(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Center(
-              child: Text(todo.description),
+              child: Container(
+                height: 300,
+                child: Text(
+                  todo.description,
+                  style: GoogleFonts.ibarraRealNova(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    textStyle: TextStyle(letterSpacing: .5),
+                  ),
+                ),
+              ),
             ),
           ),
           Row(
@@ -65,7 +84,6 @@ class _TodoPageState extends State<TodoPage> {
 
   CircleAvatar _buildCircleAvatar(TodoModel todo) {
     String imageUrl = '';
-    print(todo.category);
     if (todo.category == 'Work') {
       imageUrl =
           'https://images.unsplash.com/photo-1494498902093-87f291949d17?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60';
