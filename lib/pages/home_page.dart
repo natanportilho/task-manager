@@ -19,6 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.greenAccent[700],
         title: Text(widget.title),
       ),
       body: Center(
@@ -28,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (BuildContext context, int index) {
                 var todo = todoProvider.entries[index];
                 return Container(
-                  color: todo.done ? Colors.green : Colors.white,
+                  color: todo.done ? Colors.greenAccent[100] : Colors.green[50],
                   child: ListTile(
                     title: Text(todo.name),
                     onTap: () => {
