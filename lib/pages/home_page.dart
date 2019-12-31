@@ -39,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             builder: (context) => TodoPage(todo.name, todo),
                           ))
                     },
+                    subtitle: Text(todo.category),
                   ),
                 );
               })),
