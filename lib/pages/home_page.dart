@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager/model/TodoModel.dart';
+import 'package:task_manager/model/todo_model.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
 import 'package:task_manager/providers/todo_provider.dart';

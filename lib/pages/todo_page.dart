@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager/model/TodoModel.dart';
+import 'package:task_manager/model/todo_model.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 
 class TodoPage extends StatefulWidget {
