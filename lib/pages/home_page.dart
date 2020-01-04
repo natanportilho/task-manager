@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
 import 'package:task_manager/persistence/todo_table.dart';
+import 'package:task_manager/providers/todo_provider.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -14,17 +15,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   MyDatabase databaseProvider;
+  TodoProvider todoProvider;
 
   @override
   Widget build(BuildContext context) {
+    List<Todo> entries = <Todo>[];
     databaseProvider = Provider.of<MyDatabase>(context);
+    todoProvider = Provider.of<TodoProvider>(context);
 
-    // databaseProvider.removeAll();
+    todoProvider.update(databaseProvider);
+
     return Scaffold(
       appBar: _buildAppBar(),
       body: Center(
           child: StreamBuilder<List<Todo>>(
-              stream: databaseProvider.allTodoEntries,
+              stream: todoProvider.entries,
+              initialData: entries,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return _buildListView(snapshot.data);
@@ -42,7 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ListView _buildListView(List<Todo> entries) {
-
     return ListView.separated(
         itemCount: entries.length,
         separatorBuilder: (BuildContext context, int index) => Divider(),
