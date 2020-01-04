@@ -12,23 +12,27 @@ class Todo extends DataClass implements Insertable<Todo> {
   final int category;
   final String name;
   final String description;
+  final bool done;
   Todo(
       {@required this.id,
       this.category,
       @required this.name,
-      @required this.description});
+      @required this.description,
+      this.done});
   factory Todo.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
     return Todo(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       category:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}category']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
-      description:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}body']),
+      description: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}description']),
+      done: boolType.mapFromDatabaseResponse(data['${effectivePrefix}done']),
     );
   }
   factory Todo.fromJson(Map<String, dynamic> json,
@@ -38,6 +42,7 @@ class Todo extends DataClass implements Insertable<Todo> {
       category: serializer.fromJson<int>(json['category']),
       name: serializer.fromJson<String>(json['name']),
       description: serializer.fromJson<String>(json['description']),
+      done: serializer.fromJson<bool>(json['done']),
     );
   }
   @override
@@ -48,6 +53,7 @@ class Todo extends DataClass implements Insertable<Todo> {
       'category': serializer.toJson<int>(category),
       'name': serializer.toJson<String>(name),
       'description': serializer.toJson<String>(description),
+      'done': serializer.toJson<bool>(done),
     };
   }
 
@@ -62,15 +68,18 @@ class Todo extends DataClass implements Insertable<Todo> {
       description: description == null && nullToAbsent
           ? const Value.absent()
           : Value(description),
+      done: done == null && nullToAbsent ? const Value.absent() : Value(done),
     );
   }
 
-  Todo copyWith({int id, int category, String name, String description}) =>
+  Todo copyWith(
+          {int id, int category, String name, String description, bool done}) =>
       Todo(
         id: id ?? this.id,
         category: category ?? this.category,
         name: name ?? this.name,
         description: description ?? this.description,
+        done: done ?? this.done,
       );
   @override
   String toString() {
@@ -78,14 +87,17 @@ class Todo extends DataClass implements Insertable<Todo> {
           ..write('id: $id, ')
           ..write('category: $category, ')
           ..write('name: $name, ')
-          ..write('description: $description')
+          ..write('description: $description, ')
+          ..write('done: $done')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode,
-      $mrjc(category.hashCode, $mrjc(name.hashCode, description.hashCode))));
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(category.hashCode,
+          $mrjc(name.hashCode, $mrjc(description.hashCode, done.hashCode)))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -93,7 +105,8 @@ class Todo extends DataClass implements Insertable<Todo> {
           other.id == this.id &&
           other.category == this.category &&
           other.name == this.name &&
-          other.description == this.description);
+          other.description == this.description &&
+          other.done == this.done);
 }
 
 class TodosCompanion extends UpdateCompanion<Todo> {
@@ -101,30 +114,34 @@ class TodosCompanion extends UpdateCompanion<Todo> {
   final Value<int> category;
   final Value<String> name;
   final Value<String> description;
+  final Value<bool> done;
   const TodosCompanion({
     this.id = const Value.absent(),
     this.category = const Value.absent(),
     this.name = const Value.absent(),
     this.description = const Value.absent(),
+    this.done = const Value.absent(),
   });
   TodosCompanion.insert({
-    @required int id,
+    this.id = const Value.absent(),
     this.category = const Value.absent(),
     @required String name,
     @required String description,
-  })  : id = Value(id),
-        name = Value(name),
+    this.done = const Value.absent(),
+  })  : name = Value(name),
         description = Value(description);
   TodosCompanion copyWith(
       {Value<int> id,
       Value<int> category,
       Value<String> name,
-      Value<String> description}) {
+      Value<String> description,
+      Value<bool> done}) {
     return TodosCompanion(
       id: id ?? this.id,
       category: category ?? this.category,
       name: name ?? this.name,
       description: description ?? this.description,
+      done: done ?? this.done,
     );
   }
 }
@@ -138,11 +155,8 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   @override
   GeneratedIntColumn get id => _id ??= _constructId();
   GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn(
-      'id',
-      $tableName,
-      false,
-    );
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
   }
 
   final VerificationMeta _categoryMeta = const VerificationMeta('category');
@@ -177,14 +191,26 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
       _description ??= _constructDescription();
   GeneratedTextColumn _constructDescription() {
     return GeneratedTextColumn(
-      'body',
+      'description',
       $tableName,
       false,
     );
   }
 
+  final VerificationMeta _doneMeta = const VerificationMeta('done');
+  GeneratedBoolColumn _done;
   @override
-  List<GeneratedColumn> get $columns => [id, category, name, description];
+  GeneratedBoolColumn get done => _done ??= _constructDone();
+  GeneratedBoolColumn _constructDone() {
+    return GeneratedBoolColumn(
+      'done',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, category, name, description, done];
   @override
   $TodosTable get asDslTable => this;
   @override
@@ -218,11 +244,17 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
     } else if (description.isRequired && isInserting) {
       context.missing(_descriptionMeta);
     }
+    if (d.done.present) {
+      context.handle(
+          _doneMeta, done.isAcceptableValue(d.done.value, _doneMeta));
+    } else if (done.isRequired && isInserting) {
+      context.missing(_doneMeta);
+    }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Todo map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -242,7 +274,10 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
       map['name'] = Variable<String, StringType>(d.name.value);
     }
     if (d.description.present) {
-      map['body'] = Variable<String, StringType>(d.description.value);
+      map['description'] = Variable<String, StringType>(d.description.value);
+    }
+    if (d.done.present) {
+      map['done'] = Variable<bool, BoolType>(d.done.value);
     }
     return map;
   }

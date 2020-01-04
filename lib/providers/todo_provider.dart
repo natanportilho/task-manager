@@ -1,34 +1,35 @@
-import 'package:flutter/material.dart';
-import 'package:task_manager/model/todo_model.dart';
-import 'package:task_manager/persistence/sqlite_database.dart';
+// import 'package:flutter/material.dart';
+// import 'package:task_manager/persistence/todo_table.dart';
 
-class TodoProvider extends ChangeNotifier {
-  final SqliteDatabase sqliteDatabase = SqliteDatabase();
-  List<TodoModel> entries = <TodoModel>[];
+// class TodoProvider extends ChangeNotifier {
 
-  initiate() {
-    sqliteDatabase.getTodos().then((values) => {
-          entries = values,
-          notifyListeners(),
-        });
-  }
+//   final database = MyDatabase();
+//   List<Todo> entries = <Todo>[];
 
-  addTodo(String category, String name, String description) {
-    TodoModel todo = TodoModel(category, name, description);
-    sqliteDatabase.save(todo);
-  }
+//   addTodo(String category, String name, String description) {
 
-  remove(TodoModel todo) {
-    sqliteDatabase.removeTodo(todo.id);
-  }
+//     database.addTodo(Todo(name: name, description: description));
 
-  saveAsDone(TodoModel todo) {
-    sqliteDatabase.setTodoAsDone(todo.id);
-    todo.done = true;
-  }
+//     database.allTodoEntries.then((list) => {
+//           entries = list,
+//         });
+//     notifyListeners();
+//   }
 
-  saveAsNotDone(TodoModel todo) {
-    sqliteDatabase.setTodoAsNotDone(todo.id);
-    todo.done = false;
-  }
-}
+//   removeAll(int i) {
+//     database.removeTodo(i).then((a) => {
+//           database.allTodoEntries.then((list) => {
+//                 entries = list,
+//               }),
+//           notifyListeners(),
+//         });
+//   }
+
+//   remove(Todo todo) {
+//     database.removeAll();
+//   }
+
+//   saveAsDone(Todo todo) {}
+
+//   saveAsNotDone(Todo todo) {}
+// }

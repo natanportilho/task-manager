@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_dropdown_provider.dart';
-import 'package:task_manager/providers/todo_provider.dart';
 import 'package:task_manager/widgets/category_dropdown.dart';
 
 import 'category_creation/create_category_first_step_page.dart';
@@ -39,8 +39,8 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   Form _createTodoForm(BuildContext context) {
     final CategoryDropdownProvider categoryDropdownProvider =
         Provider.of<CategoryDropdownProvider>(context, listen: false);
-    final TodoProvider todoProvider =
-        Provider.of<TodoProvider>(context, listen: false);
+    final MyDatabase todoProvider =
+        Provider.of<MyDatabase>(context, listen: false);
 
     return Form(
       key: _formKey,
@@ -68,8 +68,8 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             child: RaisedButton(
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  todoProvider.addTodo(
-                      categoryDropdownProvider.category, name, description);
+                  todoProvider
+                      .addTodo(Todo(name: name, description: description, done: false));
                   Navigator.pop(context);
                 }
               },

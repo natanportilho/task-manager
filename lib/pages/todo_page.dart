@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager/model/todo_model.dart';
-import 'package:task_manager/providers/todo_provider.dart';
+import 'package:task_manager/persistence/todo_table.dart';
 
 class TodoPage extends StatefulWidget {
   TodoPage(this.title, this.todo);
   final String title;
-  final TodoModel todo;
+  final Todo todo;
 
   @override
   _TodoPageState createState() => _TodoPageState(todo);
@@ -15,18 +14,18 @@ class TodoPage extends StatefulWidget {
 
 class _TodoPageState extends State<TodoPage> {
   _TodoPageState(this.todo);
-  TodoModel todo;
+  Todo todo;
 
   @override
   Widget build(BuildContext context) {
-    final TodoProvider todoProvider = Provider.of<TodoProvider>(context);
+    final MyDatabase todoProvider = Provider.of<MyDatabase>(context);
     return Scaffold(
       appBar: buildAppBar(),
       body: buildTodoInfoSection(todoProvider, context),
     );
   }
 
-  Column buildTodoInfoSection(TodoProvider todoProvider, BuildContext context) {
+  Column buildTodoInfoSection(MyDatabase todoProvider, BuildContext context) {
     return Column(
       children: <Widget>[
         Center(
@@ -63,19 +62,19 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   List<Widget> buildTodoButtons(
-      TodoProvider todoProvider, BuildContext context) {
+      MyDatabase todoProvider, BuildContext context) {
     return <Widget>[
       IconButton(
         onPressed: () => {
-          todo.done
-              ? todoProvider.saveAsNotDone(todo)
-              : todoProvider.saveAsDone(todo),
+          // todo.done
+          //     ? todoProvider.saveAsNotDone(todo)
+          //     : todoProvider.saveAsDone(todo),
         },
         icon: Icon(Icons.done),
         color: todo.done ? Colors.green : Colors.indigo,
       ),
       IconButton(
-          onPressed: () => {todoProvider.remove(todo), Navigator.pop(context)},
+          onPressed: () => {todoProvider.removeTodo(todo.id), Navigator.pop(context)},
           icon: Icon(Icons.delete)),
     ];
   }
@@ -93,7 +92,7 @@ class _TodoPageState extends State<TodoPage> {
 
   Text buildCategoryText() {
     return Text(
-      todo.category,
+      todo.category.toString(),
       style: GoogleFonts.ibarraRealNova(
         fontWeight: FontWeight.bold,
         fontSize: 18,
@@ -103,7 +102,7 @@ class _TodoPageState extends State<TodoPage> {
   }
 
 //TODO:Fix this, a todo must have a category and a category must have an image
-  CircleAvatar _buildCircleAvatar(TodoModel todo) {
+  CircleAvatar _buildCircleAvatar(Todo todo) {
     String imageUrl = '';
     if (todo.category == 'Work') {
       imageUrl =

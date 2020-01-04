@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager/model/todo_model.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
+import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -14,13 +14,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  MyDatabase databaseProvider;
+
   @override
   Widget build(BuildContext context) {
-    final TodoProvider todoProvider = Provider.of<TodoProvider>(context);
-    todoProvider.initiate();
+    databaseProvider = Provider.of<MyDatabase>(context);
+
+    // databaseProvider.removeAll();
     return Scaffold(
       appBar: _buildAppBar(),
-      body: Center(child: _buildListView(todoProvider)),
+      body: Center(
+          child: StreamBuilder<List<Todo>>(
+              stream: databaseProvider.allTodoEntries,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return _buildListView(snapshot.data);
+                }
+              })),
       floatingActionButton: _createTodoButton(context),
     );
   }
@@ -32,17 +42,19 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  ListView _buildListView(TodoProvider todoProvider) {
+  ListView _buildListView(List<Todo> entries) {
+
     return ListView.separated(
-        itemCount: todoProvider.entries.length,
+        itemCount: entries.length,
         separatorBuilder: (BuildContext context, int index) => Divider(),
         itemBuilder: (BuildContext context, int index) {
-          var todo = todoProvider.entries[index];
+          var todo = entries[index];
           return Container(
             color: todo.done ? Colors.greenAccent[100] : Colors.green[50],
             child: _buildListTile(todo, context),
           );
         });
+    // });
   }
 
   FloatingActionButton _createTodoButton(BuildContext context) {
@@ -62,15 +74,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
-  ListTile _buildListTile(TodoModel todo, BuildContext context) {
+  ListTile _buildListTile(Todo todo, BuildContext context) {
     return ListTile(
       title: Text(todo.name),
       onTap: () => {_goToTodoPage(context, todo)},
-      subtitle: Text(todo.category),
+      subtitle: Text(todo.category.toString()),
     );
   }
 
-  Future _goToTodoPage(BuildContext context, TodoModel todo) {
+  Future _goToTodoPage(BuildContext context, Todo todo) {
     return Navigator.push(
         context,
         MaterialPageRoute(
