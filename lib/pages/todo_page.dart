@@ -21,68 +21,88 @@ class _TodoPageState extends State<TodoPage> {
   Widget build(BuildContext context) {
     final TodoProvider todoProvider = Provider.of<TodoProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.greenAccent[700],
-        title: Text(todo.name),
+      appBar: buildAppBar(),
+      body: buildTodoInfoSection(todoProvider, context),
+    );
+  }
+
+  Column buildTodoInfoSection(TodoProvider todoProvider, BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Center(
+          child: Text(
+            todo.name,
+            style: TextStyle(fontSize: 36),
+          ),
+        ),
+        _buildCircleAvatar(todo),
+        buildCategoryText(),
+        Divider(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Center(
+            child: Container(
+              height: 300,
+              child: buildDescriptionText(),
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: buildTodoButtons(todoProvider, context),
+        ),
+      ],
+    );
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      backgroundColor: Colors.greenAccent[700],
+      title: Text(todo.name),
+    );
+  }
+
+  List<Widget> buildTodoButtons(
+      TodoProvider todoProvider, BuildContext context) {
+    return <Widget>[
+      IconButton(
+        onPressed: () => {
+          todo.done
+              ? todoProvider.saveAsNotDone(todo)
+              : todoProvider.saveAsDone(todo),
+        },
+        icon: Icon(Icons.done),
+        color: todo.done ? Colors.green : Colors.indigo,
       ),
-      body: Column(
-        children: <Widget>[
-          Center(
-            child: Text(
-              todo.name,
-              style: TextStyle(fontSize: 36),
-            ),
-          ),
-          _buildCircleAvatar(todo),
-          Text(
-            todo.category,
-            style: GoogleFonts.ibarraRealNova(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              textStyle: TextStyle(letterSpacing: .5),
-            ),
-          ),
-          Divider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Center(
-              child: Container(
-                height: 300,
-                child: Text(
-                  todo.description,
-                  style: GoogleFonts.ibarraRealNova(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    textStyle: TextStyle(letterSpacing: .5),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(onPressed: () => {}, icon: Icon(Icons.play_arrow)),
-              IconButton(
-                onPressed: () => {
-                  todo.done
-                      ? todoProvider.saveAsNotDone(todo)
-                      : todoProvider.saveAsDone(todo),
-                },
-                icon: Icon(Icons.done),
-                color: todo.done ? Colors.green : Colors.indigo,
-              ),
-              IconButton(
-                  onPressed: () =>
-                      {todoProvider.remove(todo), Navigator.pop(context)},
-                  icon: Icon(Icons.delete)),
-            ],
-          ),
-        ],
+      IconButton(
+          onPressed: () => {todoProvider.remove(todo), Navigator.pop(context)},
+          icon: Icon(Icons.delete)),
+    ];
+  }
+
+  Text buildDescriptionText() {
+    return Text(
+      todo.description,
+      style: GoogleFonts.ibarraRealNova(
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+        textStyle: TextStyle(letterSpacing: .5),
       ),
     );
   }
 
+  Text buildCategoryText() {
+    return Text(
+      todo.category,
+      style: GoogleFonts.ibarraRealNova(
+        fontWeight: FontWeight.bold,
+        fontSize: 18,
+        textStyle: TextStyle(letterSpacing: .5),
+      ),
+    );
+  }
+
+//TODO:Fix this, a todo must have a category and a category must have an image
   CircleAvatar _buildCircleAvatar(TodoModel todo) {
     String imageUrl = '';
     if (todo.category == 'Work') {

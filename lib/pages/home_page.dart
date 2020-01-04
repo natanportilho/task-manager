@@ -18,7 +18,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final TodoProvider todoProvider = Provider.of<TodoProvider>(context);
     todoProvider.initiate();
-
     return Scaffold(
       appBar: _buildAppBar(),
       body: Center(child: _buildListView(todoProvider)),
