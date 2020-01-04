@@ -18,14 +18,14 @@ class _TodoPageState extends State<TodoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final MyDatabase todoProvider = Provider.of<MyDatabase>(context);
+    final MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
     return Scaffold(
       appBar: buildAppBar(),
-      body: buildTodoInfoSection(todoProvider, context),
+      body: buildTodoInfoSection(databaseProvider, context),
     );
   }
 
-  Column buildTodoInfoSection(MyDatabase todoProvider, BuildContext context) {
+  Column buildTodoInfoSection(MyDatabase databaseProvider, BuildContext context) {
     return Column(
       children: <Widget>[
         Center(
@@ -48,7 +48,7 @@ class _TodoPageState extends State<TodoPage> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: buildTodoButtons(todoProvider, context),
+          children: buildTodoButtons(databaseProvider, context),
         ),
       ],
     );
@@ -62,19 +62,19 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   List<Widget> buildTodoButtons(
-      MyDatabase todoProvider, BuildContext context) {
+      MyDatabase databaseProvider, BuildContext context) {
     return <Widget>[
       IconButton(
         onPressed: () => {
           // todo.done
-          //     ? todoProvider.saveAsNotDone(todo)
-          //     : todoProvider.saveAsDone(todo),
+          //     ? databaseProvider.saveAsNotDone(todo)
+          //     : databaseProvider.saveAsDone(todo),
         },
         icon: Icon(Icons.done),
         color: todo.done ? Colors.green : Colors.indigo,
       ),
       IconButton(
-          onPressed: () => {todoProvider.removeTodo(todo.id), Navigator.pop(context)},
+          onPressed: () => {databaseProvider.removeTodo(todo.id), Navigator.pop(context)},
           icon: Icon(Icons.delete)),
     ];
   }

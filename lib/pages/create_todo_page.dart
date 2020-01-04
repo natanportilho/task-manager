@@ -39,7 +39,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   Form _createTodoForm(BuildContext context) {
     final CategoryDropdownProvider categoryDropdownProvider =
         Provider.of<CategoryDropdownProvider>(context, listen: false);
-    final MyDatabase todoProvider =
+    final MyDatabase databaseProvider =
         Provider.of<MyDatabase>(context, listen: false);
 
     return Form(
@@ -70,19 +70,19 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
                 if (_formKey.currentState.validate()) {
                   var category = categoryDropdownProvider.category;
 
-                  todoProvider.getCategoryById(category).then((result) => {
+                  databaseProvider.getCategoryById(category).then((result) => {
                         if (result.length > 0)
                           {
                             category = result[0].id,
                           }
                         else
                           {
-                            todoProvider.addCategory(Category(
+                            databaseProvider.addCategory(Category(
                                 id: category, name: category, imageUrl: 'lolo'))
                           }
                       });
 
-                  todoProvider.addTodo(Todo(
+                  databaseProvider.addTodo(Todo(
                       name: name,
                       description: description,
                       done: false,

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
 import 'package:task_manager/persistence/todo_table.dart';
-import 'package:task_manager/providers/todo_provider.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
