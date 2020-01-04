@@ -68,8 +68,25 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             child: RaisedButton(
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  todoProvider
-                      .addTodo(Todo(name: name, description: description, done: false));
+                  var category = categoryDropdownProvider.category;
+
+                  todoProvider.getCategoryById(category).then((result) => {
+                        if (result.length > 0)
+                          {
+                            category = result[0].id,
+                          }
+                        else
+                          {
+                            todoProvider.addCategory(Category(
+                                id: category, name: category, imageUrl: 'lolo'))
+                          }
+                      });
+
+                  todoProvider.addTodo(Todo(
+                      name: name,
+                      description: description,
+                      done: false,
+                      category: category));
                   Navigator.pop(context);
                 }
               },

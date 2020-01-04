@@ -1,10 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 
 part 'todo_table.g.dart';
 
 class Todos extends Table {
   IntColumn get id => integer().autoIncrement()();
-  IntColumn get category => integer().nullable()();
+  TextColumn get category => text()();
   TextColumn get name => text()();
   TextColumn get description => text()();
   BoolColumn get done => boolean().withDefault(Constant(true))();
@@ -12,7 +13,7 @@ class Todos extends Table {
 
 @DataClassName("Category")
 class Categories extends Table {
-  IntColumn get id => integer().autoIncrement()();
+  TextColumn get id => text()();
   TextColumn get name => text()();
   TextColumn get imageUrl => text()();
 }
@@ -37,4 +38,10 @@ class MyDatabase extends _$MyDatabase {
       (delete(todos)..where((t) => t.id.equals(id))).go();
 
   void removeAll() => delete(todos);
+
+  Future addCategory(Category category) => into(categories).insert(category);
+
+  Future getCategoryById(String id) {
+    return (select(categories)..where((c) => c.id.equals(id))).get();
+  }
 }

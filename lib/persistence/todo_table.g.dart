@@ -9,16 +9,16 @@ part of 'todo_table.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
 class Todo extends DataClass implements Insertable<Todo> {
   final int id;
-  final int category;
+  final String category;
   final String name;
   final String description;
   final bool done;
   Todo(
       {@required this.id,
-      this.category,
+      @required this.category,
       @required this.name,
       @required this.description,
-      this.done});
+      @required this.done});
   factory Todo.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -27,8 +27,8 @@ class Todo extends DataClass implements Insertable<Todo> {
     final boolType = db.typeSystem.forDartType<bool>();
     return Todo(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      category:
-          intType.mapFromDatabaseResponse(data['${effectivePrefix}category']),
+      category: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}category']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
       description: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}description']),
@@ -39,7 +39,7 @@ class Todo extends DataClass implements Insertable<Todo> {
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
     return Todo(
       id: serializer.fromJson<int>(json['id']),
-      category: serializer.fromJson<int>(json['category']),
+      category: serializer.fromJson<String>(json['category']),
       name: serializer.fromJson<String>(json['name']),
       description: serializer.fromJson<String>(json['description']),
       done: serializer.fromJson<bool>(json['done']),
@@ -50,7 +50,7 @@ class Todo extends DataClass implements Insertable<Todo> {
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'category': serializer.toJson<int>(category),
+      'category': serializer.toJson<String>(category),
       'name': serializer.toJson<String>(name),
       'description': serializer.toJson<String>(description),
       'done': serializer.toJson<bool>(done),
@@ -73,7 +73,11 @@ class Todo extends DataClass implements Insertable<Todo> {
   }
 
   Todo copyWith(
-          {int id, int category, String name, String description, bool done}) =>
+          {int id,
+          String category,
+          String name,
+          String description,
+          bool done}) =>
       Todo(
         id: id ?? this.id,
         category: category ?? this.category,
@@ -111,7 +115,7 @@ class Todo extends DataClass implements Insertable<Todo> {
 
 class TodosCompanion extends UpdateCompanion<Todo> {
   final Value<int> id;
-  final Value<int> category;
+  final Value<String> category;
   final Value<String> name;
   final Value<String> description;
   final Value<bool> done;
@@ -124,15 +128,16 @@ class TodosCompanion extends UpdateCompanion<Todo> {
   });
   TodosCompanion.insert({
     this.id = const Value.absent(),
-    this.category = const Value.absent(),
+    @required String category,
     @required String name,
     @required String description,
     this.done = const Value.absent(),
-  })  : name = Value(name),
+  })  : category = Value(category),
+        name = Value(name),
         description = Value(description);
   TodosCompanion copyWith(
       {Value<int> id,
-      Value<int> category,
+      Value<String> category,
       Value<String> name,
       Value<String> description,
       Value<bool> done}) {
@@ -160,14 +165,14 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   }
 
   final VerificationMeta _categoryMeta = const VerificationMeta('category');
-  GeneratedIntColumn _category;
+  GeneratedTextColumn _category;
   @override
-  GeneratedIntColumn get category => _category ??= _constructCategory();
-  GeneratedIntColumn _constructCategory() {
-    return GeneratedIntColumn(
+  GeneratedTextColumn get category => _category ??= _constructCategory();
+  GeneratedTextColumn _constructCategory() {
+    return GeneratedTextColumn(
       'category',
       $tableName,
-      true,
+      false,
     );
   }
 
@@ -202,11 +207,8 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   @override
   GeneratedBoolColumn get done => _done ??= _constructDone();
   GeneratedBoolColumn _constructDone() {
-    return GeneratedBoolColumn(
-      'done',
-      $tableName,
-      true,
-    );
+    return GeneratedBoolColumn('done', $tableName, false,
+        defaultValue: Constant(true));
   }
 
   @override
@@ -268,7 +270,7 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
       map['id'] = Variable<int, IntType>(d.id.value);
     }
     if (d.category.present) {
-      map['category'] = Variable<int, IntType>(d.category.value);
+      map['category'] = Variable<String, StringType>(d.category.value);
     }
     if (d.name.present) {
       map['name'] = Variable<String, StringType>(d.name.value);
@@ -289,32 +291,36 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
 }
 
 class Category extends DataClass implements Insertable<Category> {
-  final int id;
+  final String id;
   final String name;
-  Category({@required this.id, @required this.name});
+  final String imageUrl;
+  Category({@required this.id, @required this.name, @required this.imageUrl});
   factory Category.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
     return Category(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      id: stringType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      imageUrl: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}image_url']),
     );
   }
   factory Category.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
     return Category(
-      id: serializer.fromJson<int>(json['id']),
+      id: serializer.fromJson<String>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      imageUrl: serializer.fromJson<String>(json['imageUrl']),
     );
   }
   @override
   Map<String, dynamic> toJson(
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
+      'id': serializer.toJson<String>(id),
       'name': serializer.toJson<String>(name),
+      'imageUrl': serializer.toJson<String>(imageUrl),
     };
   }
 
@@ -323,45 +329,61 @@ class Category extends DataClass implements Insertable<Category> {
     return CategoriesCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      imageUrl: imageUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(imageUrl),
     );
   }
 
-  Category copyWith({int id, String name}) => Category(
+  Category copyWith({String id, String name, String imageUrl}) => Category(
         id: id ?? this.id,
         name: name ?? this.name,
+        imageUrl: imageUrl ?? this.imageUrl,
       );
   @override
   String toString() {
     return (StringBuffer('Category(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('imageUrl: $imageUrl')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode, name.hashCode));
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(name.hashCode, imageUrl.hashCode)));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is Category && other.id == this.id && other.name == this.name);
+      (other is Category &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.imageUrl == this.imageUrl);
 }
 
 class CategoriesCompanion extends UpdateCompanion<Category> {
-  final Value<int> id;
+  final Value<String> id;
   final Value<String> name;
+  final Value<String> imageUrl;
   const CategoriesCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.imageUrl = const Value.absent(),
   });
   CategoriesCompanion.insert({
-    this.id = const Value.absent(),
+    @required String id,
     @required String name,
-  }) : name = Value(name);
-  CategoriesCompanion copyWith({Value<int> id, Value<String> name}) {
+    @required String imageUrl,
+  })  : id = Value(id),
+        name = Value(name),
+        imageUrl = Value(imageUrl);
+  CategoriesCompanion copyWith(
+      {Value<String> id, Value<String> name, Value<String> imageUrl}) {
     return CategoriesCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 }
@@ -372,12 +394,15 @@ class $CategoriesTable extends Categories
   final String _alias;
   $CategoriesTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
+  GeneratedTextColumn _id;
   @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  GeneratedTextColumn get id => _id ??= _constructId();
+  GeneratedTextColumn _constructId() {
+    return GeneratedTextColumn(
+      'id',
+      $tableName,
+      false,
+    );
   }
 
   final VerificationMeta _nameMeta = const VerificationMeta('name');
@@ -392,8 +417,20 @@ class $CategoriesTable extends Categories
     );
   }
 
+  final VerificationMeta _imageUrlMeta = const VerificationMeta('imageUrl');
+  GeneratedTextColumn _imageUrl;
   @override
-  List<GeneratedColumn> get $columns => [id, name];
+  GeneratedTextColumn get imageUrl => _imageUrl ??= _constructImageUrl();
+  GeneratedTextColumn _constructImageUrl() {
+    return GeneratedTextColumn(
+      'image_url',
+      $tableName,
+      false,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, name, imageUrl];
   @override
   $CategoriesTable get asDslTable => this;
   @override
@@ -415,11 +452,17 @@ class $CategoriesTable extends Categories
     } else if (name.isRequired && isInserting) {
       context.missing(_nameMeta);
     }
+    if (d.imageUrl.present) {
+      context.handle(_imageUrlMeta,
+          imageUrl.isAcceptableValue(d.imageUrl.value, _imageUrlMeta));
+    } else if (imageUrl.isRequired && isInserting) {
+      context.missing(_imageUrlMeta);
+    }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
   @override
   Category map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -430,10 +473,13 @@ class $CategoriesTable extends Categories
   Map<String, Variable> entityToSql(CategoriesCompanion d) {
     final map = <String, Variable>{};
     if (d.id.present) {
-      map['id'] = Variable<int, IntType>(d.id.value);
+      map['id'] = Variable<String, StringType>(d.id.value);
     }
     if (d.name.present) {
       map['name'] = Variable<String, StringType>(d.name.value);
+    }
+    if (d.imageUrl.present) {
+      map['image_url'] = Variable<String, StringType>(d.imageUrl.value);
     }
     return map;
   }
