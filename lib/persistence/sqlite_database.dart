@@ -5,6 +5,10 @@ import 'package:sqflite/sqflite.dart';
 import 'package:task_manager/model/todo_model.dart';
 
 class SqliteDatabase {
+  SqliteDatabase() {
+    db;
+  }
+
   Database _db;
 
   Future<Database> get db async {
@@ -24,7 +28,7 @@ class SqliteDatabase {
 
   FutureOr<void> _onCreate(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE todo (ID STRING PRIMARY KEY, CATEGORY TEXT, NAME TEXT, DESCRIPTION TEXT, DONE TEXT)');
+        'CREATE TABLE todo (ID STRING PRIMARY KEY, CATEGORY TEXT, NAME TEXT, DESCRIPTION TEXT, DONE BOOLEAN)');
   }
 
   Future<TodoModel> save(TodoModel todo) async {
@@ -41,12 +45,10 @@ class SqliteDatabase {
 
     List<TodoModel> todos = [];
 
-    print(maps);
-
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
         var todoInfo = maps[i].values.toList();
-        todos.add(TodoModel(todoInfo[1], todoInfo[2], todoInfo[3]));
+        todos.add(TodoModel.fromList(todoInfo));
       }
     }
     return todos;
@@ -55,5 +57,20 @@ class SqliteDatabase {
   FutureOr<void> removeAll() async {
     var dbClient = await db;
     await dbClient.execute('DELETE FROM todo');
+  }
+
+  FutureOr<void> removeTodo(String id) async {
+    var dbClient = await db;
+    await dbClient.execute('DELETE FROM todo where ID = $id');
+  }
+
+  FutureOr<void> setTodoAsDone(String id) async {
+    var dbClient = await db;
+    await dbClient.execute('UPDATE todo SET DONE = 1 WHERE id = $id');
+  }
+
+  FutureOr<void> setTodoAsNotDone(String id) async {
+    var dbClient = await db;
+    await dbClient.execute('UPDATE todo SET DONE = 0 WHERE id = $id');
   }
 }

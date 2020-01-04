@@ -20,15 +20,15 @@ class TodoModel {
       'category': category,
       'name': name,
       'description': description,
-      'done': done
+      'done': done == true ? 1 : 0
     };
   }
 
-  TodoModel.fromMap(Map<String, dynamic> map) {
-    this.id = map['id'];
-    this.done = false;
-    this.category = map['category'];
-    this.name = map['name'];
-    this.description = map['description'];
+  TodoModel.fromList(List<dynamic> todoInfo) {
+    this.id = todoInfo[0].toString();
+    this.category = todoInfo[1];
+    this.name = todoInfo[2];
+    this.description = todoInfo[3];
+    this.done = todoInfo[4] == 1 ? true : false;
   }
 }

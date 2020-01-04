@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/model/todo_model.dart';
+import 'package:task_manager/persistence/sqlite_database.dart';
 
 class TodoProvider extends ChangeNotifier {
-  final List<TodoModel> entries = <TodoModel>[];
+  final SqliteDatabase sqliteDatabase = SqliteDatabase();
+  List<TodoModel> entries = <TodoModel>[];
+
+  initiate() {
+    sqliteDatabase.getTodos().then((values) => {
+          entries = values,
+          notifyListeners(),
+        });
+  }
 
   addTodo(String category, String name, String description) {
-    entries.add(TodoModel(category, name, description));
-    notifyListeners();
+    TodoModel todo = TodoModel(category, name, description);
+    sqliteDatabase.save(todo);
   }
 
   remove(TodoModel todo) {
-    entries.remove(todo);
-    notifyListeners();
+    sqliteDatabase.removeTodo(todo.id);
   }
 
-  saveAdDone(TodoModel todo) {
-    int index = entries.indexOf(todo);
-    entries[index].done = true;
-    notifyListeners();
+  saveAsDone(TodoModel todo) {
+    sqliteDatabase.setTodoAsDone(todo.id);
+    todo.done = true;
   }
 
   saveAsNotDone(TodoModel todo) {
-    int index = entries.indexOf(todo);
-    entries[index].done = false;
-    notifyListeners();
+    sqliteDatabase.setTodoAsNotDone(todo.id);
+    todo.done = false;
   }
 }

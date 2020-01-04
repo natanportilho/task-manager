@@ -67,7 +67,7 @@ class _TodoPageState extends State<TodoPage> {
                 onPressed: () => {
                   todo.done
                       ? todoProvider.saveAsNotDone(todo)
-                      : todoProvider.saveAdDone(todo),
+                      : todoProvider.saveAsDone(todo),
                 },
                 icon: Icon(Icons.done),
                 color: todo.done ? Colors.green : Colors.indigo,

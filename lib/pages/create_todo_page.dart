@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager/model/todo_model.dart';
-import 'package:task_manager/persistence/sqlite_database.dart';
 import 'package:task_manager/providers/category_dropdown_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 import 'package:task_manager/widgets/category_dropdown.dart';
@@ -17,8 +15,6 @@ class CreateTodoPage extends StatefulWidget {
 
 class _CreateTodoPageState extends State<CreateTodoPage> {
   final _formKey = GlobalKey<FormState>();
-  final SqliteDatabase sqliteDatabase = SqliteDatabase();
-
   String category;
   String name;
   String description;
@@ -74,19 +70,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
                 if (_formKey.currentState.validate()) {
                   todoProvider.addTodo(
                       categoryDropdownProvider.category, name, description);
-
-                  sqliteDatabase.db;
-                  sqliteDatabase.save(TodoModel(
-                      categoryDropdownProvider.category, name, description));
-
-                  // sqliteDatabase.removeAll();
-
-                  Future<List<TodoModel>> todos = sqliteDatabase.getTodos();
-
-                  todos.then((value) => {
-                        print(value[value.length - 1].name),
-                      });
-
                   Navigator.pop(context);
                 }
               },
