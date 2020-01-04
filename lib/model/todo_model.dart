@@ -20,6 +20,7 @@ class TodoModel {
       'category': category,
       'name': name,
       'description': description,
+      'done': done
     };
   }
 

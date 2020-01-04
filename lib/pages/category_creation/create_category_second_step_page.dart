@@ -43,9 +43,11 @@ class CreateCategorySecondStepPage extends StatelessWidget {
           _createNameField(),
           RaisedButton(
             onPressed: () {
-              if (_formKey.currentState.validate()) {}
+              if (_formKey.currentState.validate()) {
+                
+              }
             },
-            child: Text('Submit'),
+            child: Text('Create Category'),
           ),
         ],
       ),

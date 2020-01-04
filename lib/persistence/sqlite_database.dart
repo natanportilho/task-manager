@@ -24,7 +24,7 @@ class SqliteDatabase {
 
   FutureOr<void> _onCreate(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE todo (ID STRING PRIMARY KEY, CATEGORY TEXT, NAME TEXT, DESCRIPTION TEXT)');
+        'CREATE TABLE todo (ID STRING PRIMARY KEY, CATEGORY TEXT, NAME TEXT, DESCRIPTION TEXT, DONE TEXT)');
   }
 
   Future<TodoModel> save(TodoModel todo) async {
@@ -45,9 +45,15 @@ class SqliteDatabase {
 
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        todos.add(TodoModel(maps[i]['category'], maps[i]['name'], maps[i]['description']));
+        var todoInfo = maps[i].values.toList();
+        todos.add(TodoModel(todoInfo[1], todoInfo[2], todoInfo[3]));
       }
     }
     return todos;
+  }
+
+  FutureOr<void> removeAll() async {
+    var dbClient = await db;
+    await dbClient.execute('DELETE FROM todo');
   }
 }

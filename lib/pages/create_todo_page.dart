@@ -79,6 +79,8 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
                   sqliteDatabase.save(TodoModel(
                       categoryDropdownProvider.category, name, description));
 
+                  // sqliteDatabase.removeAll();
+
                   Future<List<TodoModel>> todos = sqliteDatabase.getTodos();
 
                   todos.then((value) => {
