@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager/model/todo_model.dart';
+import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 
 class TodoPage extends StatefulWidget {
   TodoPage(this.title, this.todo);
   final String title;
-  final TodoModel todo;
+  final Todo todo;
 
   @override
   _TodoPageState createState() => _TodoPageState(todo);
@@ -15,11 +15,18 @@ class TodoPage extends StatefulWidget {
 
 class _TodoPageState extends State<TodoPage> {
   _TodoPageState(this.todo);
-  TodoModel todo;
+  Todo todo;
+  TodoProvider todoProvider;
 
   @override
   Widget build(BuildContext context) {
-    final TodoProvider todoProvider = Provider.of<TodoProvider>(context);
+    MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
+    todoProvider = Provider.of<TodoProvider>(context);
+    todoProvider.injectDatabaseProvider(databaseProvider);
+    todo = (todoProvider.todo != null && todoProvider.todo.id == todo.id)
+        ? todoProvider.todo
+        : todo;
+
     return Scaffold(
       appBar: buildAppBar(),
       body: buildTodoInfoSection(todoProvider, context),
@@ -67,15 +74,14 @@ class _TodoPageState extends State<TodoPage> {
     return <Widget>[
       IconButton(
         onPressed: () => {
-          todo.done
-              ? todoProvider.saveAsNotDone(todo)
-              : todoProvider.saveAsDone(todo),
+          todoProvider.toggleDoneFlag(todo),
         },
         icon: Icon(Icons.done),
         color: todo.done ? Colors.green : Colors.indigo,
       ),
       IconButton(
-          onPressed: () => {todoProvider.remove(todo), Navigator.pop(context)},
+          onPressed: () =>
+              {todoProvider.removeTodo(todo.id), Navigator.pop(context)},
           icon: Icon(Icons.delete)),
     ];
   }
@@ -93,7 +99,7 @@ class _TodoPageState extends State<TodoPage> {
 
   Text buildCategoryText() {
     return Text(
-      todo.category,
+      todo.category.toString(),
       style: GoogleFonts.ibarraRealNova(
         fontWeight: FontWeight.bold,
         fontSize: 18,
@@ -103,7 +109,7 @@ class _TodoPageState extends State<TodoPage> {
   }
 
 //TODO:Fix this, a todo must have a category and a category must have an image
-  CircleAvatar _buildCircleAvatar(TodoModel todo) {
+  CircleAvatar _buildCircleAvatar(Todo todo) {
     String imageUrl = '';
     if (todo.category == 'Work') {
       imageUrl =

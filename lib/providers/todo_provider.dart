@@ -1,34 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/model/todo_model.dart';
-import 'package:task_manager/persistence/sqlite_database.dart';
+import 'package:task_manager/persistence/todo_table.dart';
 
 class TodoProvider extends ChangeNotifier {
-  final SqliteDatabase sqliteDatabase = SqliteDatabase();
-  List<TodoModel> entries = <TodoModel>[];
+  Todo todo;
+  MyDatabase _databaseProvider;
+  Stream<List<Todo>> entries;
 
-  initiate() {
-    sqliteDatabase.getTodos().then((values) => {
-          entries = values,
-          notifyListeners(),
-        });
+  void injectDatabaseProvider(MyDatabase databaseProvider) {
+    this._databaseProvider = databaseProvider;
+    entries = _databaseProvider.allTodoEntries;
   }
 
-  addTodo(String category, String name, String description) {
-    TodoModel todo = TodoModel(category, name, description);
-    sqliteDatabase.save(todo);
+  Future toggleDoneFlag(Todo todo) async {
+    await this._databaseProvider.toggleDoneFlag(todo);
+    List<Todo> result = await this._databaseProvider.getTodoById(todo.id);
+    this.todo = result[0];
+    notifyListeners();
   }
 
-  remove(TodoModel todo) {
-    sqliteDatabase.removeTodo(todo.id);
+  Future<Todo> getTodoById(int id) async {
+    List<Todo> result = await this._databaseProvider.getTodoById(id);
+    return result[0];
   }
 
-  saveAsDone(TodoModel todo) {
-    sqliteDatabase.setTodoAsDone(todo.id);
-    todo.done = true;
-  }
-
-  saveAsNotDone(TodoModel todo) {
-    sqliteDatabase.setTodoAsNotDone(todo.id);
-    todo.done = false;
+  void removeTodo(int id) {
+    _databaseProvider.removeTodo(id);
   }
 }

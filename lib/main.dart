@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_dropdown_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 
 import 'pages/home_page.dart';
 
 void main() => runApp(MultiProvider(providers: [
-      ChangeNotifierProvider<TodoProvider>(create: (_) => TodoProvider()),
+      Provider(
+        create: (_) => MyDatabase(),
+      ),
+      ChangeNotifierProxyProvider<MyDatabase, TodoProvider>(
+          create: (_) => TodoProvider(),
+          update: (_, myDatabase, todoProvider) => todoProvider),
       ChangeNotifierProvider<CategoryDropdownProvider>(
           create: (_) => CategoryDropdownProvider())
     ], child: MyApp()));
