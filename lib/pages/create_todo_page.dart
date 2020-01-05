@@ -71,15 +71,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
                   var category = categoryDropdownProvider.category;
 
                   databaseProvider.getCategoryById(category).then((result) => {
-                        if (result.length > 0)
-                          {
-                            category = result[0].id,
-                          }
-                        else
-                          {
-                            databaseProvider.addCategory(Category(
-                                id: category, name: category, imageUrl: 'lolo'))
-                          }
+                        category = result[0].id,
                       });
 
                   databaseProvider.addTodo(Todo(

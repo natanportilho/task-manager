@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:moor_flutter/moor_flutter.dart';
-import 'package:provider/provider.dart';
 
 part 'todo_table.g.dart';
 
@@ -41,6 +40,12 @@ class MyDatabase extends _$MyDatabase {
     return (select(todos)..where((t) => t.category.equals(c.id))).watch();
   }
 
+  Future<List<Category>> getAllCategories() {
+    return (select(categories)
+          ..orderBy([(c) => OrderingTerm(expression: c.id)]))
+        .get();
+  }
+
   Future addTodo(Todo todo) => into(todos).insert(todo);
 
   Future removeTodo(int id) =>
@@ -50,11 +55,33 @@ class MyDatabase extends _$MyDatabase {
 
   Future addCategory(Category category) => into(categories).insert(category);
 
-  Future getCategoryById(String id) {
+  Future<List<Category>> getCategoryById(String id) {
     return (select(categories)..where((c) => c.id.equals(id))).get();
   }
 
   Future<List<Todo>> getTodoById(int id) {
     return (select(todos)..where((t) => t.id.equals(id))).get();
+  }
+
+  Future insertInitialCategories() {
+    Category personal = Category(
+        id: 'Personal',
+        name: 'Personal',
+        imageUrl:
+            'https://images.unsplash.com/photo-1462926703708-44ab9e271d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80');
+    Category work = Category(
+        id: 'Work',
+        name: 'Work',
+        imageUrl:
+            'https://images.unsplash.com/photo-1494498902093-87f291949d17?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
+    Category study = Category(
+        id: 'Study',
+        name: 'Study',
+        imageUrl:
+            'https://images.unsplash.com/photo-1537202108838-e7072bad1927?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=685&q=80');
+
+    into(categories).insert(personal);
+    into(categories).insert(work);
+    into(categories).insert(study);
   }
 }
