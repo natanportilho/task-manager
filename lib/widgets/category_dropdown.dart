@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_dropdown_provider.dart';
+import 'package:task_manager/providers/category_provider.dart';
 
 class CategoryDropdown extends StatefulWidget {
   CategoryDropdown({Key key}) : super(key: key);
@@ -11,11 +14,16 @@ class CategoryDropdown extends StatefulWidget {
 
 class _CategoryDropdownState extends State<CategoryDropdown> {
   String dropdownValue = 'Personal';
+  CategoryProvider categoryProvider;
 
   @override
   Widget build(BuildContext context) {
     final CategoryDropdownProvider categoryDropdownProvider =
         Provider.of<CategoryDropdownProvider>(context);
+    final MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
+    categoryProvider = Provider.of<CategoryProvider>(context);
+    categoryProvider.injectDatabaseProvider(databaseProvider);
+
     return buildDropdownButton(categoryDropdownProvider);
   }
 
