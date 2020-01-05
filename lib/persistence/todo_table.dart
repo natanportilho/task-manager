@@ -29,6 +29,14 @@ class MyDatabase extends _$MyDatabase {
 
   Stream<List<Todo>> get allTodoEntries => select(todos).watch();
 
+  Future toggleDoneFlag(Todo todo) {
+    return (update(todos)..where((t) => t.id.equals(todo.id))).write(
+      TodosCompanion(
+        done: todo.done ? Value(false) : Value(true),
+      ),
+    );
+  }
+
   Stream<List<Todo>> watchEntriesInCategory(Category c) {
     return (select(todos)..where((t) => t.category.equals(c.id))).watch();
   }
@@ -44,5 +52,9 @@ class MyDatabase extends _$MyDatabase {
 
   Future getCategoryById(String id) {
     return (select(categories)..where((c) => c.id.equals(id))).get();
+  }
+
+  Future<List<Todo>> getTodoById(int id) {
+    return (select(todos)..where((t) => t.id.equals(id))).get();
   }
 }

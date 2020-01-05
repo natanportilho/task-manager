@@ -22,8 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Todo> entries = <Todo>[];
     databaseProvider = Provider.of<MyDatabase>(context);
     todoProvider = Provider.of<TodoProvider>(context);
-
-    todoProvider.update(databaseProvider);
+    todoProvider.injectDatabaseProvider(databaseProvider);
 
     return Scaffold(
       appBar: _buildAppBar(),

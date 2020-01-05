@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/persistence/todo_table.dart';
+import 'package:task_manager/providers/todo_provider.dart';
 
 class TodoPage extends StatefulWidget {
   TodoPage(this.title, this.todo);
@@ -15,17 +16,24 @@ class TodoPage extends StatefulWidget {
 class _TodoPageState extends State<TodoPage> {
   _TodoPageState(this.todo);
   Todo todo;
+  TodoProvider todoProvider;
 
   @override
   Widget build(BuildContext context) {
-    final MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
+    MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
+    todoProvider = Provider.of<TodoProvider>(context);
+    todoProvider.injectDatabaseProvider(databaseProvider);
+    todo = (todoProvider.todo != null && todoProvider.todo.id == todo.id)
+        ? todoProvider.todo
+        : todo;
+
     return Scaffold(
       appBar: buildAppBar(),
-      body: buildTodoInfoSection(databaseProvider, context),
+      body: buildTodoInfoSection(todoProvider, context),
     );
   }
 
-  Column buildTodoInfoSection(MyDatabase databaseProvider, BuildContext context) {
+  Column buildTodoInfoSection(TodoProvider todoProvider, BuildContext context) {
     return Column(
       children: <Widget>[
         Center(
@@ -48,7 +56,7 @@ class _TodoPageState extends State<TodoPage> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: buildTodoButtons(databaseProvider, context),
+          children: buildTodoButtons(todoProvider, context),
         ),
       ],
     );
@@ -62,19 +70,18 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   List<Widget> buildTodoButtons(
-      MyDatabase databaseProvider, BuildContext context) {
+      TodoProvider todoProvider, BuildContext context) {
     return <Widget>[
       IconButton(
         onPressed: () => {
-          // todo.done
-          //     ? databaseProvider.saveAsNotDone(todo)
-          //     : databaseProvider.saveAsDone(todo),
+          todoProvider.toggleDoneFlag(todo),
         },
         icon: Icon(Icons.done),
         color: todo.done ? Colors.green : Colors.indigo,
       ),
       IconButton(
-          onPressed: () => {databaseProvider.removeTodo(todo.id), Navigator.pop(context)},
+          onPressed: () =>
+              {todoProvider.removeTodo(todo.id), Navigator.pop(context)},
           icon: Icon(Icons.delete)),
     ];
   }
