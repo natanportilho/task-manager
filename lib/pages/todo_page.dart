@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/persistence/todo_table.dart';
+import 'package:task_manager/providers/category_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 
 class TodoPage extends StatefulWidget {
@@ -17,15 +18,21 @@ class _TodoPageState extends State<TodoPage> {
   _TodoPageState(this.todo);
   Todo todo;
   TodoProvider todoProvider;
+  CategoryProvider categoryProvider;
 
   @override
   Widget build(BuildContext context) {
     MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
     todoProvider = Provider.of<TodoProvider>(context);
+    categoryProvider = Provider.of<CategoryProvider>(context);
+    categoryProvider.injectDatabaseProvider(databaseProvider);
+
     todoProvider.injectDatabaseProvider(databaseProvider);
     todo = (todoProvider.todo != null && todoProvider.todo.id == todo.id)
         ? todoProvider.todo
         : todo;
+
+    categoryProvider.updateCategory(todo.category);
 
     return Scaffold(
       appBar: buildAppBar(),
@@ -108,22 +115,10 @@ class _TodoPageState extends State<TodoPage> {
     );
   }
 
-//TODO:Fix this, a todo must have a category and a category must have an image
   CircleAvatar _buildCircleAvatar(Todo todo) {
-    String imageUrl = '';
-    if (todo.category == 'Work') {
-      imageUrl =
-          'https://images.unsplash.com/photo-1494498902093-87f291949d17?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60';
-    } else if (todo.category == 'Study') {
-      imageUrl =
-          'https://images.unsplash.com/photo-1537202108838-e7072bad1927?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=685&q=80';
-    } else {
-      imageUrl =
-          'https://images.unsplash.com/photo-1462926703708-44ab9e271d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80';
-    }
-
+    String imgUrl = categoryProvider.category.imageUrl;
     return CircleAvatar(
-      backgroundImage: NetworkImage(imageUrl),
+      backgroundImage: NetworkImage(imgUrl),
       radius: 80,
     );
   }
