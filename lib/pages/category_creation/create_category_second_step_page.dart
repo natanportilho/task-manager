@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager/persistence/todo_table.dart';
 
 class CreateCategorySecondStepPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -35,6 +37,8 @@ class CreateCategorySecondStepPage extends StatelessWidget {
   }
 
   Form _createTodoForm(BuildContext context) {
+    final MyDatabase databaseProvider =
+        Provider.of<MyDatabase>(context, listen: false);
     return Form(
       key: _formKey,
       child: Column(
@@ -44,7 +48,10 @@ class CreateCategorySecondStepPage extends StatelessWidget {
           RaisedButton(
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                
+                databaseProvider.addCategory(
+                    Category(id: name, name: name, imageUrl: imgUrl));
+                Navigator.pop(context);
+                Navigator.pop(context);
               }
             },
             child: Text('Create Category'),
