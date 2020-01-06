@@ -26,10 +26,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     CategoryProvider categoryProvider = Provider.of<CategoryProvider>(context);
     categoryProvider.injectDatabaseProvider(databaseProvider);
 
-    print(categoryProvider.categories.length);
-    print(categoryProvider.categories);
-
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

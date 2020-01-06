@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_dropdown_provider.dart';
@@ -42,13 +41,21 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
       onChanged: (String newValue) {
         categoryDropdownProvider.updateCategory(newValue);
       },
-      items: <String>['Personal', 'Work', 'Study']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
+      items: _createCategoriesList().toList(),
     );
+  }
+
+  List<DropdownMenuItem<String>> _createCategoriesList() {
+    List<DropdownMenuItem<String>> categoriesNames =
+        List<DropdownMenuItem<String>>();
+    if (categoryProvider.categories != null) {
+      categoryProvider.categories.forEach((c) => {
+            categoriesNames.add(DropdownMenuItem<String>(
+              value: c.name,
+              child: Text(c.name),
+            )),
+          });
+    }
+    return categoriesNames;
   }
 }
