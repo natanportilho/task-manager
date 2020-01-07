@@ -41,7 +41,8 @@ class MyDatabase extends _$MyDatabase {
   }
 
   Future<List<Category>> getAllCategories() {
-    return (select(categories)
+    //TODO: Should check this. Checking for distinct because some categories are being duplicates.
+    return (select(categories, distinct: true)
           ..orderBy([(c) => OrderingTerm(expression: c.id)]))
         .get();
   }
