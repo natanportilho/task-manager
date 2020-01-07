@@ -116,7 +116,7 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   CircleAvatar _buildCircleAvatar(Todo todo) {
-    String imgUrl = categoryProvider.category.imageUrl;
+    String imgUrl = categoryProvider.category != null ? categoryProvider.category.imageUrl : '';
     return CircleAvatar(
       backgroundImage: NetworkImage(imgUrl),
       radius: 80,
