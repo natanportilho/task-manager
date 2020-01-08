@@ -93,9 +93,13 @@ class _TodoPageState extends State<TodoPage> {
     ];
   }
 
-  Text buildDescriptionText() {
-    return Text(
-      todo.description,
+  TextField buildDescriptionText() {
+    final _textDescriptionController = TextEditingController();
+    _textDescriptionController.text = todo.description;
+
+    return TextField(
+      controller: _textDescriptionController,
+      enabled: false,
       style: GoogleFonts.ibarraRealNova(
         fontWeight: FontWeight.bold,
         fontSize: 20,
@@ -117,7 +121,9 @@ class _TodoPageState extends State<TodoPage> {
 
   CircleAvatar _buildCircleAvatar(Todo todo) {
     //TODO: Check this, categoryProvider.category should never be null.
-    String imgUrl = categoryProvider.category != null ? categoryProvider.category.imageUrl : '';
+    String imgUrl = categoryProvider.category != null
+        ? categoryProvider.category.imageUrl
+        : '';
     return CircleAvatar(
       backgroundImage: NetworkImage(imgUrl),
       radius: 80,
