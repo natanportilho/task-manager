@@ -36,7 +36,7 @@ class _TodoPageState extends State<TodoPage> {
 
     return Scaffold(
       appBar: buildAppBar(),
-      body: buildTodoInfoSection(todoProvider, context),
+      body: SingleChildScrollView(child: buildTodoInfoSection(todoProvider, context)),
     );
   }
 
@@ -99,7 +99,6 @@ class _TodoPageState extends State<TodoPage> {
 
     return TextField(
       controller: _textDescriptionController,
-      enabled: false,
       style: GoogleFonts.ibarraRealNova(
         fontWeight: FontWeight.bold,
         fontSize: 20,
