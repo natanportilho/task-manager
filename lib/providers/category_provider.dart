@@ -10,10 +10,6 @@ class CategoryProvider extends ChangeNotifier {
   void injectDatabaseProvider(MyDatabase databaseProvider) async {
     this._databaseProvider = databaseProvider;
     categories = await _databaseProvider.getAllCategories();
-    notifyListeners();
-    // _databaseProvider.getAllCategories().then((result) => {
-    //       categories = result,
-    //     });
   }
 
   Future<Category> getCategoryById(String id) async {
@@ -32,8 +28,7 @@ class CategoryProvider extends ChangeNotifier {
 
   Future<void> addCategory(Category category) async {
     await this._databaseProvider.addCategory(category);
-    _databaseProvider.getAllCategories().then((result) => {
-          categories = result,
-        });
+     categories = await _databaseProvider.getAllCategories();
+     notifyListeners();
   }
 }
