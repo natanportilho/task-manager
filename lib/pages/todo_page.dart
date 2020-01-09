@@ -42,7 +42,7 @@ class _TodoPageState extends State<TodoPage> {
               return Scaffold(
                 appBar: buildAppBar(),
                 body: SingleChildScrollView(
-                    child: buildTodoInfoSection(todoProvider, context)),
+                    child: _buildTodoInfoSection(todoProvider, context)),
               );
         }
       },
@@ -53,7 +53,8 @@ class _TodoPageState extends State<TodoPage> {
     return categoryProvider.updateCategory(todo.category);
   }
 
-  Column buildTodoInfoSection(TodoProvider todoProvider, BuildContext context) {
+  Column _buildTodoInfoSection(
+      TodoProvider todoProvider, BuildContext context) {
     final _textDescriptionController = TextEditingController();
 
     return Column(
@@ -65,7 +66,7 @@ class _TodoPageState extends State<TodoPage> {
           ),
         ),
         _buildCircleAvatar(todo),
-        buildCategoryText(),
+        _buildCategoryText(),
         Divider(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -125,7 +126,7 @@ class _TodoPageState extends State<TodoPage> {
     );
   }
 
-  Text buildCategoryText() {
+  Text _buildCategoryText() {
     return Text(
       todo.category.toString(),
       style: GoogleFonts.ibarraRealNova(

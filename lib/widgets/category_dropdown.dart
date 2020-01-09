@@ -31,13 +31,13 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
             if (snapshot.hasError)
               return new Text('Error: ${snapshot.error}');
             else
-              return buildDropdownButton(categoryDropdownProvider);
+              return _buildDropdownButton(categoryDropdownProvider);
         }
       },
     );
   }
 
-  DropdownButton<String> buildDropdownButton(
+  DropdownButton<String> _buildDropdownButton(
       CategoryDropdownProvider categoryDropdownProvider) {
     return DropdownButton<String>(
       value: categoryDropdownProvider.category,
