@@ -47,6 +47,9 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     final MyDatabase databaseProvider =
         Provider.of<MyDatabase>(context, listen: false);
 
+            final _textDescriptionController = TextEditingController();
+
+
     return Form(
       key: _formKey,
       child: Column(
@@ -67,6 +70,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             ],
           ),
           _createNameField(),
+          TextField(controller: _textDescriptionController,),
           _createDescriptionField(),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),

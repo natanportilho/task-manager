@@ -31,16 +31,31 @@ class _TodoPageState extends State<TodoPage> {
     todo = (todoProvider.todo != null && todoProvider.todo.id == todo.id)
         ? todoProvider.todo
         : todo;
-
-    categoryProvider.updateCategory(todo.category);
-
-    return Scaffold(
-      appBar: buildAppBar(),
-      body: SingleChildScrollView(child: buildTodoInfoSection(todoProvider, context)),
+    return new FutureBuilder(
+      future: _updateCategory(categoryProvider),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        switch (snapshot.connectionState) {
+          default:
+            if (snapshot.hasError)
+              return new Text('Error: ${snapshot.error}');
+            else
+              return Scaffold(
+                appBar: buildAppBar(),
+                body: SingleChildScrollView(
+                    child: buildTodoInfoSection(todoProvider, context)),
+              );
+        }
+      },
     );
   }
 
+  Future _updateCategory(CategoryProvider categoryProvider) async {
+    return categoryProvider.updateCategory(todo.category);
+  }
+
   Column buildTodoInfoSection(TodoProvider todoProvider, BuildContext context) {
+    final _textDescriptionController = TextEditingController();
+
     return Column(
       children: <Widget>[
         Center(
@@ -64,6 +79,9 @@ class _TodoPageState extends State<TodoPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: buildTodoButtons(todoProvider, context),
+        ),
+        TextField(
+          controller: _textDescriptionController,
         ),
       ],
     );

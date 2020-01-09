@@ -23,7 +23,6 @@ class CategoryProvider extends ChangeNotifier {
     List<Category> result =
         await this._databaseProvider.getCategoryById(categoryId);
     this.category = result[0];
-    notifyListeners();
   }
 
   Future<void> addCategory(Category category) async {
