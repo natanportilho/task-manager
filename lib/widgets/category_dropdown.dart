@@ -23,7 +23,18 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
     categoryProvider = Provider.of<CategoryProvider>(context);
     categoryProvider.injectDatabaseProvider(databaseProvider);
 
-    return buildDropdownButton(categoryDropdownProvider);
+    return new FutureBuilder(
+      future: databaseProvider.getAllCategories(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        switch (snapshot.connectionState) {
+          default:
+            if (snapshot.hasError)
+              return new Text('Error: ${snapshot.error}');
+            else
+              return buildDropdownButton(categoryDropdownProvider);
+        }
+      },
+    );
   }
 
   DropdownButton<String> buildDropdownButton(
