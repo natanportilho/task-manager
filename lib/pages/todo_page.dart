@@ -65,7 +65,6 @@ class _TodoPageState extends State<TodoPage> {
         ),
         _buildCircleAvatar(todo),
         _buildCategoryText(),
-        // Divider(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Center(
