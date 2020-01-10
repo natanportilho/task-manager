@@ -55,7 +55,6 @@ class _TodoPageState extends State<TodoPage> {
 
   Column _buildTodoInfoSection(
       TodoProvider todoProvider, BuildContext context) {
-    final _textDescriptionController = TextEditingController();
 
     return Column(
       children: <Widget>[
@@ -80,9 +79,6 @@ class _TodoPageState extends State<TodoPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: buildTodoButtons(todoProvider, context),
-        ),
-        TextField(
-          controller: _textDescriptionController,
         ),
       ],
     );
