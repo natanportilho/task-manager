@@ -55,7 +55,6 @@ class _TodoPageState extends State<TodoPage> {
 
   Column _buildTodoInfoSection(
       TodoProvider todoProvider, BuildContext context) {
-
     return Column(
       children: <Widget>[
         Center(
@@ -66,7 +65,7 @@ class _TodoPageState extends State<TodoPage> {
         ),
         _buildCircleAvatar(todo),
         _buildCategoryText(),
-        Divider(),
+        // Divider(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Center(
@@ -108,18 +107,27 @@ class _TodoPageState extends State<TodoPage> {
     ];
   }
 
-  TextField buildDescriptionText() {
+  Card buildDescriptionText() {
     final _textDescriptionController = TextEditingController();
     _textDescriptionController.text = todo.description;
 
-    return TextField(
-      controller: _textDescriptionController,
-      style: GoogleFonts.ibarraRealNova(
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
-        textStyle: TextStyle(letterSpacing: .5),
-      ),
-    );
+    return Card(
+      margin: EdgeInsets.all(30.0),
+        color: Colors.green[100],
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: TextField(
+            controller: _textDescriptionController,
+            maxLines: 8,
+            decoration:
+                InputDecoration.collapsed(hintText: "Enter the description"),
+            style: GoogleFonts.ibarraRealNova(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              textStyle: TextStyle(letterSpacing: .5),
+            ),
+          ),
+        ));
   }
 
   Text _buildCategoryText() {
