@@ -47,6 +47,14 @@ class MyDatabase extends _$MyDatabase {
         .get();
   }
 
+  Future updateTodoDescription(int id, String description) {
+    return (update(todos)..where((t) => t.id.equals(id))).write(
+      TodosCompanion(
+        description: Value(description),
+      ),
+    );
+  }
+
   Future addTodo(Todo todo) => into(todos).insert(todo);
 
   Future removeTodo(int id) =>

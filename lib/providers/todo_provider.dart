@@ -26,4 +26,8 @@ class TodoProvider extends ChangeNotifier {
   void removeTodo(int id) {
     _databaseProvider.removeTodo(id);
   }
+
+  updateTodoDescription(int id, String description) {
+    _databaseProvider.updateTodoDescription(id, description);
+  }
 }
