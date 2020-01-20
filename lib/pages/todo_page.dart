@@ -15,7 +15,7 @@ class TodoPage extends StatefulWidget {
 }
 
 class _TodoPageState extends State<TodoPage> {
-    final _textDescriptionController = TextEditingController();
+  final _textDescriptionController = TextEditingController();
   _TodoPageState(this.todo);
   Todo todo;
   TodoProvider todoProvider;
@@ -104,13 +104,8 @@ class _TodoPageState extends State<TodoPage> {
           onPressed: () =>
               {todoProvider.removeTodo(todo.id), Navigator.pop(context)},
           icon: Icon(Icons.delete)),
-      IconButton(
-          onPressed: () =>
-              {todoProvider.updateTodoDescription(todo.id, _textDescriptionController.text)},
-          icon: Icon(Icons.update)),
     ];
   }
-
 
   Card buildDescriptionText() {
     _textDescriptionController.text = todo.description;
@@ -121,6 +116,12 @@ class _TodoPageState extends State<TodoPage> {
         child: Padding(
           padding: EdgeInsets.all(8.0),
           child: TextField(
+            textInputAction: TextInputAction.done,
+            onEditingComplete: () {
+              todoProvider.updateTodoDescription(
+                  todo.id, _textDescriptionController.text);
+              FocusScope.of(context).requestFocus(new FocusNode());
+            },
             controller: _textDescriptionController,
             maxLines: 8,
             decoration:
