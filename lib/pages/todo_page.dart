@@ -58,12 +58,6 @@ class _TodoPageState extends State<TodoPage> {
       TodoProvider todoProvider, BuildContext context) {
     return Column(
       children: <Widget>[
-        Center(
-          child: Text(
-            todo.name,
-            style: TextStyle(fontSize: 36),
-          ),
-        ),
         _buildCircleAvatar(todo),
         _buildCategoryText(),
         Padding(
@@ -75,10 +69,15 @@ class _TodoPageState extends State<TodoPage> {
             ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: buildTodoButtons(todoProvider, context),
-        ),
+        Container(
+            child: Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: buildTodoButtons(todoProvider, context),
+                  ),
+                ))),
       ],
     );
   }
@@ -111,8 +110,7 @@ class _TodoPageState extends State<TodoPage> {
     _textDescriptionController.text = todo.description;
 
     return Card(
-        margin: EdgeInsets.all(30.0),
-        color: Colors.green[100],
+        margin: EdgeInsets.all(20.0),
         child: Padding(
           padding: EdgeInsets.all(8.0),
           child: TextField(
@@ -146,14 +144,17 @@ class _TodoPageState extends State<TodoPage> {
     );
   }
 
-  CircleAvatar _buildCircleAvatar(Todo todo) {
+  Padding _buildCircleAvatar(Todo todo) {
     //TODO: Check this, categoryProvider.category should never be null.
     String imgUrl = categoryProvider.category != null
         ? categoryProvider.category.imageUrl
         : '';
-    return CircleAvatar(
-      backgroundImage: NetworkImage(imgUrl),
-      radius: 80,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CircleAvatar(
+        backgroundImage: NetworkImage(imgUrl),
+        radius: 50,
+      ),
     );
   }
 }
