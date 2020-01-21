@@ -93,4 +93,12 @@ class MyDatabase extends _$MyDatabase {
     into(categories).insert(work);
     into(categories).insert(study);
   }
+
+  Future updateTodoCategory(todoId, categoryId) {
+    return (update(todos)..where((t) => t.id.equals(todoId))).write(
+      TodosCompanion(
+        category: Value(categoryId),
+      ),
+    );
+  }
 }

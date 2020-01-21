@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager/pages/select_category_page.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
@@ -151,9 +152,19 @@ class _TodoPageState extends State<TodoPage> {
         : '';
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: CircleAvatar(
-        backgroundImage: NetworkImage(imgUrl),
-        radius: 50,
+      child: GestureDetector(
+        child: CircleAvatar(
+          backgroundImage: NetworkImage(imgUrl),
+          radius: 50,
+        ),
+        onTap: () => {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    SelectCategoryPage(todo.id),
+              ))
+        },
       ),
     );
   }

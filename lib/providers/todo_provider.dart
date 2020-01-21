@@ -30,4 +30,8 @@ class TodoProvider extends ChangeNotifier {
   updateTodoDescription(int id, String description) {
     _databaseProvider.updateTodoDescription(id, description);
   }
+
+    updateTodoCategory(int todoId, String categoryId) {
+    return _databaseProvider.updateTodoCategory(todoId, categoryId);
+  }
 }
