@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
+import 'package:task_manager/pages/theme_selection_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/todo_provider.dart';
@@ -43,6 +44,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return AppBar(
       backgroundColor: Colors.greenAccent[700],
       title: Text(widget.title),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.color_lens),
+          onPressed: () => {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ThemeSelectionPage(),
+                )),
+          },
+        )
+      ],
     );
   }
 
