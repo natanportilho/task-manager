@@ -4,6 +4,7 @@ import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/theme_selection_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
 import 'package:task_manager/persistence/todo_table.dart';
+import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -17,10 +18,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   MyDatabase databaseProvider;
   TodoProvider todoProvider;
+  ColorThemeProvider colorThemeProvider;
 
   @override
   Widget build(BuildContext context) {
     List<Todo> entries = <Todo>[];
+    colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     databaseProvider = Provider.of<MyDatabase>(context);
     todoProvider = Provider.of<TodoProvider>(context);
     todoProvider.injectDatabaseProvider(databaseProvider);
@@ -42,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.greenAccent[700],
+      backgroundColor: colorThemeProvider.color == null ? Colors.green : colorThemeProvider.color,
       title: Text(widget.title),
       actions: <Widget>[
         IconButton(
@@ -75,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   FloatingActionButton _createTodoButton(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: Colors.greenAccent[700],
+      backgroundColor: Colors.green,
       onPressed: () => {_goToCreateTodoPage(context)},
       tooltip: 'Create Todo',
       child: Icon(Icons.add),

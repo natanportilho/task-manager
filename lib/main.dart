@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_dropdown_provider.dart';
 import 'package:task_manager/providers/category_provider.dart';
+import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 
 import 'pages/home_page.dart';
@@ -17,7 +18,9 @@ void main() => runApp(MultiProvider(providers: [
       ChangeNotifierProvider<CategoryDropdownProvider>(
           create: (_) => CategoryDropdownProvider()),
       ChangeNotifierProvider<CategoryProvider>(
-          create: (_) => CategoryProvider())
+          create: (_) => CategoryProvider()),
+          ChangeNotifierProvider<ColorThemeProvider>(
+          create: (_) => ColorThemeProvider())
     ], child: MyApp()));
 
 class MyApp extends StatelessWidget {
@@ -28,9 +31,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Task Manager',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: MyHomePage(title: 'Home Page'),
     );
   }
+
 }

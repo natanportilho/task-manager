@@ -85,7 +85,7 @@ class _TodoPageState extends State<TodoPage> {
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.greenAccent[700],
+      backgroundColor: Colors.green,
       title: Text(todo.name),
     );
   }

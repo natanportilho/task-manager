@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager/persistence/color_theme.dart';
+import 'package:task_manager/providers/color_theme_provider.dart';
 
 class ThemeSelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final List<MaterialColor> colors = _createColorsList();
+    ColorThemeProvider colorThemeProvider =
+        Provider.of<ColorThemeProvider>(context);
+
+    final List<ColorTheme> colors = _createColorsList();
 
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.greenAccent[700],
+        backgroundColor: Colors.green,
         title: Text('Select A Beautiful Theme'),
       ),
       body: Material(
@@ -19,83 +25,93 @@ class ThemeSelectionPage extends StatelessWidget {
               children: List.generate(6, (index) {
                 return Center(
                   child: GestureDetector(
-                    onTap: () => {},
+                    onTap: () => {
+                      if (colors[index].primaryColor == Colors.red)
+                        {
+                          colorThemeProvider.setColor("red"),
+                        }
+                      else if (colors[index].primaryColor == Colors.green)
+                        {
+                          colorThemeProvider.setColor("green"),
+                        }
+                      else if (colors[index].primaryColor == Colors.blue)
+                        {
+                          colorThemeProvider.setColor("blue"),
+                        }
+                      else if (colors[index].primaryColor == Colors.purple)
+                        {
+                          colorThemeProvider.setColor("purple"),
+                        }
+                      else if (colors[index].primaryColor == Colors.yellow)
+                        {
+                          colorThemeProvider.setColor("yellow"),
+                        }
+                      else if (colors[index].primaryColor == Colors.orange)
+                        {
+                          colorThemeProvider.setColor("orange"),
+                        },
+                      Navigator.pop(context),
+                    },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         height: 300,
-                        color: colors[index],
+                        color: colors[index].primaryColor,
                       ),
                     ),
                   ),
                 );
               }),
-            )
-            // padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            // child: ListView(
-            //   padding: const EdgeInsets.all(8),
-            //   children: <Widget>[
-            //     Container(
-            //       height: 160,
-            //       color: Colors.red,
-            //     ),
-            //     Container(
-            //       height: 160,
-            //       color: Colors.blue,
-            //     ),
-            //     Container(
-            //       height: 160,
-            //       color: Colors.green,
-            //     ),
-            //     Container(
-            //       height: 160,
-            //       color: Colors.yellow,
-            //     ),
-            //     Container(
-            //       height: 160,
-            //       color: Colors.orange,
-            //     ),
-            //   ],
-            // ),
-            // child: ListView(
-            //   // This next line does the trick.
-            //   scrollDirection: Axis.horizontal,
-            //   children: <Widget>[
-            //     Container(
-            //       width: 160.0,
-            //       color: Colors.red,
-            //     ),
-            //     Container(
-            //       width: 160.0,
-            //       color: Colors.blue,
-            //     ),
-            //     Container(
-            //       width: 160.0,
-            //       color: Colors.green,
-            //     ),
-            //     Container(
-            //       width: 160.0,
-            //       color: Colors.yellow,
-            //     ),
-            //     Container(
-            //       width: 160.0,
-            //       color: Colors.orange,
-            //     ),
-            //   ],
-            // )
-            ),
+            )),
       ),
     ));
   }
 
-  List<MaterialColor> _createColorsList() {
-    final List<MaterialColor> colors = <MaterialColor>[];
-    colors.add(Colors.red);
-    colors.add(Colors.green);
-    colors.add(Colors.blue);
-    colors.add(Colors.purple);
-    colors.add(Colors.yellow);
-    colors.add(Colors.orange);
+  List<ColorTheme> _createColorsList() {
+    final List<ColorTheme> colors = <ColorTheme>[];
+
+    ColorTheme red = ColorTheme();
+    red.name = 'red';
+    red.primaryColor = Colors.red;
+    red.secondaryColor = Colors.redAccent[300];
+    red.thirdColor = Colors.redAccent[50];
+    colors.add(red);
+
+    ColorTheme green = ColorTheme();
+    green.name = 'green';
+    green.primaryColor = Colors.green;
+    green.secondaryColor = Colors.greenAccent[300];
+    green.thirdColor = Colors.greenAccent[50];
+    colors.add(green);
+
+    ColorTheme purple = ColorTheme();
+    purple.name = 'purple';
+    purple.primaryColor = Colors.purple;
+    purple.secondaryColor = Colors.purpleAccent[300];
+    purple.thirdColor = Colors.purpleAccent[50];
+    colors.add(purple);
+
+    ColorTheme blue = ColorTheme();
+    blue.name = 'blue';
+    blue.primaryColor = Colors.blue;
+    blue.secondaryColor = Colors.blueAccent[300];
+    blue.thirdColor = Colors.blueAccent[50];
+    colors.add(blue);
+
+    ColorTheme yellow = ColorTheme();
+    yellow.name = 'yellow';
+    yellow.primaryColor = Colors.yellow;
+    yellow.secondaryColor = Colors.yellowAccent[300];
+    yellow.thirdColor = Colors.yellowAccent[50];
+    colors.add(yellow);
+
+    ColorTheme orange = ColorTheme();
+    orange.name = 'orange';
+    orange.primaryColor = Colors.orange;
+    orange.secondaryColor = Colors.orangeAccent[300];
+    orange.thirdColor = Colors.orangeAccent[50];
+    colors.add(orange);
+
     return colors;
   }
 }
