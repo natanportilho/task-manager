@@ -63,6 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ListView _buildListView(List<Todo> entries) {
+    var doneColor = colorThemeProvider.color != null ? Colors.greenAccent[100] ? colorThemeProvider.color.secondaryColor;
+
     return ListView.separated(
         itemCount: entries.length,
         separatorBuilder: (BuildContext context, int index) => Divider(),
