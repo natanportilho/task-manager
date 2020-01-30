@@ -12,7 +12,7 @@ class CreateCategoryPage extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.greenAccent[700],
+        backgroundColor: Colors.green,
         title: Text('Create Category'),
       ),
       body: Material(
