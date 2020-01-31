@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: colorThemeProvider.color == null ? Colors.green : colorThemeProvider.color,
+      backgroundColor: colorThemeProvider.color == null ? Colors.green : colorThemeProvider.color.primaryColor,
       title: Text(widget.title),
       actions: <Widget>[
         IconButton(
@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ListView _buildListView(List<Todo> entries) {
-    var doneColor = colorThemeProvider.color != null ? Colors.greenAccent[100] ? colorThemeProvider.color.secondaryColor;
+    // var doneColor = colorThemeProvider.color != null ? Colors.greenAccent[100] ? colorThemeProvider.color.secondaryColor;
 
     return ListView.separated(
         itemCount: entries.length,

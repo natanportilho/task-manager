@@ -26,30 +26,7 @@ class ThemeSelectionPage extends StatelessWidget {
                 return Center(
                   child: GestureDetector(
                     onTap: () => {
-                      if (colors[index].primaryColor == Colors.red)
-                        {
-                          colorThemeProvider.setColor("red"),
-                        }
-                      else if (colors[index].primaryColor == Colors.green)
-                        {
-                          colorThemeProvider.setColor("green"),
-                        }
-                      else if (colors[index].primaryColor == Colors.blue)
-                        {
-                          colorThemeProvider.setColor("blue"),
-                        }
-                      else if (colors[index].primaryColor == Colors.purple)
-                        {
-                          colorThemeProvider.setColor("purple"),
-                        }
-                      else if (colors[index].primaryColor == Colors.yellow)
-                        {
-                          colorThemeProvider.setColor("yellow"),
-                        }
-                      else if (colors[index].primaryColor == Colors.orange)
-                        {
-                          colorThemeProvider.setColor("orange"),
-                        },
+                      colorThemeProvider.setColor(colors[index]),
                       Navigator.pop(context),
                     },
                     child: Padding(
