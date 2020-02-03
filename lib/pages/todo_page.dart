@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:task_manager/pages/select_category_page.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_provider.dart';
+import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 
 class TodoPage extends StatefulWidget {
@@ -21,9 +22,12 @@ class _TodoPageState extends State<TodoPage> {
   Todo todo;
   TodoProvider todoProvider;
   CategoryProvider categoryProvider;
+  ColorThemeProvider colorThemeProvider;
+
 
   @override
   Widget build(BuildContext context) {
+    colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
     todoProvider = Provider.of<TodoProvider>(context);
     categoryProvider = Provider.of<CategoryProvider>(context);
@@ -85,7 +89,7 @@ class _TodoPageState extends State<TodoPage> {
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.green,
+      backgroundColor: colorThemeProvider.color == null ? Colors.green : colorThemeProvider.color.primaryColor,
       title: Text(todo.name),
     );
   }

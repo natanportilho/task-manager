@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_dropdown_provider.dart';
 import 'package:task_manager/providers/category_provider.dart';
+import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/widgets/category_dropdown.dart';
 
 import 'category_creation/create_category_first_step_page.dart';
@@ -25,11 +26,14 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
     CategoryProvider categoryProvider = Provider.of<CategoryProvider>(context);
     categoryProvider.injectDatabaseProvider(databaseProvider);
+    ColorThemeProvider colorThemeProvider = Provider.of<ColorThemeProvider>(context);
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green,
+          backgroundColor: colorThemeProvider.color == null
+              ? Colors.green
+              : colorThemeProvider.color.primaryColor,
           title: Text('Create todo'),
         ),
         body: Material(

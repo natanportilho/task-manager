@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager/providers/color_theme_provider.dart';
 
 import 'create_category_second_step_page.dart';
 
@@ -8,11 +10,15 @@ class CreateCategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> urlImages = _createImagesList();
+    ColorThemeProvider colorThemeProvider =
+        Provider.of<ColorThemeProvider>(context);
 
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: colorThemeProvider.color == null
+            ? Colors.green
+            : colorThemeProvider.color.primaryColor,
         title: Text('Create Category'),
       ),
       body: Material(
@@ -27,7 +33,8 @@ class CreateCategoryPage extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CreateCategorySecondStepPage(urlImages[index]),
+                            builder: (context) =>
+                                CreateCategorySecondStepPage(urlImages[index]),
                           ))
                     },
                     child: CircleAvatar(

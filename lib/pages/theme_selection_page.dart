@@ -4,9 +4,11 @@ import 'package:task_manager/persistence/color_theme.dart';
 import 'package:task_manager/providers/color_theme_provider.dart';
 
 class ThemeSelectionPage extends StatelessWidget {
+  
+
   @override
   Widget build(BuildContext context) {
-    ColorThemeProvider colorThemeProvider =
+    ColorThemeProvider colorThemeProvider = Provider.of<ColorThemeProvider>(context);
         Provider.of<ColorThemeProvider>(context);
 
     final List<ColorTheme> colors = _createColorsList();
@@ -14,7 +16,7 @@ class ThemeSelectionPage extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+      backgroundColor: colorThemeProvider.color == null ? Colors.green : colorThemeProvider.color.primaryColor,
         title: Text('Select A Beautiful Theme'),
       ),
       body: Material(
