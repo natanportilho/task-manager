@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_provider.dart';

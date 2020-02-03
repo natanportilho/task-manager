@@ -63,7 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ListView _buildListView(List<Todo> entries) {
-    // var doneColor = colorThemeProvider.color != null ? Colors.greenAccent[100] ? colorThemeProvider.color.secondaryColor;
+    MaterialAccentColor doneColor = colorThemeProvider.color != null ? colorThemeProvider.color.secondaryColor : Colors.greenAccent[100];
+    MaterialAccentColor notDoneColor = colorThemeProvider.color != null ? colorThemeProvider.color.thirdColor : Colors.greenAccent[50];
 
     return ListView.separated(
         itemCount: entries.length,
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (BuildContext context, int index) {
           var todo = entries[index];
           return Container(
-            color: todo.done ? Colors.greenAccent[100] : Colors.green[50],
+            color: todo.done ? doneColor : notDoneColor,
             child: _buildListTile(todo, context),
           );
         });
@@ -80,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   FloatingActionButton _createTodoButton(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: Colors.green,
+      backgroundColor: colorThemeProvider.color == null ? Colors.green : colorThemeProvider.color.primaryColor,
       onPressed: () => {_goToCreateTodoPage(context)},
       tooltip: 'Create Todo',
       child: Icon(Icons.add),
