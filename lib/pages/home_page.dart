@@ -63,8 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ListView _buildListView(List<Todo> entries) {
-    MaterialAccentColor doneColor = colorThemeProvider.color != null ? colorThemeProvider.color.secondaryColor : Colors.greenAccent[100];
-    MaterialAccentColor notDoneColor = colorThemeProvider.color != null ? colorThemeProvider.color.thirdColor : Colors.greenAccent[50];
+    Color doneColor = colorThemeProvider.color != null ? colorThemeProvider.color.secondaryColor : Colors.greenAccent[100];
+    Color notDoneColor = colorThemeProvider.color != null ? colorThemeProvider.color.thirdColor : Colors.greenAccent[50];
 
     return ListView.separated(
         itemCount: entries.length,

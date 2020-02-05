@@ -52,43 +52,43 @@ class ThemeSelectionPage extends StatelessWidget {
     ColorTheme red = ColorTheme();
     red.name = 'red';
     red.primaryColor = Colors.red;
-    red.secondaryColor = Colors.redAccent[300];
-    red.thirdColor = Colors.redAccent[50];
+    red.secondaryColor = Colors.redAccent[100];
+    red.thirdColor = Colors.transparent;
     colors.add(red);
 
     ColorTheme green = ColorTheme();
     green.name = 'green';
     green.primaryColor = Colors.green;
-    green.secondaryColor = Colors.greenAccent[300];
-    green.thirdColor = Colors.greenAccent[50];
+    green.secondaryColor = Colors.greenAccent[100];
+    green.thirdColor = Colors.transparent;
     colors.add(green);
 
     ColorTheme purple = ColorTheme();
     purple.name = 'purple';
     purple.primaryColor = Colors.purple;
-    purple.secondaryColor = Colors.purpleAccent[300];
-    purple.thirdColor = Colors.purpleAccent[50];
+    purple.secondaryColor = Colors.purpleAccent[100];
+    purple.thirdColor = Colors.transparent;
     colors.add(purple);
 
     ColorTheme blue = ColorTheme();
     blue.name = 'blue';
     blue.primaryColor = Colors.blue;
-    blue.secondaryColor = Colors.blueAccent[300];
-    blue.thirdColor = Colors.blueAccent[50];
+    blue.secondaryColor = Colors.blue[100];
+    blue.thirdColor = Colors.transparent;
     colors.add(blue);
 
     ColorTheme yellow = ColorTheme();
     yellow.name = 'yellow';
     yellow.primaryColor = Colors.yellow;
-    yellow.secondaryColor = Colors.yellowAccent[300];
-    yellow.thirdColor = Colors.yellowAccent[50];
+    yellow.secondaryColor = Colors.yellowAccent[100];
+    yellow.thirdColor = Colors.transparent;
     colors.add(yellow);
 
     ColorTheme orange = ColorTheme();
     orange.name = 'orange';
     orange.primaryColor = Colors.orange;
-    orange.secondaryColor = Colors.orangeAccent[300];
-    orange.thirdColor = Colors.orangeAccent[50];
+    orange.secondaryColor = Colors.orangeAccent[100];
+    orange.thirdColor = Colors.transparent;
     colors.add(orange);
 
     return colors;
