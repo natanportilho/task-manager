@@ -13,9 +13,7 @@ class TodoProvider extends ChangeNotifier {
 
   Future toggleDoneFlag(Todo todo) async {
     await this._databaseProvider.toggleDoneFlag(todo);
-    List<Todo> result = await this._databaseProvider.getTodoById(todo.id);
-    this.todo = result[0];
-    notifyListeners();
+    _notifyTodo(todo.id);
   }
 
   Future<Todo> getTodoById(int id) async {
@@ -27,15 +25,17 @@ class TodoProvider extends ChangeNotifier {
     _databaseProvider.removeTodo(id);
   }
 
-  updateTodoDescription(int id, String description) async {
-    await _databaseProvider.updateTodoDescription(id, description);
-    List<Todo> result = await this._databaseProvider.getTodoById(id);
-    this.todo = result[0];
-    notifyListeners();
+  updateTodoDescription(int todoId, String description) async {
+    await _databaseProvider.updateTodoDescription(todoId, description);
+    _notifyTodo(todoId);
   }
 
   updateTodoCategory(int todoId, String categoryId) async {
     await this._databaseProvider.updateTodoCategory(todoId, categoryId);
+    _notifyTodo(todoId);
+  }
+
+  void _notifyTodo(int todoId) async {
     List<Todo> result = await this._databaseProvider.getTodoById(todoId);
     this.todo = result[0];
     notifyListeners();
