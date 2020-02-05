@@ -32,7 +32,7 @@ class TodoProvider extends ChangeNotifier {
   }
 
   updateTodoCategory(int todoId, String categoryId) async {
-    await _databaseProvider.updateTodoCategory(todoId, categoryId);
+    await this._databaseProvider.updateTodoCategory(todoId, categoryId);
     List<Todo> result = await this._databaseProvider.getTodoById(todoId);
     this.todo = result[0];
     notifyListeners();
