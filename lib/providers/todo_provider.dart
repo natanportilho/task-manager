@@ -27,8 +27,11 @@ class TodoProvider extends ChangeNotifier {
     _databaseProvider.removeTodo(id);
   }
 
-  updateTodoDescription(int id, String description) {
-    _databaseProvider.updateTodoDescription(id, description);
+  updateTodoDescription(int id, String description) async {
+    await _databaseProvider.updateTodoDescription(id, description);
+    List<Todo> result = await this._databaseProvider.getTodoById(id);
+    this.todo = result[0];
+    notifyListeners();
   }
 
   updateTodoCategory(int todoId, String categoryId) async {
