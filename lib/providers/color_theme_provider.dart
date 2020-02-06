@@ -5,7 +5,24 @@ import 'package:task_manager/persistence/color_theme.dart';
 class ColorThemeProvider extends ChangeNotifier {
   ColorTheme color;
 
-// TODO: Should save theme as preferences for app
+  Future init() async {
+    final prefs = await SharedPreferences.getInstance();
+    String colorName = prefs.getString('color');
+
+    List<ColorTheme> colors = ColorTheme().createColorsList();
+    ColorTheme colorTheme = ColorTheme();
+
+    colors.forEach((c) => {
+          if (c.name == colorName)
+            {
+              colorTheme = c,
+            }
+        });
+
+    this.color = colorTheme;
+    notifyListeners();
+  }
+
   Future setColor(ColorTheme color) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('color', color.name);

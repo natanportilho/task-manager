@@ -24,6 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     List<Todo> entries = <Todo>[];
     colorThemeProvider = Provider.of<ColorThemeProvider>(context);
+    colorThemeProvider.init();
     databaseProvider = Provider.of<MyDatabase>(context);
     todoProvider = Provider.of<TodoProvider>(context);
     todoProvider.injectDatabaseProvider(databaseProvider);
