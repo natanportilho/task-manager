@@ -40,17 +40,16 @@ class _TodoPageState extends State<TodoPage> {
     return new FutureBuilder(
       future: _updateCategory(categoryProvider),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        switch (snapshot.connectionState) {
-          default:
-            if (snapshot.hasError)
-              return new Text('Error: ${snapshot.error}');
-            else
-              return Scaffold(
-                appBar: buildAppBar(),
-                body: SingleChildScrollView(
-                    child: _buildTodoInfoSection(todoProvider, context)),
-              );
+        if (snapshot.hasData) {
+          return Scaffold(
+            appBar: buildAppBar(),
+            body: SingleChildScrollView(
+                child: _buildTodoInfoSection(todoProvider, context)),
+          );
+        } else if (snapshot.hasError) {
+          return new Text('Error: ${snapshot.error}');
         }
+        return CircularProgressIndicator();
       },
     );
   }
