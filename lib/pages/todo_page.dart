@@ -88,7 +88,9 @@ class _TodoPageState extends State<TodoPage> {
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: colorThemeProvider.color == null ? Colors.green : colorThemeProvider.color.primaryColor,
+      backgroundColor: colorThemeProvider.color == null
+          ? Colors.green
+          : colorThemeProvider.color.primaryColor,
       title: Text(todo.name),
     );
   }
@@ -156,19 +158,31 @@ class _TodoPageState extends State<TodoPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        child: CircleAvatar(
-          backgroundImage: NetworkImage(imgUrl),
-          radius: 50,
-        ),
+        child: _getCategoryImage(imgUrl),
         onTap: () => {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    SelectCategoryPage(todo.id),
+                builder: (context) => SelectCategoryPage(todo.id),
               ))
         },
       ),
     );
+  }
+
+  CircleAvatar _getCategoryImage(String imageUrl) {
+    print('image ' + imageUrl);
+    if (imageUrl == '') {
+      return CircleAvatar(
+        backgroundColor: Colors.black26,
+        child: Text('Loading'),
+        radius: 50,
+      );
+    } else {
+      return CircleAvatar(
+        backgroundImage: NetworkImage(imageUrl),
+        radius: 50,
+      );
+    }
   }
 }
