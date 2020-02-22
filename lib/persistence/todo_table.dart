@@ -28,10 +28,12 @@ class MyDatabase extends _$MyDatabase {
 
   Stream<List<Todo>> get allTodoEntries => select(todos).watch();
 
-  Future toggleDoneFlag(Todo todo) {
-    return (update(todos)..where((t) => t.id.equals(todo.id))).write(
-      TodosCompanion(
-        done: todo.done ? Value(false) : Value(true),
+  Future toggleDoneFlag(Todo todo) async {
+    return await this.transaction(
+      () => (update(todos)..where((t) => t.id.equals(todo.id))).write(
+        TodosCompanion(
+          done: todo.done ? Value(false) : Value(true),
+        ),
       ),
     );
   }
@@ -47,32 +49,39 @@ class MyDatabase extends _$MyDatabase {
         .get();
   }
 
-  Future updateTodoDescription(int id, String description) {
-    return (update(todos)..where((t) => t.id.equals(id))).write(
-      TodosCompanion(
-        description: Value(description),
-      ),
-    );
+  Future updateTodoDescription(int id, String description) async {
+    return await this
+        .transaction(() => (update(todos)..where((t) => t.id.equals(id))).write(
+              TodosCompanion(
+                description: Value(description),
+              ),
+            ));
   }
 
-  Future addTodo(Todo todo) => into(todos).insert(todo);
-
-  Future removeTodo(int id) =>
-      (delete(todos)..where((t) => t.id.equals(id))).go();
-
-  void removeAll() => delete(todos);
-
-  Future addCategory(Category category) => into(categories).insert(category);
-
-  Future<List<Category>> getCategoryById(String id) {
-    return (select(categories)..where((c) => c.id.equals(id))).get();
+  Future addTodo(Todo todo) async {
+    await this.transaction(() => into(todos).insert(todo));
   }
 
-  Future<List<Todo>> getTodoById(int id) {
-    return (select(todos)..where((t) => t.id.equals(id))).get();
+  Future removeTodo(int id) async {
+    await this
+        .transaction(() => (delete(todos)..where((t) => t.id.equals(id))).go());
   }
 
-  Future insertInitialCategories() {
+  void removeAll() async => delete(todos);
+
+  Future addCategory(Category category) async {
+    return await this.transaction(() => into(categories).insert(category));
+  }
+
+  Future<List<Category>> getCategoryById(String id) async {
+    return await (select(categories)..where((c) => c.id.equals(id))).get();
+  }
+
+  Future<List<Todo>> getTodoById(int id) async {
+    return await (select(todos)..where((t) => t.id.equals(id))).get();
+  }
+
+  Future insertInitialCategories() async {
     Category personal = Category(
         id: 'Personal',
         name: 'Personal',
@@ -89,15 +98,17 @@ class MyDatabase extends _$MyDatabase {
         imageUrl:
             'https://images.unsplash.com/photo-1537202108838-e7072bad1927?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=685&q=80');
 
-    into(categories).insert(personal);
-    into(categories).insert(work);
-    into(categories).insert(study);
+    await into(categories).insert(personal);
+    await into(categories).insert(work);
+    await into(categories).insert(study);
   }
 
-  Future updateTodoCategory(todoId, categoryId) {
-    return (update(todos)..where((t) => t.id.equals(todoId))).write(
-      TodosCompanion(
-        category: Value(categoryId),
+  Future updateTodoCategory(todoId, categoryId) async {
+    return await this.transaction(
+      () => (update(todos)..where((t) => t.id.equals(todoId))).write(
+        TodosCompanion(
+          category: Value(categoryId),
+        ),
       ),
     );
   }
