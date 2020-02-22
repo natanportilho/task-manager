@@ -24,7 +24,6 @@ class _TodoPageState extends State<TodoPage> {
   CategoryProvider categoryProvider;
   ColorThemeProvider colorThemeProvider;
 
-
   @override
   Widget build(BuildContext context) {
     colorThemeProvider = Provider.of<ColorThemeProvider>(context);
@@ -49,7 +48,23 @@ class _TodoPageState extends State<TodoPage> {
         } else if (snapshot.hasError) {
           return new Text('Error: ${snapshot.error}');
         }
-        return CircularProgressIndicator();
+        return Scaffold(
+          appBar: buildAppBar(),
+          body: Stack(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 100.0),
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
       },
     );
   }
