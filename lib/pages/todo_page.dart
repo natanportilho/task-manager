@@ -186,7 +186,6 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   CircleAvatar _getCategoryImage(String imageUrl) {
-    print('image ' + imageUrl);
     if (imageUrl == '') {
       return CircleAvatar(
         backgroundColor: Colors.black26,
