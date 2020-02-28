@@ -17,7 +17,6 @@ class TodoPage extends StatefulWidget {
 }
 
 class _TodoPageState extends State<TodoPage> {
-  final _textDescriptionController = TextEditingController();
   _TodoPageState(this.todo);
   Todo todo;
   TodoProvider todoProvider;
@@ -128,28 +127,18 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   Card buildDescriptionText() {
-    _textDescriptionController.text = todo.description;
-
     return Card(
         margin: EdgeInsets.all(20.0),
         child: Padding(
           padding: EdgeInsets.all(8.0),
-          child: TextField(
+          child: TextFormField(
+            initialValue: todo.description,
             textInputAction: TextInputAction.done,
-            onEditingComplete: () {
-              todoProvider.updateTodoDescription(
-                  todo.id, _textDescriptionController.text);
-              FocusScope.of(context).requestFocus(new FocusNode());
+            onChanged: (text) {
+              todoProvider.updateTodoDescription(todo.id, text);
             },
-            controller: _textDescriptionController,
-            maxLines: 8,
             decoration:
                 InputDecoration.collapsed(hintText: "Enter the description"),
-            style: GoogleFonts.ibarraRealNova(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              textStyle: TextStyle(letterSpacing: .5),
-            ),
           ),
         ));
   }
