@@ -182,17 +182,24 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   CircleAvatar _getCategoryImage(String imageUrl) {
-    if (imageUrl == '') {
-      return CircleAvatar(
-        backgroundColor: Colors.black26,
-        child: Text('Loading'),
-        radius: 50,
-      );
-    } else {
-      return CircleAvatar(
-        backgroundImage: NetworkImage(imageUrl),
-        radius: 50,
-      );
-    }
+    if (imageUrl == '')
+      return _buildPlaceholderCategoryImage();
+    else
+      return _buildCategoryImage(imageUrl);
+  }
+
+  CircleAvatar _buildCategoryImage(String imageUrl) {
+    return CircleAvatar(
+      backgroundImage: NetworkImage(imageUrl),
+      radius: 50,
+    );
+  }
+
+  CircleAvatar _buildPlaceholderCategoryImage() {
+    return CircleAvatar(
+      backgroundColor: Colors.black26,
+      child: Text('Loading'),
+      radius: 50,
+    );
   }
 }
