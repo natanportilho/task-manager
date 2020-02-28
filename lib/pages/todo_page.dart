@@ -171,14 +171,18 @@ class _TodoPageState extends State<TodoPage> {
       child: GestureDetector(
         child: _getCategoryImage(imgUrl),
         onTap: () => {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SelectCategoryPage(todo.id),
-              ))
+          _goToSelectCategoryPage(todo)
         },
       ),
     );
+  }
+
+  Future _goToSelectCategoryPage(Todo todo) {
+    return Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SelectCategoryPage(todo.id),
+            ));
   }
 
   CircleAvatar _getCategoryImage(String imageUrl) {

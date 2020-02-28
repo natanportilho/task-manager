@@ -24,29 +24,37 @@ class CreateCategoryPage extends StatelessWidget {
       body: Material(
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: GridView.count(
-              crossAxisCount: 4,
-              children: List.generate(urlImages.length, (index) {
-                return Center(
-                  child: GestureDetector(
-                    onTap: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                CreateCategorySecondStepPage(urlImages[index]),
-                          ))
-                    },
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(urlImages[index]),
-                      maxRadius: 40,
-                    ),
-                  ),
-                );
-              }),
-            )),
+            child: _buildCategoryGridView(urlImages, context)),
       ),
     ));
+  }
+
+  GridView _buildCategoryGridView(List<String> urlImages, BuildContext context) {
+    return GridView.count(
+            crossAxisCount: 4,
+            children: List.generate(urlImages.length, (index) {
+              return Center(
+                child: GestureDetector(
+                  onTap: () => {
+                    _goToCreateCategorySecondStepPage(context, urlImages, index)
+                  },
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(urlImages[index]),
+                    maxRadius: 40,
+                  ),
+                ),
+              );
+            }),
+          );
+  }
+
+  Future _goToCreateCategorySecondStepPage(BuildContext context, List<String> urlImages, int index) {
+    return Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              CreateCategorySecondStepPage(urlImages[index]),
+                        ));
   }
 
   List<String> _createImagesList() {
