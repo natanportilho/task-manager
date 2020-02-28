@@ -25,16 +25,7 @@ class _TodoPageState extends State<TodoPage> {
 
   @override
   Widget build(BuildContext context) {
-    colorThemeProvider = Provider.of<ColorThemeProvider>(context);
-    MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
-    todoProvider = Provider.of<TodoProvider>(context);
-    categoryProvider = Provider.of<CategoryProvider>(context);
-    categoryProvider.injectDatabaseProvider(databaseProvider);
-
-    todoProvider.injectDatabaseProvider(databaseProvider);
-    todo = (todoProvider.todo != null && todoProvider.todo.id == todo.id)
-        ? todoProvider.todo
-        : todo;
+    initProviders(context);
     return new FutureBuilder(
       future: _updateCategory(categoryProvider),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -49,23 +40,39 @@ class _TodoPageState extends State<TodoPage> {
         }
         return Scaffold(
           appBar: buildAppBar(),
-          body: Stack(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 100.0),
-                    child: Center(child: CircularProgressIndicator()),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          body: _buildSpinnerScreen(),
         );
       },
     );
+  }
+
+  _buildSpinnerScreen() {
+    return Stack(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 100.0),
+              child: Center(child: CircularProgressIndicator()),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void initProviders(BuildContext context) {
+    colorThemeProvider = Provider.of<ColorThemeProvider>(context);
+    MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
+    todoProvider = Provider.of<TodoProvider>(context);
+    categoryProvider = Provider.of<CategoryProvider>(context);
+    categoryProvider.injectDatabaseProvider(databaseProvider);
+    todoProvider.injectDatabaseProvider(databaseProvider);
+    todo = (todoProvider.todo != null && todoProvider.todo.id == todo.id)
+        ? todoProvider.todo
+        : todo;
   }
 
   Future _updateCategory(CategoryProvider categoryProvider) async {
