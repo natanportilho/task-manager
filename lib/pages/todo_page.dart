@@ -55,7 +55,11 @@ class _TodoPageState extends State<TodoPage> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(vertical: 100.0),
-              child: Center(child: CircularProgressIndicator(backgroundColor: Colors.green)),
+              child: Center(
+                  child: CircularProgressIndicator(
+                      backgroundColor: colorThemeProvider.color.primaryColor,
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          colorThemeProvider.color.secondaryColor))),
             ),
           ],
         ),
@@ -170,19 +174,17 @@ class _TodoPageState extends State<TodoPage> {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         child: _getCategoryImage(imgUrl),
-        onTap: () => {
-          _goToSelectCategoryPage(todo)
-        },
+        onTap: () => {_goToSelectCategoryPage(todo)},
       ),
     );
   }
 
   Future _goToSelectCategoryPage(Todo todo) {
     return Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SelectCategoryPage(todo.id),
-            ));
+        context,
+        MaterialPageRoute(
+          builder: (context) => SelectCategoryPage(todo.id),
+        ));
   }
 
   CircleAvatar _getCategoryImage(String imageUrl) {
