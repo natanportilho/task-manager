@@ -55,7 +55,7 @@ class _TodoPageState extends State<TodoPage> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(vertical: 100.0),
-              child: Center(child: CircularProgressIndicator()),
+              child: Center(child: CircularProgressIndicator(backgroundColor: Colors.green)),
             ),
           ],
         ),
