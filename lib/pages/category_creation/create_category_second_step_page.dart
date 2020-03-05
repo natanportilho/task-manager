@@ -13,7 +13,8 @@ class CreateCategorySecondStepPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorThemeProvider colorThemeProvider = Provider.of<ColorThemeProvider>(context);
+    ColorThemeProvider colorThemeProvider =
+        Provider.of<ColorThemeProvider>(context);
 
     return SafeArea(
         child: Scaffold(
@@ -30,7 +31,7 @@ class CreateCategorySecondStepPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 CircleAvatar(
-                  backgroundImage: NetworkImage(this.imgUrl),
+                  backgroundImage: AssetImage(this.imgUrl),
                   radius: 80,
                 ),
                 _createTodoForm(context)

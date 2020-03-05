@@ -29,61 +29,49 @@ class CreateCategoryPage extends StatelessWidget {
     ));
   }
 
-  GridView _buildCategoryGridView(List<String> urlImages, BuildContext context) {
+  GridView _buildCategoryGridView(
+      List<String> urlImages, BuildContext context) {
     return GridView.count(
-            crossAxisCount: 4,
-            children: List.generate(urlImages.length, (index) {
-              return Center(
-                child: GestureDetector(
-                  onTap: () => {
-                    _goToCreateCategorySecondStepPage(context, urlImages, index)
-                  },
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(urlImages[index]),
-                    maxRadius: 40,
-                  ),
-                ),
-              );
-            }),
-          );
+      crossAxisCount: 4,
+      children: List.generate(urlImages.length, (index) {
+        return Center(
+          child: GestureDetector(
+            onTap: () =>
+                {_goToCreateCategorySecondStepPage(context, urlImages, index)},
+            child: CircleAvatar(
+              // backgroundImage: AssetImage(urlImages[index]),
+              child: Image.asset('source/images/beer.jpg'),
+              maxRadius: 40,
+            ),
+          ),
+        );
+      }),
+    );
   }
 
-  Future _goToCreateCategorySecondStepPage(BuildContext context, List<String> urlImages, int index) {
+  Future _goToCreateCategorySecondStepPage(
+      BuildContext context, List<String> urlImages, int index) {
     return Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              CreateCategorySecondStepPage(urlImages[index]),
-                        ));
+        context,
+        MaterialPageRoute(
+          builder: (context) => CreateCategorySecondStepPage(urlImages[index]),
+        ));
   }
 
   List<String> _createImagesList() {
     final List<String> urlImages = <String>[];
-    urlImages.add(
-        'https://images.unsplash.com/photo-1521412644187-c49fa049e84d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
-    urlImages.add(
-        'https://images.unsplash.com/photo-1553374280-11356158085c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
-    urlImages.add(
-        'https://images.unsplash.com/photo-1566579090262-51cde5ebe92e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
-    urlImages.add(
-        'https://images.unsplash.com/photo-1571008887538-b36bb32f4571?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80');
-    urlImages.add(
-        'https://images.unsplash.com/photo-1494498902093-87f291949d17?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
-    urlImages.add(
-        'https://images.unsplash.com/photo-1537202108838-e7072bad1927?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=685&q=80');
-    urlImages.add(
-        'https://images.unsplash.com/photo-1462926703708-44ab9e271d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80');
-    urlImages.add(
-        'https://images.unsplash.com/photo-1494887205043-c5f291293cf6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80');
-    urlImages.add(
-        'https://images.unsplash.com/photo-1495954484750-af469f2f9be5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
-    urlImages.add(
-        'https://images.unsplash.com/photo-1531594896955-305cf81269f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
-    urlImages.add(
-        'https://images.unsplash.com/photo-1521931961826-fe48677230a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
-    urlImages.add(
-        'https://images.unsplash.com/photo-1436076863939-06870fe779c2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
-
+    urlImages.add('source/images/american_football.jpg');
+    urlImages.add('images/basktball.jpg');
+    urlImages.add('images/beach.jpg');
+    urlImages.add('source/images/beer.jpg');
+    urlImages.add('images/football.jpg');
+    urlImages.add('images/laptop.jpg');
+    urlImages.add('images/library.jpg');
+    urlImages.add('images/life_freedom.jpg');
+    urlImages.add('images/money.jpg');
+    urlImages.add('images/phone.jpg');
+    urlImages.add('/running.jpg');
+    urlImages.add('video_game.jpg');
     return urlImages;
   }
 }
