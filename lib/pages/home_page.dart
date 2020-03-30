@@ -24,29 +24,68 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     List<Todo> entries = <Todo>[];
     colorThemeProvider = Provider.of<ColorThemeProvider>(context);
-    colorThemeProvider.init();
-    databaseProvider = Provider.of<MyDatabase>(context);
+
+    return new FutureBuilder(
+      future: _initiateListeners(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return Scaffold(
+            appBar: _buildAppBar(),
+            body: Center(
+                child: StreamBuilder<List<Todo>>(
+                    stream: todoProvider.entries,
+                    initialData: entries,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return _buildListView(snapshot.data);
+                      }
+                    })),
+            floatingActionButton: _createTodoButton(context),
+          );
+        } else if (snapshot.hasError) {
+          return new Text('Error: ${snapshot.error}');
+        }
+        return Scaffold(
+          appBar: _buildAppBar(),
+          body: _buildSpinnerScreen(),
+        );
+      },
+    );
+  }
+
+  _initiateListeners() async {
+    databaseProvider = Provider.of<MyDatabase>(context, listen: false);
     todoProvider = Provider.of<TodoProvider>(context);
     todoProvider.injectDatabaseProvider(databaseProvider);
+    await colorThemeProvider.init();
+  }
 
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: Center(
-          child: StreamBuilder<List<Todo>>(
-              stream: todoProvider.entries,
-              initialData: entries,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return _buildListView(snapshot.data);
-                }
-              })),
-      floatingActionButton: _createTodoButton(context),
+  _buildSpinnerScreen() {
+    return Stack(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 100.0),
+              child: Center(
+                  child: CircularProgressIndicator(
+                      backgroundColor: colorThemeProvider.color.primaryColor,
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          colorThemeProvider.color.secondaryColor))),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: colorThemeProvider.color == null ? Colors.green : colorThemeProvider.color.primaryColor,
+      backgroundColor: colorThemeProvider.color == null
+          ? Colors.green
+          : colorThemeProvider.color.primaryColor,
       title: Text(widget.title),
       actions: <Widget>[
         IconButton(
@@ -64,8 +103,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ListView _buildListView(List<Todo> entries) {
-    Color doneColor = colorThemeProvider.color != null ? colorThemeProvider.color.secondaryColor : Colors.greenAccent[100];
-    Color notDoneColor = colorThemeProvider.color != null ? colorThemeProvider.color.thirdColor : Colors.greenAccent[50];
+    Color doneColor = colorThemeProvider.color != null
+        ? colorThemeProvider.color.secondaryColor
+        : Colors.greenAccent[100];
+    Color notDoneColor = colorThemeProvider.color != null
+        ? colorThemeProvider.color.thirdColor
+        : Colors.greenAccent[50];
 
     return ListView.separated(
         itemCount: entries.length,
@@ -82,7 +125,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   FloatingActionButton _createTodoButton(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: colorThemeProvider.color == null ? Colors.green : colorThemeProvider.color.primaryColor,
+      backgroundColor: colorThemeProvider.color == null
+          ? Colors.green
+          : colorThemeProvider.color.primaryColor,
       onPressed: () => {_goToCreateTodoPage(context)},
       tooltip: 'Create Todo',
       child: Icon(Icons.add),
