@@ -71,9 +71,13 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.symmetric(vertical: 100.0),
               child: Center(
                   child: CircularProgressIndicator(
-                      backgroundColor: colorThemeProvider.color.primaryColor,
+                      backgroundColor: colorThemeProvider.color != null
+                          ? colorThemeProvider.color.primaryColor
+                          : Colors.white,
                       valueColor: new AlwaysStoppedAnimation<Color>(
-                          colorThemeProvider.color.secondaryColor))),
+                          colorThemeProvider.color != null
+                              ? colorThemeProvider.color.secondaryColor
+                              : Colors.white))),
             ),
           ],
         ),
