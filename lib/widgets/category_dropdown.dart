@@ -62,7 +62,13 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
       categoryProvider.categories.forEach((c) => {
             categoriesNames.add(DropdownMenuItem<String>(
               value: c.name,
-              child: Text(c.name),
+              child: Text(
+                c.name,
+                style: new TextStyle(
+                  fontSize: 12.0,
+                   decoration: TextDecoration.none,
+                ),
+              ),
             )),
           });
     }
