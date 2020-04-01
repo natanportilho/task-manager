@@ -12,7 +12,6 @@ class CategoryDropdown extends StatefulWidget {
 }
 
 class _CategoryDropdownState extends State<CategoryDropdown> {
-  String dropdownValue = 'Personal';
   CategoryProvider categoryProvider;
 
   @override
