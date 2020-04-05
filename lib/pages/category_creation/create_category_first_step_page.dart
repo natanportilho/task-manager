@@ -39,6 +39,7 @@ class CreateCategoryPage extends StatelessWidget {
                     _goToCreateCategorySecondStepPage(context, urlImages, index)
                   },
                   child: CircleAvatar(
+                    backgroundColor: Colors.white,
                     backgroundImage: NetworkImage(urlImages[index]),
                     maxRadius: 40,
                   ),
