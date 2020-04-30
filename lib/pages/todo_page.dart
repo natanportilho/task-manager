@@ -25,6 +25,7 @@ class _TodoPageState extends State<TodoPage> {
 
   @override
   Widget build(BuildContext context) {
+    
     initProviders(context);
     return new FutureBuilder(
       future: _updateCategory(categoryProvider),

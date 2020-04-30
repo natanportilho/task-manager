@@ -6,6 +6,8 @@ import 'package:task_manager/pages/todo_page.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
+import 'package:task_manager/repositories/todo_repository.dart';
+import 'package:task_manager/repositories/todo_repository_interface.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -22,6 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     List<Todo> entries = <Todo>[];
     colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     colorThemeProvider.init();
