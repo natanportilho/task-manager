@@ -4,6 +4,9 @@ import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_dropdown_provider.dart';
 import 'package:task_manager/providers/category_provider.dart';
 import 'package:task_manager/providers/color_theme_provider.dart';
+import 'package:task_manager/stores/task_store.dart';
+import 'package:task_manager/models/task_model.dart';
+
 import 'package:task_manager/widgets/category_dropdown.dart';
 
 import 'category_creation/create_category_first_step_page.dart';
@@ -16,6 +19,7 @@ class CreateTodoPage extends StatefulWidget {
 }
 
 class _CreateTodoPageState extends State<CreateTodoPage> {
+  // final taskStore = TaskStore();
   final _formKey = GlobalKey<FormState>();
   String category;
   String name;
@@ -26,7 +30,8 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
     CategoryProvider categoryProvider = Provider.of<CategoryProvider>(context);
     categoryProvider.injectDatabaseProvider(databaseProvider);
-    ColorThemeProvider colorThemeProvider = Provider.of<ColorThemeProvider>(context);
+    ColorThemeProvider colorThemeProvider =
+        Provider.of<ColorThemeProvider>(context);
 
     return SafeArea(
       child: Scaffold(
@@ -46,6 +51,8 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   }
 
   Form _createTodoForm(BuildContext context) {
+    TaskStore taskStore = Provider.of<TaskStore>(context);
+
     final CategoryDropdownProvider categoryDropdownProvider =
         Provider.of<CategoryDropdownProvider>(context, listen: false);
     final MyDatabase databaseProvider =
@@ -77,17 +84,24 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             child: RaisedButton(
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  var category = categoryDropdownProvider.category;
+                  // taskStore.add(Task(
+                  //     id: 1,
+                  //     category: "whatever",
+                  //     name: name,
+                  //     description: description,
+                  //     done: false));
+                      taskStore.add(Task(id:1, category: "a", name: "a", description: "a", done:true));
+                  // var category = categoryDropdownProvider.category;
 
-                  databaseProvider.getCategoryById(category).then((result) => {
-                        category = result[0].id,
-                      });
+                  // databaseProvider.getCategoryById(category).then((result) => {
+                  //       category = result[0].id,
+                  //     });
 
-                  databaseProvider.addTodo(Todo(
-                      name: name,
-                      description: description,
-                      done: false,
-                      category: category));
+                  // databaseProvider.addTodo(Todo(
+                  //     name: name,
+                  //     description: description,
+                  //     done: false,
+                  //     category: category));
                   Navigator.pop(context);
                 }
               },
