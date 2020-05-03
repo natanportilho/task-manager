@@ -50,9 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
             initialData: taskStore.tasks,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                print( taskStore.tasks.length);
+                // print( taskStore.tasks.length);
                 return _buildListView(snapshot.data);
               }
+              return Text("not able to laod content");
             }),
       )),
       floatingActionButton: _createTodoButton(context),
