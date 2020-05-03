@@ -50,9 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: colorThemeProvider.color == null
           ? Colors.green
           : colorThemeProvider.color.primaryColor,
-      title: Observer(
-        builder: (_) => Text(taskStore.tasks.length.toString()),
-      ),
+      title: Text("Homepage"),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.color_lens),
