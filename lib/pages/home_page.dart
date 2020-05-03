@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/theme_selection_page.dart';
@@ -20,9 +19,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // final taskStore = TaskStore();
   TaskStore taskStore;
-
   MyDatabase databaseProvider;
   TodoProvider todoProvider;
   ColorThemeProvider colorThemeProvider;
@@ -30,8 +27,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     taskStore = Provider.of<TaskStore>(context);
-
-    List<Todo> entries = <Todo>[];
     colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     colorThemeProvider.init();
     databaseProvider = Provider.of<MyDatabase>(context);
@@ -82,11 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
         : Colors.greenAccent[50];
 
     return ListView.separated(
-        // itemCount: entries.length,
         itemCount: taskStore.tasks.length,
         separatorBuilder: (BuildContext context, int index) => Divider(),
         itemBuilder: (BuildContext context, int index) {
-          // var todo = entries[index];
           var task = taskStore.tasks[index];
 
           return Container(

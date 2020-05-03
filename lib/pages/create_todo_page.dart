@@ -19,7 +19,6 @@ class CreateTodoPage extends StatefulWidget {
 }
 
 class _CreateTodoPageState extends State<CreateTodoPage> {
-  // final taskStore = TaskStore();
   final _formKey = GlobalKey<FormState>();
   String category;
   String name;
