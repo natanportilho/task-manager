@@ -119,12 +119,12 @@ class _MyHomePageState extends State<MyHomePage> {
   ListTile _buildListTile(Task todo, BuildContext context) {
     return ListTile(
       title: Text(todo.name),
-      // onTap: () => {_goToTodoPage(context, todo)},
+      onTap: () => {_goToTodoPage(context, todo)},
       subtitle: Text(todo.category.toString()),
     );
   }
 
-  Future _goToTodoPage(BuildContext context, Todo todo) {
+  Future _goToTodoPage(BuildContext context, Task todo) {
     return Navigator.push(
         context,
         MaterialPageRoute(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/pages/select_category_page.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_provider.dart';
@@ -10,7 +11,7 @@ import 'package:task_manager/providers/todo_provider.dart';
 class TodoPage extends StatefulWidget {
   TodoPage(this.title, this.todo);
   final String title;
-  final Todo todo;
+  final Task todo;
 
   @override
   _TodoPageState createState() => _TodoPageState(todo);
@@ -18,7 +19,7 @@ class TodoPage extends StatefulWidget {
 
 class _TodoPageState extends State<TodoPage> {
   _TodoPageState(this.todo);
-  Todo todo;
+  Task todo;
   TodoProvider todoProvider;
   CategoryProvider categoryProvider;
   ColorThemeProvider colorThemeProvider;
@@ -126,7 +127,7 @@ class _TodoPageState extends State<TodoPage> {
     return <Widget>[
       IconButton(
         onPressed: () => {
-          todoProvider.toggleDoneFlag(todo),
+          // todoProvider.toggleDoneFlag(todo),
         },
         icon: Icon(Icons.done),
         color: todo.done ? Colors.green : Colors.indigo,
@@ -166,7 +167,7 @@ class _TodoPageState extends State<TodoPage> {
     );
   }
 
-  Padding _buildCircleAvatar(Todo todo) {
+  Padding _buildCircleAvatar(Task todo) {
     //TODO: Check this, categoryProvider.category should never be null.
     String imgUrl = categoryProvider.category != null
         ? categoryProvider.category.imageUrl
@@ -180,7 +181,7 @@ class _TodoPageState extends State<TodoPage> {
     );
   }
 
-  Future _goToSelectCategoryPage(Todo todo) {
+  Future _goToSelectCategoryPage(Task todo) {
     return Navigator.push(
         context,
         MaterialPageRoute(
