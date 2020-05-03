@@ -158,7 +158,7 @@ class _TodoPageState extends State<TodoPage> {
 
   Text _buildCategoryText() {
     return Text(
-      todo.category.toString(),
+      todo.category.name.toString(),
       style: GoogleFonts.ibarraRealNova(
         fontWeight: FontWeight.bold,
         fontSize: 18,
