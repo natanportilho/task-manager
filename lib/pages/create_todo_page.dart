@@ -90,7 +90,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
                   //     name: name,
                   //     description: description,
                   //     done: false));
-                      taskStore.add(Task(id:1, category: "a", name: "a", description: "a", done:true));
+                      taskStore.add(Task(id:1, category: category, name: name, description: description, done:false));
                   // var category = categoryDropdownProvider.category;
 
                   // databaseProvider.getCategoryById(category).then((result) => {

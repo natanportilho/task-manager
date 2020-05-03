@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/theme_selection_page.dart';
@@ -22,7 +23,6 @@ class _MyHomePageState extends State<MyHomePage> {
   // final taskStore = TaskStore();
   TaskStore taskStore;
 
-
   MyDatabase databaseProvider;
   TodoProvider todoProvider;
   ColorThemeProvider colorThemeProvider;
@@ -38,36 +38,26 @@ class _MyHomePageState extends State<MyHomePage> {
     todoProvider = Provider.of<TodoProvider>(context);
     todoProvider.injectDatabaseProvider(databaseProvider);
 
-
     return Scaffold(
-
-      appBar: _buildAppBar(),
+      appBar: _buildAppBar(context),
       body: Center(
-          // child: StreamBuilder<List<Todo>>(
           child: Observer(
-        builder: (_) => StreamBuilder<List<Task>>(
-            stream: Stream.fromIterable(taskStore.tasks.map((element) => null)),
-            initialData: taskStore.tasks,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                // print( taskStore.tasks.length);
-                return _buildListView(snapshot.data);
-              }
-              return Text("not able to laod content");
-            }),
+        builder: (_) => _buildListView(taskStore.tasks),
       )),
       floatingActionButton: _createTodoButton(context),
     );
   }
 
-  AppBar _buildAppBar() {
+  AppBar _buildAppBar(BuildContext context) {
     TaskStore taskStore = Provider.of<TaskStore>(context);
 
     return AppBar(
       backgroundColor: colorThemeProvider.color == null
           ? Colors.green
           : colorThemeProvider.color.primaryColor,
-      title: Observer(builder: (_) => Text(taskStore.tasks.length.toString()),),
+      title: Observer(
+        builder: (_) => Text(taskStore.tasks.length.toString()),
+      ),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.color_lens),
@@ -113,7 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ? Colors.green
           : colorThemeProvider.color.primaryColor,
       onPressed: () => {_goToCreateTodoPage(context)},
-
       tooltip: 'Create Todo',
       child: Icon(Icons.add),
     );
