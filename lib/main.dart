@@ -5,6 +5,8 @@ import 'package:task_manager/providers/category_dropdown_provider.dart';
 import 'package:task_manager/providers/category_provider.dart';
 import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
+import 'package:task_manager/stores/task_store.dart';
+
 
 import 'pages/home_page.dart';
 
@@ -20,7 +22,9 @@ void main() => runApp(MultiProvider(providers: [
       ChangeNotifierProvider<CategoryProvider>(
           create: (_) => CategoryProvider()),
           ChangeNotifierProvider<ColorThemeProvider>(
-          create: (_) => ColorThemeProvider())
+          create: (_) => ColorThemeProvider()),
+          Provider<TaskStore>(
+          create: (_) => TaskStore())
     ], child: MyApp()));
 
 class MyApp extends StatelessWidget {

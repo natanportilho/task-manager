@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 
@@ -20,15 +22,14 @@ class CategoryProvider extends ChangeNotifier {
   }
 
   Future updateCategory(String categoryId) async {
-    List<Category> result =
-        await this._databaseProvider.getCategoryById(categoryId);
-    this.category = result[0];
-    return result[0];
+    var completer = new Completer<String>();
+    completer.complete("a");
+    return completer.future;
   }
 
   Future<void> addCategory(Category category) async {
     await this._databaseProvider.addCategory(category);
-     categories = await _databaseProvider.getAllCategories();
-     notifyListeners();
+    categories = await _databaseProvider.getAllCategories();
+    notifyListeners();
   }
 }
