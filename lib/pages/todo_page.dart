@@ -82,7 +82,7 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   Future _updateCategory(CategoryProvider categoryProvider) async {
-    return categoryProvider.updateCategory(todo.category);
+    return categoryProvider.updateCategory(todo.category.name);
   }
 
   Column _buildTodoInfoSection(

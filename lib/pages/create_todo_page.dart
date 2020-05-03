@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager/persistence/todo_table.dart';
+// import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_dropdown_provider.dart';
 import 'package:task_manager/providers/category_provider.dart';
 import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/stores/task_store.dart';
 import 'package:task_manager/models/task_model.dart';
+import 'package:task_manager/models/category_model.dart';
 
 import 'package:task_manager/widgets/category_dropdown.dart';
 
@@ -26,9 +27,9 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
 
   @override
   Widget build(BuildContext context) {
-    MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
+    // MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
     CategoryProvider categoryProvider = Provider.of<CategoryProvider>(context);
-    categoryProvider.injectDatabaseProvider(databaseProvider);
+    // categoryProvider.injectDatabaseProvider(databaseProvider);
     ColorThemeProvider colorThemeProvider =
         Provider.of<ColorThemeProvider>(context);
 
@@ -54,8 +55,8 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
 
     final CategoryDropdownProvider categoryDropdownProvider =
         Provider.of<CategoryDropdownProvider>(context, listen: false);
-    final MyDatabase databaseProvider =
-        Provider.of<MyDatabase>(context, listen: false);
+    // final MyDatabase databaseProvider =
+    //     Provider.of<MyDatabase>(context, listen: false);
 
     return Form(
       key: _formKey,
@@ -83,24 +84,15 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             child: RaisedButton(
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  // taskStore.add(Task(
-                  //     id: 1,
-                  //     category: "whatever",
-                  //     name: name,
-                  //     description: description,
-                  //     done: false));
-                      taskStore.add(Task(id:1, category: category, name: name, description: description, done:false));
-                  // var category = categoryDropdownProvider.category;
+                  var category = Category(id: 1, name: "Personal");
 
-                  // databaseProvider.getCategoryById(category).then((result) => {
-                  //       category = result[0].id,
-                  //     });
+                  taskStore.add(Task(
+                      id: 1,
+                      category: category,
+                      name: name,
+                      description: description,
+                      done: false));
 
-                  // databaseProvider.addTodo(Todo(
-                  //     name: name,
-                  //     description: description,
-                  //     done: false,
-                  //     category: category));
                   Navigator.pop(context);
                 }
               },
