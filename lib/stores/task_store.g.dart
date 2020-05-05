@@ -39,6 +39,16 @@ mixin _$TaskStore on _TaskStore, Store {
   }
 
   @override
+  Task updateCategory(int taskId, Category category) {
+    final _$actionInfo = _$_TaskStoreActionController.startAction();
+    try {
+      return super.updateCategory(taskId, category);
+    } finally {
+      _$_TaskStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string = 'tasks: ${tasks.toString()}';
     return '{$string}';

@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:task_manager/models/category_model.dart';
 import 'package:task_manager/models/task_model.dart';
 part 'task_store.g.dart';
 
@@ -11,5 +12,16 @@ abstract class _TaskStore with Store {
   @action
   void add(Task task) {
     tasks.add(task);
+  }
+
+  @action
+  Task updateCategory(int taskId, Category category) {
+    Task task = tasks.firstWhere((t) => t.id == taskId);
+    task.category = category;
+    for (var i = 0; i < tasks.length; i++) {
+      if (tasks[i].id == taskId) {
+        tasks[i] = task;
+      }
+    }
   }
 }

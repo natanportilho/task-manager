@@ -87,11 +87,11 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             child: RaisedButton(
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  var category = Category(id: 1, name: "Personal");
+                  Category c = categoryStore.getCategoryByName(category);
 
                   taskStore.add(Task(
-                      id: 1,
-                      category: category,
+                      id: 1, // fix
+                      category: c,
                       name: name,
                       description: description,
                       done: false));
