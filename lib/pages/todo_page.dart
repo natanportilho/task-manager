@@ -7,6 +7,7 @@ import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_provider.dart';
 import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
+import 'package:task_manager/stores/task_store.dart';
 
 class TodoPage extends StatefulWidget {
   TodoPage(this.title, this.todo);
@@ -18,6 +19,7 @@ class TodoPage extends StatefulWidget {
 }
 
 class _TodoPageState extends State<TodoPage> {
+  TaskStore taskStore;
   _TodoPageState(this.todo);
   Task todo;
   TodoProvider todoProvider;
@@ -26,7 +28,7 @@ class _TodoPageState extends State<TodoPage> {
 
   @override
   Widget build(BuildContext context) {
-    
+    taskStore = Provider.of<TaskStore>(context);
     initProviders(context);
     return new FutureBuilder(
       future: _updateCategory(categoryProvider),
@@ -127,7 +129,7 @@ class _TodoPageState extends State<TodoPage> {
     return <Widget>[
       IconButton(
         onPressed: () => {
-          // todoProvider.toggleDoneFlag(todo),
+          _toggleDoneFlag(todo),
         },
         icon: Icon(Icons.done),
         color: todo.done ? Colors.green : Colors.indigo,
@@ -209,5 +211,9 @@ class _TodoPageState extends State<TodoPage> {
       child: Text('Loading'),
       radius: 50,
     );
+  }
+
+  _toggleDoneFlag(Task task) {
+    taskStore.toggleDoneFlag(task.id);
   }
 }

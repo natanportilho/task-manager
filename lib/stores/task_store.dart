@@ -15,11 +15,26 @@ abstract class _TaskStore with Store {
   }
 
   @action
-  void updateCategory(int taskId, Category category) {
-    Task task = tasks.firstWhere((t) => t.id == taskId);
+  Task updateCategory(int taskId, Category category) {
+    Task task = _getTaksById(taskId);
     task.category = category;
+    _updateTask(task);
+  }
+
+  @action
+  void toggleDoneFlag(int taskId) {
+    Task task = _getTaksById(taskId);
+    task.done = !task.done;
+    _updateTask(task);
+  }
+
+  _getTaksById(int taskId) {
+    return tasks.firstWhere((t) => t.id == taskId);
+  }
+
+  _updateTask(Task task) {
     for (var i = 0; i < tasks.length; i++) {
-      if (tasks[i].id == taskId) {
+      if (tasks[i].id == task.id) {
         tasks[i] = task;
       }
     }
