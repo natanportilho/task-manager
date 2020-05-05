@@ -136,7 +136,7 @@ class _TodoPageState extends State<TodoPage> {
       ),
       IconButton(
           onPressed: () =>
-              {todoProvider.removeTodo(todo.id), Navigator.pop(context)},
+              {taskStore.remove(todo), Navigator.pop(context)},
           icon: Icon(Icons.delete)),
     ];
   }

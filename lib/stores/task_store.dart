@@ -35,6 +35,11 @@ abstract class _TaskStore with Store {
     _updateTask(task);
   }
 
+  @action
+  void remove(Task task) {
+    tasks.remove(task);
+  }
+
   _getTaksById(int taskId) {
     return tasks.firstWhere((t) => t.id == taskId);
   }
