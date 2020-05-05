@@ -30,6 +30,8 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
 
   @override
   Widget build(BuildContext context) {
+    
+    categoryStore = Provider.of<CategoryStore>(context);
     // MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
     CategoryProvider categoryProvider = Provider.of<CategoryProvider>(context);
     // categoryProvider.injectDatabaseProvider(databaseProvider);
