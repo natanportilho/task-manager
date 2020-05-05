@@ -1,17 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-// import 'package:task_manager/persistence/todo_table.dart';
-import 'package:task_manager/providers/category_dropdown_provider.dart';
-import 'package:task_manager/providers/category_provider.dart';
 import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/stores/store_category.dart';
 import 'package:task_manager/stores/task_store.dart';
 import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/models/category_model.dart';
-
-import 'package:task_manager/widgets/category_dropdown.dart';
-
 import 'category_creation/create_category_first_step_page.dart';
 
 class CreateTodoPage extends StatefulWidget {
@@ -24,17 +20,13 @@ class CreateTodoPage extends StatefulWidget {
 class _CreateTodoPageState extends State<CreateTodoPage> {
   CategoryStore categoryStore;
   final _formKey = GlobalKey<FormState>();
-  String category;
+  String category = "Personal";
   String name;
   String description;
 
   @override
   Widget build(BuildContext context) {
-    
     categoryStore = Provider.of<CategoryStore>(context);
-    // MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
-    CategoryProvider categoryProvider = Provider.of<CategoryProvider>(context);
-    // categoryProvider.injectDatabaseProvider(databaseProvider);
     ColorThemeProvider colorThemeProvider =
         Provider.of<ColorThemeProvider>(context);
 
@@ -57,12 +49,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
 
   Form _createTodoForm(BuildContext context) {
     TaskStore taskStore = Provider.of<TaskStore>(context);
-
-    final CategoryDropdownProvider categoryDropdownProvider =
-        Provider.of<CategoryDropdownProvider>(context, listen: false);
-    // final MyDatabase databaseProvider =
-    //     Provider.of<MyDatabase>(context, listen: false);
-
     return Form(
       key: _formKey,
       child: Column(
@@ -90,14 +76,13 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   Category c = categoryStore.getCategoryByName(category);
-
+                  var rng = new Random();
                   taskStore.add(Task(
-                      id: 1, // fix
+                      id: rng.nextInt(100), // fix
                       category: c,
                       name: name,
                       description: description,
                       done: false));
-
                   Navigator.pop(context);
                 }
               },

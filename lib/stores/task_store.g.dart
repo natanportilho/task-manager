@@ -49,6 +49,36 @@ mixin _$TaskStore on _TaskStore, Store {
   }
 
   @override
+  void toggleDoneFlag(int taskId) {
+    final _$actionInfo = _$_TaskStoreActionController.startAction();
+    try {
+      return super.toggleDoneFlag(taskId);
+    } finally {
+      _$_TaskStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void updateDescription(int taskId, String description) {
+    final _$actionInfo = _$_TaskStoreActionController.startAction();
+    try {
+      return super.updateDescription(taskId, description);
+    } finally {
+      _$_TaskStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void remove(Task task) {
+    final _$actionInfo = _$_TaskStoreActionController.startAction();
+    try {
+      return super.remove(task);
+    } finally {
+      _$_TaskStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string = 'tasks: ${tasks.toString()}';
     return '{$string}';

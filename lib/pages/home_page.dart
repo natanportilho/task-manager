@@ -21,7 +21,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TaskStore taskStore;
   MyDatabase databaseProvider;
-  TodoProvider todoProvider;
   ColorThemeProvider colorThemeProvider;
 
   @override
@@ -30,8 +29,6 @@ class _MyHomePageState extends State<MyHomePage> {
     colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     colorThemeProvider.init();
     databaseProvider = Provider.of<MyDatabase>(context);
-    todoProvider = Provider.of<TodoProvider>(context);
-    todoProvider.injectDatabaseProvider(databaseProvider);
 
     return Scaffold(
       appBar: _buildAppBar(context),
@@ -83,7 +80,6 @@ class _MyHomePageState extends State<MyHomePage> {
             child: _buildListTile(task, context),
           );
         });
-    // });
   }
 
   FloatingActionButton _createTodoButton(BuildContext context) {
