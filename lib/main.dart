@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/persistence/todo_table.dart';
-import 'package:task_manager/providers/category_dropdown_provider.dart';
 import 'package:task_manager/providers/category_provider.dart';
 import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
@@ -18,8 +17,6 @@ void main() => runApp(MultiProvider(providers: [
       ChangeNotifierProxyProvider<MyDatabase, TodoProvider>(
           create: (_) => TodoProvider(),
           update: (_, myDatabase, todoProvider) => todoProvider),
-      ChangeNotifierProvider<CategoryDropdownProvider>(
-          create: (_) => CategoryDropdownProvider()),
       ChangeNotifierProvider<CategoryProvider>(
           create: (_) => CategoryProvider()),
           ChangeNotifierProvider<ColorThemeProvider>(

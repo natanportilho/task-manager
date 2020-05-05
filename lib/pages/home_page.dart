@@ -83,7 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
             child: _buildListTile(task, context),
           );
         });
-    // });
   }
 
   FloatingActionButton _createTodoButton(BuildContext context) {
