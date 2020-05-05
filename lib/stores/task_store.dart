@@ -15,7 +15,7 @@ abstract class _TaskStore with Store {
   }
 
   @action
-  Task updateCategory(int taskId, Category category) {
+  void updateCategory(int taskId, Category category) {
     Task task = tasks.firstWhere((t) => t.id == taskId);
     task.category = category;
     for (var i = 0; i < tasks.length; i++) {
