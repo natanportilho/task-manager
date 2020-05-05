@@ -44,8 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   AppBar _buildAppBar(BuildContext context) {
-    TaskStore taskStore = Provider.of<TaskStore>(context);
-
     return AppBar(
       backgroundColor: colorThemeProvider.color == null
           ? Colors.green
