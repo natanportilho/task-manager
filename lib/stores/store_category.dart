@@ -5,6 +5,12 @@ part 'store_category.g.dart';
 class CategoryStore = _CategoryStore with _$CategoryStore;
 
 abstract class _CategoryStore with Store {
+  _CategoryStore() {
+    categories.add(Category(id: 1, name: "Personal"));
+    categories.add(Category(id: 2, name: "Study"));
+    categories.add(Category(id: 3, name: "Work"));
+  }
+
   @observable
   var categories = ObservableList<Category>();
 
