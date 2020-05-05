@@ -1,10 +1,12 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager/persistence/todo_table.dart';
-import 'package:task_manager/providers/category_provider.dart';
 import 'package:task_manager/providers/color_theme_provider.dart';
+import 'package:task_manager/models/category_model.dart';
+import 'package:task_manager/stores/store_category.dart';
 
 class CreateCategorySecondStepPage extends StatelessWidget {
+  CategoryStore categoryStore;
   final _formKey = GlobalKey<FormState>();
 
   final String imgUrl;
@@ -13,7 +15,9 @@ class CreateCategorySecondStepPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorThemeProvider colorThemeProvider = Provider.of<ColorThemeProvider>(context);
+    categoryStore = Provider.of<CategoryStore>(context);
+    ColorThemeProvider colorThemeProvider =
+        Provider.of<ColorThemeProvider>(context);
 
     return SafeArea(
         child: Scaffold(
@@ -43,11 +47,6 @@ class CreateCategorySecondStepPage extends StatelessWidget {
   }
 
   Form _createTodoForm(BuildContext context) {
-    final MyDatabase databaseProvider =
-        Provider.of<MyDatabase>(context, listen: false);
-    final CategoryProvider categoryProvider =
-        Provider.of<CategoryProvider>(context, listen: false);
-    categoryProvider.injectDatabaseProvider(databaseProvider);
 
     return Form(
       key: _formKey,
@@ -58,8 +57,8 @@ class CreateCategorySecondStepPage extends StatelessWidget {
           RaisedButton(
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                categoryProvider.addCategory(
-                    Category(id: name, name: name, imageUrl: imgUrl));
+                var rng = new Random();
+                categoryStore.add(Category(id: rng.nextInt(100), name: name));
                 Navigator.pop(context);
                 Navigator.pop(context);
               }
