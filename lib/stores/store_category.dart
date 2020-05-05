@@ -18,4 +18,8 @@ abstract class _CategoryStore with Store {
   void add(Category category) {
     categories.add(category);
   }
+
+  Category getCategoryByName(String name) {
+    return categories.firstWhere((c) => c.name == name);
+  }
 }
