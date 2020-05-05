@@ -150,7 +150,7 @@ class _TodoPageState extends State<TodoPage> {
             initialValue: todo.description,
             textInputAction: TextInputAction.done,
             onChanged: (text) {
-              todoProvider.updateTodoDescription(todo.id, text);
+              taskStore.updateDescription(todo.id, text);
             },
             decoration:
                 InputDecoration.collapsed(hintText: "Enter the description"),

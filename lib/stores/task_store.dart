@@ -28,6 +28,13 @@ abstract class _TaskStore with Store {
     _updateTask(task);
   }
 
+  @action
+  void updateDescription(int taskId, String description) {
+    Task task = _getTaksById(taskId);
+    task.description = description;
+    _updateTask(task);
+  }
+
   _getTaksById(int taskId) {
     return tasks.firstWhere((t) => t.id == taskId);
   }
