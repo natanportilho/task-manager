@@ -16,9 +16,7 @@ abstract class _TaskStore with Store {
 
   @action
   Task updateCategory(int taskId, Category category) {
-    Task task = _getTaksById(taskId);
-    task.category = category;
-    _updateTask(task);
+    _updateTask(_getTaksById(taskId)..category = category);
   }
 
   @action
@@ -30,9 +28,7 @@ abstract class _TaskStore with Store {
 
   @action
   void updateDescription(int taskId, String description) {
-    Task task = _getTaksById(taskId);
-    task.description = description;
-    _updateTask(task);
+    _updateTask(_getTaksById(taskId)..description = description);
   }
 
   @action

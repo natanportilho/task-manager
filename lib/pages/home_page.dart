@@ -6,7 +6,6 @@ import 'package:task_manager/pages/theme_selection_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/color_theme_provider.dart';
-import 'package:task_manager/providers/todo_provider.dart';
 import 'package:task_manager/stores/task_store.dart';
 import 'package:task_manager/models/task_model.dart';
 
