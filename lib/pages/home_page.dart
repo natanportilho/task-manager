@@ -5,7 +5,6 @@ import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/theme_selection_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
 import 'package:task_manager/persistence/todo_table.dart';
-import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/stores/task_store.dart';
 import 'package:task_manager/models/task_model.dart';
 
@@ -20,13 +19,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TaskStore taskStore;
   MyDatabase databaseProvider;
-  ColorThemeProvider colorThemeProvider;
 
   @override
   Widget build(BuildContext context) {
     taskStore = Provider.of<TaskStore>(context);
-    colorThemeProvider = Provider.of<ColorThemeProvider>(context);
-    colorThemeProvider.init();
     databaseProvider = Provider.of<MyDatabase>(context);
 
     return Scaffold(
@@ -41,9 +37,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: colorThemeProvider.color == null
-          ? Colors.green
-          : colorThemeProvider.color.primaryColor,
       title: Text("Homepage"),
       actions: <Widget>[
         IconButton(
@@ -61,13 +54,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ListView _buildListView(List<Task> entries) {
-    Color doneColor = colorThemeProvider.color != null
-        ? colorThemeProvider.color.secondaryColor
-        : Colors.greenAccent[100];
-    Color notDoneColor = colorThemeProvider.color != null
-        ? colorThemeProvider.color.thirdColor
-        : Colors.greenAccent[50];
-
     return ListView.separated(
         itemCount: taskStore.tasks.length,
         separatorBuilder: (BuildContext context, int index) => Divider(),
@@ -75,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
           var task = taskStore.tasks[index];
 
           return Container(
-            color: task.done ? doneColor : notDoneColor,
+            color: _changeDoneColor(task, context),
             child: _buildListTile(task, context),
           );
         });
@@ -83,9 +69,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   FloatingActionButton _createTodoButton(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: colorThemeProvider.color == null
-          ? Colors.green
-          : colorThemeProvider.color.primaryColor,
       onPressed: () => {_goToCreateTodoPage(context)},
       tooltip: 'Create Todo',
       child: Icon(Icons.add),
@@ -114,5 +97,13 @@ class _MyHomePageState extends State<MyHomePage> {
         MaterialPageRoute(
           builder: (context) => TodoPage(todo.name, todo),
         ));
+  }
+
+  Color _changeDoneColor(Task task, BuildContext context) {
+    if (task.done) {
+      return Theme.of(context).accentColor;
+    } else {
+      return Colors.white;
+    }
   }
 }

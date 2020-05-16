@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/stores/store_category.dart';
 import 'package:task_manager/stores/task_store.dart';
 import 'package:task_manager/models/task_model.dart';
@@ -27,15 +26,10 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   @override
   Widget build(BuildContext context) {
     categoryStore = Provider.of<CategoryStore>(context);
-    ColorThemeProvider colorThemeProvider =
-        Provider.of<ColorThemeProvider>(context);
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: colorThemeProvider.color == null
-              ? Colors.green
-              : colorThemeProvider.color.primaryColor,
           title: Text('Create todo'),
         ),
         body: Material(
