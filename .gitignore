@@ -24,3 +24,7 @@ doc/api/
 lib/persistence/todo_table.g.dart
 lib/stores/store_category.g.dart
 lib/stores/task_store.g.dart
+
+# Others
+.flutter-plugins
+.flutter-plugins-dependencies
