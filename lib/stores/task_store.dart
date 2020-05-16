@@ -36,7 +36,7 @@ abstract class _TaskStore with Store {
     tasks.remove(task);
   }
 
-  _getTaksById(int taskId) {
+  Task _getTaksById(int taskId) {
     return tasks.firstWhere((t) => t.id == taskId);
   }
 

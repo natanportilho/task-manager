@@ -6,7 +6,6 @@ import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/pages/select_category_page.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_provider.dart';
-import 'package:task_manager/providers/todo_provider.dart';
 import 'package:task_manager/stores/task_store.dart';
 
 class TodoPage extends StatefulWidget {
@@ -22,7 +21,6 @@ class _TodoPageState extends State<TodoPage> {
   TaskStore taskStore;
   _TodoPageState(this.todo);
   Task todo;
-  TodoProvider todoProvider;
   CategoryProvider categoryProvider;
 
   @override
@@ -36,7 +34,9 @@ class _TodoPageState extends State<TodoPage> {
           return Scaffold(
             appBar: buildAppBar(),
             body: SingleChildScrollView(
-                child: _buildTodoInfoSection(todoProvider, context)),
+                child: Observer(
+                    builder: (_) =>
+                        _buildTodoInfoSection(context))),
           );
         } else if (snapshot.hasError) {
           return new Text('Error: ${snapshot.error}');
@@ -72,21 +72,16 @@ class _TodoPageState extends State<TodoPage> {
 
   void initProviders(BuildContext context) {
     MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
-    todoProvider = Provider.of<TodoProvider>(context);
     categoryProvider = Provider.of<CategoryProvider>(context);
     categoryProvider.injectDatabaseProvider(databaseProvider);
-    todoProvider.injectDatabaseProvider(databaseProvider);
-    todo = (todoProvider.todo != null && todoProvider.todo.id == todo.id)
-        ? todoProvider.todo
-        : todo;
   }
 
   Future _updateCategory(CategoryProvider categoryProvider) async {
     return categoryProvider.updateCategory(todo.category.name);
   }
 
-  Column _buildTodoInfoSection(
-      TodoProvider todoProvider, BuildContext context) {
+  Column _buildTodoInfoSection( BuildContext context) {
+
     return Column(
       children: <Widget>[
         _buildCircleAvatar(todo),
@@ -121,15 +116,13 @@ class _TodoPageState extends State<TodoPage> {
 
   List<Widget> buildTodoButtons(BuildContext context) {
     return <Widget>[
-      Observer(
-        builder: (_) => IconButton(
-          onPressed: () => {
-            print(todo.done),
-            _toggleDoneFlag(todo),
-          },
-          icon: Icon(Icons.done),
-          color: todo.done ? Colors.green : Colors.indigo,
-        ),
+      IconButton(
+        onPressed: () => {
+          print(todo.done),
+          _toggleDoneFlag(todo),
+        },
+        icon: Icon(Icons.done),
+        color: todo.done ? Colors.green : Colors.indigo,
       ),
       IconButton(
           onPressed: () => {taskStore.remove(todo), Navigator.pop(context)},
@@ -137,9 +130,6 @@ class _TodoPageState extends State<TodoPage> {
     ];
   }
 
-// Observer(
-//         builder: (_) => _buildListView(taskStore.tasks),
-//       )
   Card buildDescriptionText() {
     return Card(
         margin: EdgeInsets.all(20.0),
