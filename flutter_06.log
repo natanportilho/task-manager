@@ -1,0 +1,98 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run
+
+## exception
+
+NoSuchMethodError: NoSuchMethodError: The method 'join' was called on null.
+Receiver: null
+Tried calling: join("|")
+
+```
+#0      Object.noSuchMethod (dart:core-patch/object_patch.dart:51:5)
+#1      AnsiTerminal.promptForCharInput (package:flutter_tools/src/base/terminal.dart:286:55)
+#2      FlutterCommand._readUserInput (package:flutter_tools/src/runner/flutter_command.dart:882:52)
+#3      FlutterCommand._chooseOneOfAvailableDevices (package:flutter_tools/src/runner/flutter_command.dart:856:37)
+#4      FlutterCommand.findAllTargetDevices (package:flutter_tools/src/runner/flutter_command.dart:844:43)
+#5      _rootRunUnary (dart:async/zone.dart:1198:47)
+#6      _CustomZone.runUnary (dart:async/zone.dart:1100:19)
+#7      _FutureListener.handleValue (dart:async/future_impl.dart:143:18)
+#8      Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:696:45)
+#9      Future._propagateToListeners (dart:async/future_impl.dart:725:32)
+#10     Future._completeWithValue (dart:async/future_impl.dart:529:5)
+#11     _AsyncAwaitCompleter.complete (dart:async-patch/async_patch.dart:40:15)
+#12     _completeOnAsyncReturn (dart:async-patch/async_patch.dart:311:13)
+#13     DeviceManager.findTargetDevices (package:flutter_tools/src/device.dart)
+#14     _rootRunUnary (dart:async/zone.dart:1198:47)
+#15     _CustomZone.runUnary (dart:async/zone.dart:1100:19)
+#16     _FutureListener.handleValue (dart:async/future_impl.dart:143:18)
+#17     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:696:45)
+#18     Future._propagateToListeners (dart:async/future_impl.dart:725:32)
+#19     Future._completeWithValue (dart:async/future_impl.dart:529:5)
+#20     _AsyncAwaitCompleter.complete (dart:async-patch/async_patch.dart:40:15)
+#21     _completeOnAsyncReturn (dart:async-patch/async_patch.dart:311:13)
+#22     DeviceManager.getAllConnectedDevices (package:flutter_tools/src/device.dart)
+#23     _rootRunUnary (dart:async/zone.dart:1198:47)
+#24     _CustomZone.runUnary (dart:async/zone.dart:1100:19)
+#25     _FutureListener.handleValue (dart:async/future_impl.dart:143:18)
+#26     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:696:45)
+#27     Future._propagateToListeners (dart:async/future_impl.dart:725:32)
+#28     Future._completeWithValue (dart:async/future_impl.dart:529:5)
+#29     Future.wait.<anonymous closure> (dart:async/future.dart:409:22)
+#30     _rootRunUnary (dart:async/zone.dart:1198:47)
+#31     _CustomZone.runUnary (dart:async/zone.dart:1100:19)
+#32     _FutureListener.handleValue (dart:async/future_impl.dart:143:18)
+#33     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:696:45)
+#34     Future._propagateToListeners (dart:async/future_impl.dart:725:32)
+#35     Future._completeWithValue (dart:async/future_impl.dart:529:5)
+#36     Future._asyncCompleteWithValue.<anonymous closure> (dart:async/future_impl.dart:567:7)
+#37     _rootRun (dart:async/zone.dart:1190:13)
+#38     _CustomZone.run (dart:async/zone.dart:1093:19)
+#39     _CustomZone.runGuarded (dart:async/zone.dart:997:7)
+#40     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:1037:23)
+#41     _microtaskLoop (dart:async/schedule_microtask.dart:41:21)
+#42     _startMicrotaskLoop (dart:async/schedule_microtask.dart:50:5)
+#43     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#44     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:169:5)
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel master, 1.19.0-2.0.pre.24, on Linux, locale en_US.UTF-8)
+    • Flutter version 1.19.0-2.0.pre.24 at /home/natanportilho/Documents/Projects/flutter
+    • Framework revision 4fb99e0e8c (16 hours ago), 2020-05-13 19:29:33 -0300
+    • Engine revision ada8a0fd64
+    • Dart version 2.9.0 (build 2.9.0-8.0.dev a6d06b59ec)
+
+[!] Android toolchain - develop for Android devices (Android SDK version 29.0.2)
+    • Android SDK at /home/natanportilho/Android/Sdk
+    • Platform android-29, build-tools 29.0.2
+    • Java binary at: /home/natanportilho/Documents/Software/android-studio/jre/bin/java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b49-5587405)
+    ! Some Android licenses not accepted.  To resolve this, run: flutter doctor --android-licenses
+
+[✓] Chrome - develop for the web
+    • Chrome at google-chrome
+
+[!] Android Studio (version 3.5)
+    • Android Studio at /home/natanportilho/Documents/Software/android-studio
+    ✗ Flutter plugin not installed; this adds Flutter specific functionality.
+    ✗ Dart plugin not installed; this adds Dart specific functionality.
+    • Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b49-5587405)
+
+[✓] VS Code (version 1.45.0)
+    • VS Code at /usr/share/code
+    • Flutter extension version 3.10.1
+
+[✓] Connected device (4 available)
+    • Android SDK built for x86 • emulator-5554 • android-x86    • Android 10 (API 29) (emulator)
+    • Android SDK built for x86 • emulator-5556 • android-x86    • Android 10 (API 29) (emulator)
+    • Web Server                • web-server    • web-javascript • Flutter Tools
+    • Chrome                    • chrome        • web-javascript • Google Chrome 81.0.4044.138
+
+! Doctor found issues in 2 categories.
+```

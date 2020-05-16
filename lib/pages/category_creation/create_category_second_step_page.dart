@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/models/category_model.dart';
 import 'package:task_manager/stores/store_category.dart';
 
@@ -16,15 +15,10 @@ class CreateCategorySecondStepPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     categoryStore = Provider.of<CategoryStore>(context);
-    ColorThemeProvider colorThemeProvider =
-        Provider.of<ColorThemeProvider>(context);
 
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        backgroundColor: colorThemeProvider.color == null
-            ? Colors.green
-            : colorThemeProvider.color.primaryColor,
         title: Text('Create Category'),
       ),
       body: Material(
@@ -47,7 +41,6 @@ class CreateCategorySecondStepPage extends StatelessWidget {
   }
 
   Form _createTodoForm(BuildContext context) {
-
     return Form(
       key: _formKey,
       child: Column(

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:task_manager/providers/color_theme_provider.dart';
-
 import 'create_category_second_step_page.dart';
 
 class CreateCategoryPage extends StatelessWidget {
@@ -10,15 +7,9 @@ class CreateCategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> urlImages = _createImagesList();
-    ColorThemeProvider colorThemeProvider =
-        Provider.of<ColorThemeProvider>(context);
-
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        backgroundColor: colorThemeProvider.color == null
-            ? Colors.green
-            : colorThemeProvider.color.primaryColor,
         title: Text('Create Category'),
       ),
       body: Material(
@@ -29,33 +20,33 @@ class CreateCategoryPage extends StatelessWidget {
     ));
   }
 
-  GridView _buildCategoryGridView(List<String> urlImages, BuildContext context) {
+  GridView _buildCategoryGridView(
+      List<String> urlImages, BuildContext context) {
     return GridView.count(
-            crossAxisCount: 4,
-            children: List.generate(urlImages.length, (index) {
-              return Center(
-                child: GestureDetector(
-                  onTap: () => {
-                    _goToCreateCategorySecondStepPage(context, urlImages, index)
-                  },
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    backgroundImage: NetworkImage(urlImages[index]),
-                    maxRadius: 40,
-                  ),
-                ),
-              );
-            }),
-          );
+      crossAxisCount: 4,
+      children: List.generate(urlImages.length, (index) {
+        return Center(
+          child: GestureDetector(
+            onTap: () =>
+                {_goToCreateCategorySecondStepPage(context, urlImages, index)},
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              backgroundImage: NetworkImage(urlImages[index]),
+              maxRadius: 40,
+            ),
+          ),
+        );
+      }),
+    );
   }
 
-  Future _goToCreateCategorySecondStepPage(BuildContext context, List<String> urlImages, int index) {
+  Future _goToCreateCategorySecondStepPage(
+      BuildContext context, List<String> urlImages, int index) {
     return Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              CreateCategorySecondStepPage(urlImages[index]),
-                        ));
+        context,
+        MaterialPageRoute(
+          builder: (context) => CreateCategorySecondStepPage(urlImages[index]),
+        ));
   }
 
   List<String> _createImagesList() {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/pages/select_category_page.dart';
 import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/providers/category_provider.dart';
-import 'package:task_manager/providers/color_theme_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 import 'package:task_manager/stores/task_store.dart';
 
@@ -24,7 +24,6 @@ class _TodoPageState extends State<TodoPage> {
   Task todo;
   TodoProvider todoProvider;
   CategoryProvider categoryProvider;
-  ColorThemeProvider colorThemeProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +60,9 @@ class _TodoPageState extends State<TodoPage> {
               padding: EdgeInsets.symmetric(vertical: 100.0),
               child: Center(
                   child: CircularProgressIndicator(
-                      backgroundColor: colorThemeProvider.color.primaryColor,
+                      backgroundColor: Colors.indigo,
                       valueColor: new AlwaysStoppedAnimation<Color>(
-                          colorThemeProvider.color.secondaryColor))),
+                          Colors.indigoAccent))),
             ),
           ],
         ),
@@ -72,7 +71,6 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   void initProviders(BuildContext context) {
-    colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
     todoProvider = Provider.of<TodoProvider>(context);
     categoryProvider = Provider.of<CategoryProvider>(context);
@@ -108,7 +106,7 @@ class _TodoPageState extends State<TodoPage> {
                 child: Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: buildTodoButtons(todoProvider, context),
+                    children: buildTodoButtons(context),
                   ),
                 ))),
       ],
@@ -117,30 +115,31 @@ class _TodoPageState extends State<TodoPage> {
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: colorThemeProvider.color == null
-          ? Colors.green
-          : colorThemeProvider.color.primaryColor,
       title: Text(todo.name),
     );
   }
 
-  List<Widget> buildTodoButtons(
-      TodoProvider todoProvider, BuildContext context) {
+  List<Widget> buildTodoButtons(BuildContext context) {
     return <Widget>[
-      IconButton(
-        onPressed: () => {
-          _toggleDoneFlag(todo),
-        },
-        icon: Icon(Icons.done),
-        color: todo.done ? Colors.green : Colors.indigo,
+      Observer(
+        builder: (_) => IconButton(
+          onPressed: () => {
+            print(todo.done),
+            _toggleDoneFlag(todo),
+          },
+          icon: Icon(Icons.done),
+          color: todo.done ? Colors.green : Colors.indigo,
+        ),
       ),
       IconButton(
-          onPressed: () =>
-              {taskStore.remove(todo), Navigator.pop(context)},
+          onPressed: () => {taskStore.remove(todo), Navigator.pop(context)},
           icon: Icon(Icons.delete)),
     ];
   }
 
+// Observer(
+//         builder: (_) => _buildListView(taskStore.tasks),
+//       )
   Card buildDescriptionText() {
     return Card(
         margin: EdgeInsets.all(20.0),
