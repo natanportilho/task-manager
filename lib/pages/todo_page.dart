@@ -1,11 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/pages/select_category_page.dart';
-import 'package:task_manager/persistence/todo_table.dart';
-import 'package:task_manager/providers/category_provider.dart';
 import 'package:task_manager/stores/task_store.dart';
 
 class TodoPage extends StatefulWidget {
@@ -22,15 +22,13 @@ class _TodoPageState extends State<TodoPage> {
   _TodoPageState(this.todo);
   Task todo;
   List<Task> tasks;
-  CategoryProvider categoryProvider;
 
   @override
   Widget build(BuildContext context) {
     taskStore = Provider.of<TaskStore>(context);
-    initProviders(context);
     return Observer(
       builder: (_) => new FutureBuilder(
-        future: _updateCategory(categoryProvider),
+        future: _updateCategory(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
@@ -72,14 +70,10 @@ class _TodoPageState extends State<TodoPage> {
     );
   }
 
-  void initProviders(BuildContext context) {
-    MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
-    categoryProvider = Provider.of<CategoryProvider>(context);
-    categoryProvider.injectDatabaseProvider(databaseProvider);
-  }
-
-  Future _updateCategory(CategoryProvider categoryProvider) async {
-    return categoryProvider.updateCategory(todo.category.name);
+  Future _updateCategory() async {
+    var completer = new Completer<String>();
+    completer.complete("a");
+    return completer.future;
   }
 
   Column _buildTodoInfoSection(BuildContext context) {
@@ -122,8 +116,7 @@ class _TodoPageState extends State<TodoPage> {
           _toggleDoneFlag(todo),
         },
         icon: Icon(Icons.done),
-        color:
-            todo.done ? Colors.green : Colors.indigo,
+        color: todo.done ? Colors.green : Colors.indigo,
       ),
       IconButton(
           onPressed: () => {taskStore.remove(todo), Navigator.pop(context)},
@@ -160,10 +153,7 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   Padding _buildCircleAvatar(Task todo) {
-    //TODO: Check this, categoryProvider.category should never be null.
-    String imgUrl = categoryProvider.category != null
-        ? categoryProvider.category.imageUrl
-        : '';
+    String imgUrl =  '';
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
