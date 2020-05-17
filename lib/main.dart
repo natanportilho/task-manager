@@ -30,12 +30,12 @@ class MyApp extends StatelessWidget {
     return new DynamicTheme(
         defaultBrightness: Brightness.light,
         data: (brightness) => new ThemeData(
-              primarySwatch: Colors.indigo,
+              primarySwatch: Colors.red,
               brightness: brightness,
             ),
         themedWidgetBuilder: (context, theme) {
           return new MaterialApp(
-            title: 'Flutter Demo',
+            title: 'Task Manager',
             theme: theme,
             home: MyHomePage(title: 'Home Page'),
           );
