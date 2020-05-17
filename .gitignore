@@ -21,9 +21,7 @@ doc/api/
 *.js.map
 
 # Mobx generated files
-lib/persistence/todo_table.g.dart
-lib/stores/store_category.g.dart
-lib/stores/task_store.g.dart
+*.g.dart
 
 # Others
 .flutter-plugins
