@@ -1,15 +1,24 @@
+import 'package:mobx/mobx.dart';
 import 'package:task_manager/models/category_model.dart';
+part 'task_model.g.dart';
 
-class Task {
+class Task =  _Task with _$Task;
+
+abstract class _Task with Store {
+  @observable
   int id;
+  @observable
   String name;
+  @observable
   String description;
+  @observable
   bool done;
+  @observable
   Category category;
 
-  Task({this.id, this.name, this.description, this.done, this.category});
+  _Task({this.id, this.name, this.description, this.done, this.category});
 
-  Task.fromJson(Map<String, dynamic> json) {
+  _Task.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];

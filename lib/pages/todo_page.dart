@@ -21,31 +21,33 @@ class _TodoPageState extends State<TodoPage> {
   TaskStore taskStore;
   _TodoPageState(this.todo);
   Task todo;
+  List<Task> tasks;
   CategoryProvider categoryProvider;
 
   @override
   Widget build(BuildContext context) {
     taskStore = Provider.of<TaskStore>(context);
     initProviders(context);
-    return new FutureBuilder(
-      future: _updateCategory(categoryProvider),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
+    return Observer(
+      builder: (_) => new FutureBuilder(
+        future: _updateCategory(categoryProvider),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return Scaffold(
+              appBar: buildAppBar(),
+              body: SingleChildScrollView(
+                  child:
+                      Observer(builder: (_) => _buildTodoInfoSection(context))),
+            );
+          } else if (snapshot.hasError) {
+            return new Text('Error: ${snapshot.error}');
+          }
           return Scaffold(
             appBar: buildAppBar(),
-            body: SingleChildScrollView(
-                child: Observer(
-                    builder: (_) =>
-                        _buildTodoInfoSection(context))),
+            body: _buildSpinnerScreen(),
           );
-        } else if (snapshot.hasError) {
-          return new Text('Error: ${snapshot.error}');
-        }
-        return Scaffold(
-          appBar: buildAppBar(),
-          body: _buildSpinnerScreen(),
-        );
-      },
+        },
+      ),
     );
   }
 
@@ -80,8 +82,7 @@ class _TodoPageState extends State<TodoPage> {
     return categoryProvider.updateCategory(todo.category.name);
   }
 
-  Column _buildTodoInfoSection( BuildContext context) {
-
+  Column _buildTodoInfoSection(BuildContext context) {
     return Column(
       children: <Widget>[
         _buildCircleAvatar(todo),
@@ -118,11 +119,11 @@ class _TodoPageState extends State<TodoPage> {
     return <Widget>[
       IconButton(
         onPressed: () => {
-          print(todo.done),
           _toggleDoneFlag(todo),
         },
         icon: Icon(Icons.done),
-        color: todo.done ? Colors.green : Colors.indigo,
+        color:
+            todo.done ? Colors.green : Colors.indigo,
       ),
       IconButton(
           onPressed: () => {taskStore.remove(todo), Navigator.pop(context)},

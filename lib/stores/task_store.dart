@@ -16,19 +16,19 @@ abstract class _TaskStore with Store {
 
   @action
   Task updateCategory(int taskId, Category category) {
-    _updateTask(_getTaksById(taskId)..category = category);
+    _updateTask(getTaksById(taskId)..category = category);
   }
 
   @action
   void toggleDoneFlag(int taskId) {
-    Task task = _getTaksById(taskId);
+    Task task = getTaksById(taskId);
     task.done = !task.done;
     _updateTask(task);
   }
 
   @action
   void updateDescription(int taskId, String description) {
-    _updateTask(_getTaksById(taskId)..description = description);
+    _updateTask(getTaksById(taskId)..description = description);
   }
 
   @action
@@ -36,7 +36,7 @@ abstract class _TaskStore with Store {
     tasks.remove(task);
   }
 
-  Task _getTaksById(int taskId) {
+  Task getTaksById(int taskId) {
     return tasks.firstWhere((t) => t.id == taskId);
   }
 
