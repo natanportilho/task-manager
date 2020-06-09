@@ -26,26 +26,24 @@ class _TodoPageState extends State<TodoPage> {
   @override
   Widget build(BuildContext context) {
     taskStore = Provider.of<TaskStore>(context);
-    return Observer(
-      builder: (_) => new FutureBuilder(
-        future: _updateCategory(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            return Scaffold(
-              appBar: buildAppBar(),
-              body: SingleChildScrollView(
-                  child:
-                      Observer(builder: (_) => _buildTodoInfoSection(context))),
-            );
-          } else if (snapshot.hasError) {
-            return new Text('Error: ${snapshot.error}');
-          }
+    return FutureBuilder(
+      future: _updateCategory(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
           return Scaffold(
             appBar: buildAppBar(),
-            body: _buildSpinnerScreen(),
+            body: SingleChildScrollView(
+                child:
+                    Observer(builder: (_) => _buildTodoInfoSection(context))),
           );
-        },
-      ),
+        } else if (snapshot.hasError) {
+          return new Text('Error: ${snapshot.error}');
+        }
+        return Scaffold(
+          appBar: buildAppBar(),
+          body: _buildSpinnerScreen(),
+        );
+      },
     );
   }
 
@@ -153,7 +151,7 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   Padding _buildCircleAvatar(Task todo) {
-    String imgUrl =  '';
+    String imgUrl = '';
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
