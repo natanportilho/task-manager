@@ -60,9 +60,11 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (BuildContext context, int index) {
           var task = taskStore.tasks[index];
 
-          return Container(
-            color: _changeDoneColor(task, context),
-            child: _buildListTile(task, context),
+          return Observer(
+            builder: (_) => Container(
+              color: _changeDoneColor(task, context),
+              child: _buildListTile(task, context),
+            ),
           );
         });
   }
