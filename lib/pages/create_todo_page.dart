@@ -131,6 +131,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       items: _createCategoriesList().toList(),
       onChanged: (newValue) {
         category = newValue;
+        updateCategoryName(newValue);
       },
       underline: Container(
         height: 2,
@@ -159,5 +160,11 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
           });
     }
     return categoriesNames;
+  }
+
+  void updateCategoryName(String categoryName) {
+    setState(() {
+      category = categoryName;
+    });
   }
 }
