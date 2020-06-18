@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//TODO: This page should be used to update categories
 class SelectCategoryPage extends StatelessWidget {
   final int todoId;
   String name;
@@ -26,7 +27,7 @@ class SelectCategoryPage extends StatelessWidget {
                     },
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(
-                          'categoryProvider.categories[index].imageUrl'),
+                          ''),
                       maxRadius: 40,
                     ),
                   ),
