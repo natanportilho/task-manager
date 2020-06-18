@@ -11,7 +11,7 @@ abstract class _Category with Store {
   @observable
   String imageUrl;
 
-  _Category({this.id, this.name});
+  _Category({this.id, this.name, this.imageUrl});
 
   _Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];

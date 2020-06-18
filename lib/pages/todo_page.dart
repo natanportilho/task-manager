@@ -151,11 +151,10 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   Padding _buildCircleAvatar(Task todo) {
-    String imgUrl = '';
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        child: _getCategoryImage(imgUrl),
+        child: _getCategoryImage(todo.category.imageUrl),
         onTap: () => {_goToSelectCategoryPage(todo)},
       ),
     );
