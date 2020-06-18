@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/persistence/todo_table.dart';
-import 'package:task_manager/providers/category_provider.dart';
 import 'package:task_manager/providers/todo_provider.dart';
 import 'package:task_manager/stores/store_category.dart';
 import 'package:task_manager/stores/task_store.dart';
@@ -16,8 +15,6 @@ void main() => runApp(MultiProvider(providers: [
       ChangeNotifierProxyProvider<MyDatabase, TodoProvider>(
           create: (_) => TodoProvider(),
           update: (_, myDatabase, todoProvider) => todoProvider),
-      ChangeNotifierProvider<CategoryProvider>(
-          create: (_) => CategoryProvider()),
       Provider<TaskStore>(create: (_) => TaskStore()),
       Provider<CategoryStore>(create: (_) => CategoryStore())
     ], child: MyApp()));
