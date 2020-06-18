@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/theme_selection_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
-import 'package:task_manager/persistence/todo_table.dart';
 import 'package:task_manager/stores/task_store.dart';
 import 'package:task_manager/models/task_model.dart';
 
@@ -18,12 +17,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TaskStore taskStore;
-  MyDatabase databaseProvider;
 
   @override
   Widget build(BuildContext context) {
     taskStore = Provider.of<TaskStore>(context);
-    databaseProvider = Provider.of<MyDatabase>(context);
 
     return Scaffold(
       appBar: _buildAppBar(context),
