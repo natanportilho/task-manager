@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:task_manager/persistence/todo_table.dart';
-import 'package:task_manager/providers/todo_provider.dart';
 
 class SelectCategoryPage extends StatelessWidget {
   final int todoId;
   String name;
   SelectCategoryPage(this.todoId);
-  TodoProvider todoProvider;
 
   @override
   Widget build(BuildContext context) {
-    MyDatabase databaseProvider = Provider.of<MyDatabase>(context);
-    todoProvider = Provider.of<TodoProvider>(context);
 
     return SafeArea(
         child: Scaffold(
@@ -29,9 +23,6 @@ class SelectCategoryPage extends StatelessWidget {
                 return Center(
                   child: GestureDetector(
                     onTap: () => {
-                      todoProvider.updateTodoCategory(
-                          todoId, 'categoryProvider.categories[index].id'),
-                      Navigator.pop(context)
                     },
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(
