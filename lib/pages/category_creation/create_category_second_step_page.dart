@@ -4,13 +4,21 @@ import 'package:provider/provider.dart';
 import 'package:task_manager/models/category_model.dart';
 import 'package:task_manager/stores/store_category.dart';
 
-class CreateCategorySecondStepPage extends StatelessWidget {
+class CreateCategorySecondStepPage extends StatefulWidget {
+  final String imgUrl;
+
+  CreateCategorySecondStepPage(this.imgUrl);
+
+  @override
+  _CreateCategorySecondStepPageState createState() => _CreateCategorySecondStepPageState();
+}
+
+class _CreateCategorySecondStepPageState extends State<CreateCategorySecondStepPage> {
   CategoryStore categoryStore;
+
   final _formKey = GlobalKey<FormState>();
 
-  final String imgUrl;
   String name;
-  CreateCategorySecondStepPage(this.imgUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +36,7 @@ class CreateCategorySecondStepPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 CircleAvatar(
-                  backgroundImage: NetworkImage(this.imgUrl),
+                  backgroundImage: NetworkImage(this.widget.imgUrl),
                   radius: 80,
                 ),
                 _createTodoForm(context)
