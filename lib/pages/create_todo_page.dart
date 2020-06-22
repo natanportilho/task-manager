@@ -26,24 +26,45 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   @override
   Widget build(BuildContext context) {
     categoryStore = Provider.of<CategoryStore>(context);
+    TaskStore taskStore = Provider.of<TaskStore>(context);
 
     return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        appBar: AppBar(
-          title: Text('Create todo'),
-        ),
-        body: Material(
-          child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: _createTodoForm(context)),
-        ),
+        child: Scaffold(
+      resizeToAvoidBottomPadding: false,
+      appBar: AppBar(
+        title: Text('Create todo'),
       ),
-    );
+      body: Material(
+        child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: _createTodoForm(context)),
+      ),
+      bottomNavigationBar: BottomAppBar(
+          color: Colors.transparent,
+          child: Observer(
+            builder: (_) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: RaisedButton(
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      Category c = categoryStore.getCategoryByName(category);
+                      var rng = new Random();
+                      taskStore.add(Task(
+                          id: rng.nextInt(100), // fix
+                          category: c,
+                          name: name,
+                          description: description,
+                          done: false));
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Text('Submit'),
+                )),
+          )),
+    ));
   }
 
   Form _createTodoForm(BuildContext context) {
-    TaskStore taskStore = Provider.of<TaskStore>(context);
     return Form(
       key: _formKey,
       child: Column(
@@ -64,26 +85,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             ],
           ),
           _createNameField(),
-          _createDescriptionField(),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: RaisedButton(
-              onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  Category c = categoryStore.getCategoryByName(category);
-                  var rng = new Random();
-                  taskStore.add(Task(
-                      id: rng.nextInt(100), // fix
-                      category: c,
-                      name: name,
-                      description: description,
-                      done: false));
-                  Navigator.pop(context);
-                }
-              },
-              child: Text('Submit'),
-            ),
-          ),
+          _createDescriptionField()
         ],
       ),
     );
