@@ -59,6 +59,10 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
                     }
                   },
                   child: Text('Submit'),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0.0),
+                      side: BorderSide(color: Colors.white, width: 0)),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                 )),
           )),
     ));
