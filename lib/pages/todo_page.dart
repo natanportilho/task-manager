@@ -35,6 +35,11 @@ class _TodoPageState extends State<TodoPage> {
             body: SingleChildScrollView(
                 child:
                     Observer(builder: (_) => _buildTodoInfoSection(context))),
+            bottomNavigationBar: BottomAppBar(
+              color: Colors.transparent,
+              child: Observer(builder: (_) => _buildTodoButtons(context)),
+              elevation: 0,
+            ),
           );
         } else if (snapshot.hasError) {
           return new Text('Error: ${snapshot.error}');
@@ -83,20 +88,11 @@ class _TodoPageState extends State<TodoPage> {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Center(
             child: Container(
-              height: 300,
+              height: 200,
               child: buildDescriptionText(),
             ),
           ),
         ),
-        Container(
-            child: Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: buildTodoButtons(context),
-                  ),
-                ))),
       ],
     );
   }
@@ -107,19 +103,22 @@ class _TodoPageState extends State<TodoPage> {
     );
   }
 
-  List<Widget> buildTodoButtons(BuildContext context) {
-    return <Widget>[
-      IconButton(
-        onPressed: () => {
-          _toggleDoneFlag(todo),
-        },
-        icon: Icon(Icons.done),
-        color: todo.done ? Colors.green : Colors.indigo,
-      ),
-      IconButton(
-          onPressed: () => {taskStore.remove(todo), Navigator.pop(context)},
-          icon: Icon(Icons.delete)),
-    ];
+  Row _buildTodoButtons(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        IconButton(
+          onPressed: () => {
+            _toggleDoneFlag(todo),
+          },
+          icon: Icon(Icons.done),
+          color: todo.done ? Colors.green : Colors.indigo,
+        ),
+        IconButton(
+            onPressed: () => {taskStore.remove(todo), Navigator.pop(context)},
+            icon: Icon(Icons.delete)),
+      ],
+    );
   }
 
   Card buildDescriptionText() {
