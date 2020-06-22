@@ -26,7 +26,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   @override
   Widget build(BuildContext context) {
     categoryStore = Provider.of<CategoryStore>(context);
-    TaskStore taskStore = Provider.of<TaskStore>(context);
 
     return SafeArea(
         child: Scaffold(
@@ -42,28 +41,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
           child: Observer(
-            builder: (_) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: RaisedButton(
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      Category c = categoryStore.getCategoryByName(category);
-                      var rng = new Random();
-                      taskStore.add(Task(
-                          id: rng.nextInt(100), // fix
-                          category: c,
-                          name: name,
-                          description: description,
-                          done: false));
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: Text('Submit'),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0.0),
-                      side: BorderSide(color: Colors.white, width: 0)),
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                )),
+            builder: (_) => _createSubmitButton(),
           )),
     ));
   }
@@ -173,5 +151,32 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     setState(() {
       category = categoryName;
     });
+  }
+
+  Padding _createSubmitButton() {
+    TaskStore taskStore = Provider.of<TaskStore>(context);
+
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: RaisedButton(
+          onPressed: () {
+            if (_formKey.currentState.validate()) {
+              Category c = categoryStore.getCategoryByName(category);
+              var rng = new Random();
+              taskStore.add(Task(
+                  id: rng.nextInt(100), // fix
+                  category: c,
+                  name: name,
+                  description: description,
+                  done: false));
+              Navigator.pop(context);
+            }
+          },
+          child: Text('Submit'),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0.0),
+              side: BorderSide(color: Colors.white, width: 0)),
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+        ));
   }
 }
