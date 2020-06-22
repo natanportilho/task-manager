@@ -29,6 +29,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
 
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           title: Text('Create todo'),
         ),
