@@ -53,7 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
   ListView _buildListView(List<Task> entries) {
     return ListView.separated(
         itemCount: taskStore.tasks.length,
-        separatorBuilder: (BuildContext context, int index) => Divider(),
+        separatorBuilder: (BuildContext context, int index) => Divider(
+              height: 2,
+            ),
         itemBuilder: (BuildContext context, int index) {
           var task = taskStore.tasks[index];
 
