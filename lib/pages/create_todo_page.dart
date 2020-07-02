@@ -39,10 +39,9 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             child: _createTodoForm(context)),
       ),
       bottomNavigationBar: BottomAppBar(
-          color: Colors.transparent,
-          child: Observer(
-            builder: (_) => _createSubmitButton(),
-          )),
+        color: Colors.transparent,
+        child: _createSubmitButton(),
+      ),
     ));
   }
 
