@@ -30,19 +30,31 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     return SafeArea(
         child: Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-        title: Text('Create todo'),
-      ),
-      body: Material(
-        child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: _createTodoForm(context)),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.transparent,
-        child: _createSubmitButton(),
-      ),
+      appBar: buildAppBar(),
+      body: buildBody(context),
+      bottomNavigationBar: buildBottomAppBar(),
     ));
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      title: Text('Create todo'),
+    );
+  }
+
+  Material buildBody(BuildContext context) {
+    return Material(
+      child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: _createTodoForm(context)),
+    );
+  }
+
+  BottomAppBar buildBottomAppBar() {
+    return BottomAppBar(
+      color: Colors.transparent,
+      child: _createSubmitButton(),
+    );
   }
 
   Form _createTodoForm(BuildContext context) {
