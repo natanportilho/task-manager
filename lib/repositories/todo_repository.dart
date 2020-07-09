@@ -11,7 +11,7 @@ class TodoRepository implements ITodoRepository {
     return this.firestore.collection('task').snapshots().map((query) {
       return query.documents.map((doc) {
         return TodoModel.fromDocument(doc);
-      });
+      }).toList();
     });
   }
 }
