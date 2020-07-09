@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/pages/select_category_page.dart';
+import 'package:task_manager/repositories/todo_repository.dart';
+import 'package:task_manager/repositories/todo_repository_interface.dart';
 import 'package:task_manager/stores/task_store.dart';
 
 class TodoPage extends StatefulWidget {

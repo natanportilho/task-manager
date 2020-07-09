@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager/models/todo_model.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/theme_selection_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
+import 'package:task_manager/repositories/todo_repository.dart';
+import 'package:task_manager/repositories/todo_repository_interface.dart';
 import 'package:task_manager/stores/task_store.dart';
 import 'package:task_manager/models/task_model.dart';
 
@@ -17,9 +20,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TaskStore taskStore;
+  ITodoRepository todoRepository = TodoRepository();
 
   @override
   Widget build(BuildContext context) {
+    print('getting todo from firebase');
+
+    todoRepository.getTodos().forEach((element) {
+      List<TodoModel> todos = element;
+      todos.forEach((element) {
+        print(element.description);
+      });
+    });
+    // print('hello?');
     taskStore = Provider.of<TaskStore>(context);
 
     return Scaffold(
