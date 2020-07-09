@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+//todo: Why there is a Task model and a Todo model?
 class TodoModel {
   final DocumentReference id;
   String name;
