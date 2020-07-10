@@ -25,15 +25,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // print('getting todo from firebase');
-
-    // todoRepository.getTodos().forEach((element) {
-    //   List<TodoModel> todos = element;
-    //   todos.forEach((element) {
-    //     print(element.description);
-    //   });
-    // });
-    // print('hello?');
     taskStore = Provider.of<TaskStore>(context);
 
     return Scaffold(
