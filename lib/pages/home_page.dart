@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ListView _buildListView(List<Task> entries) {
-    List<TodoModel> myTodos = homePageController.todos.data;
+    List<Task> myTodos = homePageController.todos.data;
 
     myTodos.forEach((element) {
       print(element.description);

@@ -173,9 +173,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
           onPressed: () {
             if (_formKey.currentState.validate()) {
               Category c = categoryStore.getCategoryByName(category);
-              var rng = new Random();
               taskStore.add(Task(
-                  id: rng.nextInt(100), // fix
                   category: c,
                   name: name,
                   description: description,

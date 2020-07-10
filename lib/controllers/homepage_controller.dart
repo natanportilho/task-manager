@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/models/todo_model.dart';
 import 'package:task_manager/repositories/todo_repository.dart';
 import 'package:task_manager/repositories/todo_repository_interface.dart';
@@ -10,7 +11,7 @@ abstract class _HomePageController with Store {
   ITodoRepository todoRepository = TodoRepository();
 
   @observable
-  ObservableStream<List<TodoModel>> todos;
+  ObservableStream<List<Task>> todos;
 
   _HomePageController() {
     getTodos();

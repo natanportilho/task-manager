@@ -132,7 +132,7 @@ class _TodoPageState extends State<TodoPage> {
             initialValue: todo.description,
             textInputAction: TextInputAction.done,
             onChanged: (text) {
-              taskStore.updateDescription(todo.id, text);
+              taskStore.updateDescription(todo.id.documentID, text);
             },
             decoration:
                 InputDecoration.collapsed(hintText: "Enter the description"),
@@ -165,7 +165,7 @@ class _TodoPageState extends State<TodoPage> {
     return Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SelectCategoryPage(todo.id),
+          builder: (context) => SelectCategoryPage(todo.id.documentID),
         ));
   }
 
@@ -192,6 +192,6 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   _toggleDoneFlag(Task task) {
-    taskStore.toggleDoneFlag(task.id);
+    taskStore.toggleDoneFlag(task.id.documentID);
   }
 }

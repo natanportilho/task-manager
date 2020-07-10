@@ -1,12 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobx/mobx.dart';
 import 'package:task_manager/models/category_model.dart';
 part 'task_model.g.dart';
 
-class Task =  _Task with _$Task;
+class Task = _Task with _$Task;
 
 abstract class _Task with Store {
   @observable
-  int id;
+  DocumentReference id;
   @observable
   String name;
   @observable
@@ -18,15 +19,15 @@ abstract class _Task with Store {
 
   _Task({this.id, this.name, this.description, this.done, this.category});
 
-  _Task.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    description = json['description'];
-    done = json['done'];
-    category = json['category'] != null
-        ? new Category.fromJson(json['category'])
-        : null;
-  }
+  // _Task.fromJson(Map<String, dynamic> json) {
+  //   id = json['id'];
+  //   name = json['name'];
+  //   description = json['description'];
+  //   done = json['done'];
+  //   category = json['category'] != null
+  //       ? new Category.fromJson(json['category'])
+  //       : null;
+  // }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -38,5 +39,13 @@ abstract class _Task with Store {
       data['category'] = this.category.toJson();
     }
     return data;
+  }
+
+  factory _Task.fromDocument(DocumentSnapshot doc) {
+    return Task(
+        name: doc['name'],
+        description: doc['description'],
+        done: doc['done'],
+        id: doc.reference);
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 //TODO: This page should be used to update categories
 class SelectCategoryPage extends StatelessWidget {
-  final int todoId;
+  final String todoId;
   String name;
   SelectCategoryPage(this.todoId);
 
