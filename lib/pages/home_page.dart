@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/controllers/homepage_controller.dart';
-import 'package:task_manager/models/todo_model.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/theme_selection_page.dart';
 import 'package:task_manager/pages/todo_page.dart';

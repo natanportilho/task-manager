@@ -1,6 +1,5 @@
 import 'package:mobx/mobx.dart';
 import 'package:task_manager/models/task_model.dart';
-import 'package:task_manager/models/todo_model.dart';
 import 'package:task_manager/repositories/todo_repository.dart';
 import 'package:task_manager/repositories/todo_repository_interface.dart';
 part 'homepage_controller.g.dart';
