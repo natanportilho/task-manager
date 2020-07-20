@@ -16,6 +16,7 @@ abstract class _TaskStore with Store {
   @action
   void add(Task task) {
     tasks.add(task);
+    // todo: how do I get the id generated from firebase and have it also in my taskStore?
     todoRepository.addTodo(task);
   }
 
