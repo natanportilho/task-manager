@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobx/mobx.dart';
 import 'package:task_manager/models/category_model.dart';
 import 'package:task_manager/models/task_model.dart';
@@ -14,10 +15,13 @@ abstract class _TaskStore with Store {
   var tasks = ObservableList<Task>();
 
   @action
-  void add(Task task) {
+  Future<void> add(Task task) async {
+    DocumentReference ref = await todoRepository.addTodo(task);
+    task.id = ref;
+
     tasks.add(task);
     // todo: how do I get the id generated from firebase and have it also in my taskStore?
-    todoRepository.addTodo(task);
+    //todoRepository.addTodo(task);
   }
 
   @action

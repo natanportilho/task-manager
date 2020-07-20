@@ -5,4 +5,6 @@ abstract class ITodoRepository {
   Stream<List<Task>> getTodos();
 
   Future<DocumentReference> addTodo(Task task);
+
+  void toggleTodo(Task task);
 }

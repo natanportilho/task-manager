@@ -20,4 +20,9 @@ abstract class _HomePageController with Store {
   getTodos() {
     todos = todoRepository.getTodos().asObservable();
   }
+
+  @action
+  toggleTodo(Task task) {
+    todoRepository.toggleTodo(task);
+  }
 }
