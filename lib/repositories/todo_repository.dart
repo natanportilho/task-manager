@@ -4,6 +4,8 @@ import 'package:task_manager/repositories/todo_repository_interface.dart';
 
 class TodoRepository implements ITodoRepository {
   Firestore firestore;
+  CollectionReference _userReference;
+  // FirebaseDatabase _database = FirebaseDatabase.instance;
 
   @override
   Stream<List<Task>> getTodos() {
@@ -18,6 +20,19 @@ class TodoRepository implements ITodoRepository {
   Future<DocumentReference> addTodo(Task task) {
     this.firestore = Firestore.instance;
     return this.firestore.collection('task').add(task.toJson());
+  }
+
+  Future<DocumentReference> toggleTodo(Task task) {
+    this.firestore = Firestore.instance;
+
+    task.done = !task.done;
+    if (task != null) {
+      this
+          .firestore
+          .collection("task")
+          .document(task.id.documentID)
+          .updateData({'done': task.done});
+    }
   }
 
   Task fromDocument(DocumentSnapshot doc) {
