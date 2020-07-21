@@ -19,6 +19,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TaskStore taskStore;
+
   ITodoRepository todoRepository = TodoRepository();
 
   @override
@@ -54,6 +55,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ListView _buildListView(List<Task> entries) {
+    List<Task> myTodos = taskStore.todos.data;
+
+    myTodos.forEach((element) {
+      print(element.description);
+    });
+
     return ListView.separated(
         itemCount: taskStore.tasks.length,
         separatorBuilder: (BuildContext context, int index) => Divider(

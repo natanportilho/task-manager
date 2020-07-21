@@ -19,7 +19,7 @@ abstract class _TaskStore with Store {
   ObservableStream<List<Task>> todos;
 
   _TaskStore() {
-    todos = getTodos();
+    getTodos();
   }
 
   @action
