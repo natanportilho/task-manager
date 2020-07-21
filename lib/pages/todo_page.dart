@@ -190,8 +190,6 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   _toggleDoneFlag(Task task) {
-    //taskStore.toggleDoneFlag(task.id.documentID);
-    // todo:this works, it actually updates in the firebase DB. Should not be using homePage Controller though
     taskStore.toggleTodo(task);
   }
 }
