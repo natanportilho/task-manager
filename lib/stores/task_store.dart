@@ -14,6 +14,23 @@ abstract class _TaskStore with Store {
   @observable
   var tasks = ObservableList<Task>();
 
+  @observable
+  ObservableStream<List<Task>> todos;
+
+  _TaskStore() {
+    todos = getTodos();
+  }
+
+  @action
+  getTodos() {
+    todos = todoRepository.getTodos().asObservable();
+  }
+
+  @action
+  toggleTodo(Task task) {
+    todoRepository.toggleTodo(task);
+  }
+
   @action
   Future<void> add(Task task) async {
     DocumentReference ref = await todoRepository.addTodo(task);
