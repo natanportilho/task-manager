@@ -11,7 +11,7 @@ class TaskStore = _TaskStore with _$TaskStore;
 //TODO: This class must create TaskModels in firebase (this works) and update those as well as get them (How do we update the observable list?)
 abstract class _TaskStore with Store {
   ITodoRepository todoRepository = TodoRepository();
-  //Todo: should not have todos and taks lists, should use only one
+  //Todo: remove tasks, only use todo - also maybe rename todos -> tasks
   @observable
   var tasks = ObservableList<Task>();
 
