@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager/controllers/homepage_controller.dart';
 import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/pages/select_category_page.dart';
 import 'package:task_manager/stores/task_store.dart';
@@ -23,7 +22,6 @@ class _TodoPageState extends State<TodoPage> {
   _TodoPageState(this.todo);
   Task todo;
   List<Task> tasks;
-  HomePageController homePageController = HomePageController();
 
   @override
   Widget build(BuildContext context) {
@@ -194,6 +192,6 @@ class _TodoPageState extends State<TodoPage> {
   _toggleDoneFlag(Task task) {
     //taskStore.toggleDoneFlag(task.id.documentID);
     // todo:this works, it actually updates in the firebase DB. Should not be using homePage Controller though
-    homePageController.toggleTodo(task);
+    taskStore.toggleTodo(task);
   }
 }

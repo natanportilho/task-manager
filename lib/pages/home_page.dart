@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager/controllers/homepage_controller.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/theme_selection_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
@@ -21,7 +20,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TaskStore taskStore;
   ITodoRepository todoRepository = TodoRepository();
-  HomePageController homePageController = HomePageController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +54,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ListView _buildListView(List<Task> entries) {
-    List<Task> myTodos = homePageController.todos.data;
-
-    myTodos.forEach((element) {
-      print(element.description);
-    });
-
     return ListView.separated(
         itemCount: taskStore.tasks.length,
         separatorBuilder: (BuildContext context, int index) => Divider(
