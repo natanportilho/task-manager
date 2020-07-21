@@ -62,12 +62,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     return ListView.separated(
-        itemCount: taskStore.tasks.length,
+        itemCount: myTodos.length,
         separatorBuilder: (BuildContext context, int index) => Divider(
               height: 2,
             ),
         itemBuilder: (BuildContext context, int index) {
-          var task = taskStore.tasks[index];
+          var task = myTodos[index];
 
           return Observer(
             builder: (_) => Container(
@@ -98,7 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return ListTile(
       title: Text(todo.name),
       onTap: () => {_goToTodoPage(context, todo)},
-      subtitle: Text(todo.category.name.toString()),
+      //subtitle: Text(todo.category.name.toString()),
+
+      subtitle: Text('placeholder'),
     );
   }
 
