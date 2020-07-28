@@ -57,9 +57,9 @@ class _MyHomePageState extends State<MyHomePage> {
   ListView _buildListView(List<Task> entries) {
     List<Task> myTodos = taskStore.todos.data;
 
-    myTodos.forEach((element) {
-      print(element.description);
-    });
+    if (myTodos == null) {
+      myTodos = List<Task>();
+    }
 
     return ListView.separated(
         itemCount: myTodos.length,
