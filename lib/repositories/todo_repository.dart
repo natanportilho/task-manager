@@ -35,6 +35,7 @@ class TodoRepository implements ITodoRepository {
     }
   }
 
+// Why cant i have this in the model?
   Task fromDocument(DocumentSnapshot doc) {
     return Task(
         name: doc['name'],
