@@ -82,7 +82,7 @@ class _TodoPageState extends State<TodoPage> {
   Column _buildTodoInfoSection(BuildContext context) {
     return Column(
       children: <Widget>[
-        _buildCircleAvatar(todo),
+        //_buildCircleAvatar(todo),
         _buildCategoryText(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
