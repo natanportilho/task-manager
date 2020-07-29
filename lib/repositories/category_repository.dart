@@ -7,8 +7,8 @@ class CategoryRepository implements ICategoryRepository {
   CollectionReference _userReference;
   @override
   Future<DocumentReference> addCategory(Category category) {
-    // TODO: implement addCategory
-    throw UnimplementedError();
+    this.firestore = Firestore.instance;
+    return this.firestore.collection('category').add(category.toJson());
   }
 
   @override
