@@ -30,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: _buildAppBar(context),
       body: Center(
           child: Observer(
-        builder: (_) => _buildListView(taskStore.tasks),
+        builder: (_) => _buildListView(),
       )),
       floatingActionButton: _createTodoButton(context),
     );
@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  ListView _buildListView(List<Task> entries) {
+  ListView _buildListView() {
     List<Task> myTodos = taskStore.todos.data;
 
     if (myTodos == null) {
