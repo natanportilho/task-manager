@@ -140,6 +140,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   List<DropdownMenuItem<String>> _createCategoriesList() {
     List<DropdownMenuItem<String>> categoriesNames =
         List<DropdownMenuItem<String>>();
+        //todo: fix this, we need to get categories from firebase now
     if (categoryStore.categories != null) {
       categoryStore.categories.forEach((c) => {
             categoriesNames.add(DropdownMenuItem<String>(
