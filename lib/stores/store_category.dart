@@ -27,14 +27,10 @@ abstract class _CategoryStore with Store {
   Future<void> add(Category category) async {
     DocumentReference ref = await categoryRepository.addCategory(category);
     category.id = ref;
-
-
-    // categories.add(category);
-    // todo: how do I get the id generated from firebase and have it also in my taskStore?
-    //todoRepository.addTodo(task);
   }
 
-  // Category getCategoryByName(String name) {
-  //   return categories.firstWhere((c) => c.name == name);
-  // }
+  Category getCategoryByName(String name) {
+    List<Category> myCategories = categories.data;
+    return myCategories.firstWhere((c) => c.name == name);
+  }
 }

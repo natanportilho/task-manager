@@ -115,7 +115,10 @@ class _TodoPageState extends State<TodoPage> {
           color: todo.done ? Colors.green : Colors.indigo,
         ),
         IconButton(
-            onPressed: () => {taskStore.remove(todo), Navigator.pop(context)},
+            onPressed: () => {
+                  //taskStore.remove(todo),
+                  Navigator.pop(context)
+                },
             icon: Icon(Icons.delete)),
       ],
     );
@@ -130,7 +133,7 @@ class _TodoPageState extends State<TodoPage> {
             initialValue: todo.description,
             textInputAction: TextInputAction.done,
             onChanged: (text) {
-              taskStore.updateDescription(todo.id.documentID, text);
+              //taskStore.updateDescription(todo.id.documentID, text);
             },
             decoration:
                 InputDecoration.collapsed(hintText: "Enter the description"),
@@ -140,8 +143,8 @@ class _TodoPageState extends State<TodoPage> {
 
   Text _buildCategoryText() {
     return Text(
-      "Place Holder Category",
-      //todo.category.name.toString(),
+      //"Place Holder Category",
+      todo.category.name.toString(),
       style: GoogleFonts.ibarraRealNova(
         fontWeight: FontWeight.bold,
         fontSize: 18,

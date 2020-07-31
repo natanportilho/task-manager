@@ -41,6 +41,9 @@ class TodoRepository implements ITodoRepository {
         name: doc['name'],
         description: doc['description'],
         done: doc['done'],
-        id: doc.reference);
+        id: doc.reference
+        // this gives an erros, maybe have to implement and from Document to Category type
+        //category: doc['category']
+        );
   }
 }

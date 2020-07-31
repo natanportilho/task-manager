@@ -45,6 +45,7 @@ class _CreateCategorySecondStepPageState extends State<CreateCategorySecondStepP
           ),
         ),
       ),
+      
     ));
   }
 
@@ -59,7 +60,7 @@ class _CreateCategorySecondStepPageState extends State<CreateCategorySecondStepP
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 var rng = new Random();
-                categoryStore.add(Category(id: rng.nextInt(100), name: name));
+                //categoryStore.add(Category(id: rng.nextInt(100), name: name));
                 Navigator.pop(context);
                 Navigator.pop(context);
               }
