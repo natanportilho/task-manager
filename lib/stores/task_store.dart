@@ -11,9 +11,6 @@ class TaskStore = _TaskStore with _$TaskStore;
 //TODO: This class must create TaskModels in firebase (this works) and update those as well as get them (How do we update the observable list?)
 abstract class _TaskStore with Store {
   ITodoRepository todoRepository = TodoRepository();
-  //Todo: remove tasks, only use todo - also maybe rename todos -> tasks
-  @observable
-  var tasks = ObservableList<Task>();
 
   @observable
   ObservableStream<List<Task>> todos;
@@ -36,10 +33,6 @@ abstract class _TaskStore with Store {
   Future<void> add(Task task) async {
     DocumentReference ref = await todoRepository.addTodo(task);
     task.id = ref;
-
-    tasks.add(task);
-    // todo: how do I get the id generated from firebase and have it also in my taskStore?
-    //todoRepository.addTodo(task);
   }
 
   @action
