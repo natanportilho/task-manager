@@ -1,4 +1,7 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:task_manager/models/category_model.dart';
 import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/repositories/todo_repository_interface.dart';
 
@@ -37,13 +40,21 @@ class TodoRepository implements ITodoRepository {
 
 // Why cant i have this in the model?
   Task fromDocument(DocumentSnapshot doc) {
+    //printDoc(doc['category']);
+
     return Task(
         name: doc['name'],
         description: doc['description'],
         done: doc['done'],
-        id: doc.reference
-        // this gives an erros, maybe have to implement and from Document to Category type
-        //category: doc['category']
+        id: doc.reference,
+        category: categoryFromDocument(doc['category'])
         );
   }
+
+  // Why cant i have this in the model?
+  Category categoryFromDocument(Map<String, dynamic> doc) {
+    return Category(
+        name: doc['name'], imageUrl: doc['imageUrl'], id: doc["id"]);
+  }
+
 }
