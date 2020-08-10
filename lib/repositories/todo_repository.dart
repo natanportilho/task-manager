@@ -47,6 +47,14 @@ class TodoRepository implements ITodoRepository {
     }
   }
 
+  void remove(Task task) {
+    this.firestore = Firestore.instance;
+
+    if (task != null) {
+      this.firestore.collection("task").document(task.id.documentID).delete();
+    }
+  }
+
   Task fromDocument(DocumentSnapshot doc) {
     return Task(
         name: doc['name'],

@@ -33,6 +33,10 @@ abstract class _TaskStore with Store {
     task.id = ref;
   }
 
+  remove(Task task) async {
+    todoRepository.remove(task);
+  }
+
   @action
   updateDescription(Task task, String description) {
     task.description = description;

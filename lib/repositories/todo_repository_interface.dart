@@ -9,4 +9,6 @@ abstract class ITodoRepository {
   void toggleTodo(Task task);
 
   void updateDescription(Task task);
+
+  void remove(Task task);
 }

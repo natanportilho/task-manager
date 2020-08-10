@@ -115,10 +115,7 @@ class _TodoPageState extends State<TodoPage> {
           color: todo.done ? Colors.green : Colors.indigo,
         ),
         IconButton(
-            onPressed: () => {
-                  //taskStore.remove(todo),
-                  Navigator.pop(context)
-                },
+            onPressed: () => {taskStore.remove(todo), Navigator.pop(context)},
             icon: Icon(Icons.delete)),
       ],
     );
