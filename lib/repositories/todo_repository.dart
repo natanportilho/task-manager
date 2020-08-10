@@ -25,7 +25,7 @@ class TodoRepository implements ITodoRepository {
     return this.firestore.collection('task').add(task.toJson());
   }
 
-  Future<DocumentReference> toggleTodo(Task task) {
+  void toggleTodo(Task task) {
     this.firestore = Firestore.instance;
 
     task.done = !task.done;
@@ -38,7 +38,7 @@ class TodoRepository implements ITodoRepository {
     }
   }
 
-    Future<DocumentReference> updateDescription(Task task) {
+    void updateDescription(Task task) {
     this.firestore = Firestore.instance;
 
     if (task != null) {
