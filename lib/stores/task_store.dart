@@ -47,10 +47,12 @@ abstract class _TaskStore with Store {
   //   _updateTask(task);
   // }
 
-  // @action
-  // void updateDescription(String taskId, String description) {
-  //   _updateTask(getTaksById(taskId)..description = description);
-  // }
+  @action
+  updateDescription(Task task, String description) {
+    task.description = description;
+    todoRepository.updateDescription(task);
+    //_updateTask(getTaksById(taskId)..description = description);
+  }
 
   // @action
   // void remove(Task task) {

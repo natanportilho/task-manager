@@ -7,4 +7,6 @@ abstract class ITodoRepository {
   Future<DocumentReference> addTodo(Task task);
 
   void toggleTodo(Task task);
+
+  void updateDescription(Task task);
 }

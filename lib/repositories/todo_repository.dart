@@ -38,6 +38,18 @@ class TodoRepository implements ITodoRepository {
     }
   }
 
+    Future<DocumentReference> updateDescription(Task task) {
+    this.firestore = Firestore.instance;
+
+    if (task != null) {
+      this
+          .firestore
+          .collection("task")
+          .document(task.id.documentID)
+          .updateData({'description': task.description});
+    }
+  }
+
 // Why cant i have this in the model?
   Task fromDocument(DocumentSnapshot doc) {
     //printDoc(doc['category']);
