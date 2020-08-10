@@ -8,7 +8,6 @@ part 'store_category.g.dart';
 class CategoryStore = _CategoryStore with _$CategoryStore;
 
 abstract class _CategoryStore with Store {
-  // Shoudl get categories from Firebase
   ICategoryRepository categoryRepository = CategoryRepository();
 
   @observable
