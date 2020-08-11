@@ -98,10 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return ListTile(
       title: Text(todo.name),
       onTap: () => {_goToTodoPage(context, todo)},
-      //todo: fix this
-      //subtitle: Text(todo.category.name.toString()),
-
-      subtitle: Text('placeholder'),
+      subtitle: Text(todo.category.name.toString()),
     );
   }
 
