@@ -29,9 +29,8 @@ abstract class _TaskStore with Store {
   }
 
   @action
-  Future<void> add(Task task) async {
-    DocumentReference ref = await todoRepository.addTodo(task);
-    task.id = ref;
+  Future<void> add(Task task) {
+    todoRepository.addTodo(task);
   }
 
   remove(Task task) async {
