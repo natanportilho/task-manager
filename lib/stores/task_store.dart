@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobx/mobx.dart';
+import 'package:task_manager/models/category_model.dart';
 import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/repositories/todo_repository.dart';
 import 'package:task_manager/repositories/todo_repository_interface.dart';
@@ -41,5 +42,11 @@ abstract class _TaskStore with Store {
   updateDescription(Task task, String description) {
     task.description = description;
     todoRepository.updateDescription(task);
+  }
+
+  @action
+  updateCategory(Task task, Category category) {
+    task.category = category;
+    todoRepository.updateCategory(task);
   }
 }

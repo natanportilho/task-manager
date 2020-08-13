@@ -10,5 +10,7 @@ abstract class ITodoRepository {
 
   void updateDescription(Task task);
 
+  void updateCategory(Task task);
+
   void remove(Task task);
 }

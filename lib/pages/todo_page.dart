@@ -163,7 +163,7 @@ class _TodoPageState extends State<TodoPage> {
     return Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SelectCategoryPage(todo.id.documentID),
+          builder: (context) => SelectCategoryPage(todo),
         ));
   }
 

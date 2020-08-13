@@ -47,6 +47,18 @@ class TodoRepository implements ITodoRepository {
     }
   }
 
+  void updateCategory(Task task) {
+    this.firestore = Firestore.instance;
+
+    if (task != null) {
+      this
+          .firestore
+          .collection("task")
+          .document(task.id.documentID)
+          .updateData({'category': task.category.toJson()});
+    }
+  }
+
   void remove(Task task) {
     this.firestore = Firestore.instance;
 

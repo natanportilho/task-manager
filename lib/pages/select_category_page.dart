@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/models/category_model.dart';
+import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/stores/store_category.dart';
+import 'package:task_manager/stores/task_store.dart';
 
 //TODO: This page should be used to update categories
 class SelectCategoryPage extends StatelessWidget {
   CategoryStore categoryStore;
-  final String todoId;
+  TaskStore taskStore;
+  Task task;
   String name;
-  SelectCategoryPage(this.todoId);
+  SelectCategoryPage(this.task);
 
   @override
   Widget build(BuildContext context) {
     categoryStore = Provider.of<CategoryStore>(context);
+    taskStore = Provider.of<TaskStore>(context);
 
     return SafeArea(
         child: Scaffold(
@@ -43,7 +47,8 @@ class SelectCategoryPage extends StatelessWidget {
       children: List.generate(allcategories.length, (index) {
         return Center(
           child: GestureDetector(
-            onTap: () => {},
+            onTap: () =>
+                {taskStore.updateCategory(task, allcategories[index])},
             child: CircleAvatar(
               backgroundImage: NetworkImage(allcategories[index].imageUrl),
               maxRadius: 40,
