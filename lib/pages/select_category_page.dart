@@ -27,12 +27,12 @@ class SelectCategoryPage extends StatelessWidget {
             body: Material(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Observer(builder: (_) => _buildGridView()),
+                child: Observer(builder: (_) => _buildGridView(context)),
               ),
             )));
   }
 
-  GridView _buildGridView() {
+  GridView _buildGridView(BuildContext context) {
     List<Category> allcategories = <Category>[];
 
     if (categoryStore.categories != null &&
@@ -47,8 +47,10 @@ class SelectCategoryPage extends StatelessWidget {
       children: List.generate(allcategories.length, (index) {
         return Center(
           child: GestureDetector(
-            onTap: () =>
-                {taskStore.updateCategory(task, allcategories[index])},
+            onTap: () => {
+              taskStore.updateCategory(task, allcategories[index]),
+              Navigator.pop(context),
+            },
             child: CircleAvatar(
               backgroundImage: NetworkImage(allcategories[index].imageUrl),
               maxRadius: 40,
