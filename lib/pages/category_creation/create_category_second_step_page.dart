@@ -4,16 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:task_manager/models/category_model.dart';
 import 'package:task_manager/stores/store_category.dart';
 
-class CreateCategorySecondStepPage extends StatefulWidget {
+class CreateCategorySecondStepPage extends StatelessWidget {
   final String imgUrl;
-
   CreateCategorySecondStepPage(this.imgUrl);
-
-  @override
-  _CreateCategorySecondStepPageState createState() => _CreateCategorySecondStepPageState();
-}
-
-class _CreateCategorySecondStepPageState extends State<CreateCategorySecondStepPage> {
   CategoryStore categoryStore;
 
   final _formKey = GlobalKey<FormState>();
@@ -36,7 +29,7 @@ class _CreateCategorySecondStepPageState extends State<CreateCategorySecondStepP
             child: Column(
               children: <Widget>[
                 CircleAvatar(
-                  backgroundImage: NetworkImage(this.widget.imgUrl),
+                  backgroundImage: NetworkImage(this.imgUrl),
                   radius: 80,
                 ),
                 _createTodoForm(context)
@@ -45,7 +38,6 @@ class _CreateCategorySecondStepPageState extends State<CreateCategorySecondStepP
           ),
         ),
       ),
-      
     ));
   }
 
@@ -59,8 +51,9 @@ class _CreateCategorySecondStepPageState extends State<CreateCategorySecondStepP
           RaisedButton(
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                var rng = new Random();
-                //categoryStore.add(Category(id: rng.nextInt(100), name: name));
+                Category category =
+                    Category(name: this.name, imageUrl: this.imgUrl);
+                categoryStore.add(category);
                 Navigator.pop(context);
                 Navigator.pop(context);
               }
