@@ -112,9 +112,12 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
           child: TextFormField(
             autofocus: true,
             validator: (value) {
-              // if (value.isEmpty) {
-              //   return 'Please enter a description';
-              // }
+              if (value.isEmpty) {
+                print(value);
+                return 'Please enter a description';
+              } else {
+                print(value);
+              }
               description = value;
               return null;
             },
@@ -203,7 +206,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   Future<bool> _onWillPop() async {
     TaskStore taskStore = Provider.of<TaskStore>(context, listen: false);
 
-    if (_formKey.currentState.validate()) {
+    if (description != null && !description.isEmpty) {
       Category c = categoryStore.getCategoryByName(category);
       taskStore.add(
           Task(category: c, name: name, description: description, done: false));
