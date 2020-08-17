@@ -65,10 +65,10 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Text(
-                'Category:    ',
-                style: TextStyle(fontSize: 16.0),
-              ),
+              // Text(
+              //   'Category:    ',
+              //   style: TextStyle(fontSize: 16.0),
+              // ),
               Observer(builder: (_) => _createDropDown()),
               IconButton(
                 icon: Icon(Icons.add),
@@ -77,7 +77,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
               )
             ],
           ),
-          _createNameField(),
+          //_createNameField(),
           _createDescriptionField()
         ],
       ),
@@ -101,29 +101,33 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
 
   _createDescriptionField() {
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(16.0),
       child: Container(
-        width: 400,
-        height: 400,
+        //constraints: BoxConstraints.expand(),
+        //width: 400,
+        height: 300,
+
         child: Form(
           autovalidate: true,
           child: TextFormField(
-            autofocus: false,
+            autofocus: true,
             validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter a description';
-              }
+              // if (value.isEmpty) {
+              //   return 'Please enter a description';
+              // }
               description = value;
               return null;
             },
-            maxLines: 10,
+            maxLines: 100,
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              //border: OutlineInputBorder(),
+              border: InputBorder.none,
+
               filled: true,
               fillColor: Colors.white,
-              labelText: "Description",
+              //labelText: "Description",
               labelStyle: TextStyle(fontSize: 15.0),
-              hintText: 'Description',
+              //hintText: 'Description',
             ),
           ),
         ),
@@ -197,13 +201,14 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   }
 
   Future<bool> _onWillPop() async {
-    print('lolo');
     TaskStore taskStore = Provider.of<TaskStore>(context, listen: false);
 
     if (_formKey.currentState.validate()) {
       Category c = categoryStore.getCategoryByName(category);
       taskStore.add(
           Task(category: c, name: name, description: description, done: false));
+      Navigator.pop(context);
+    } else {
       Navigator.pop(context);
     }
   }
