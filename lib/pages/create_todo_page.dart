@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -26,13 +25,16 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   Widget build(BuildContext context) {
     categoryStore = Provider.of<CategoryStore>(context);
 
-    return SafeArea(
-        child: Scaffold(
-      resizeToAvoidBottomPadding: false,
-      appBar: buildAppBar(),
-      body: buildBody(context),
-      bottomNavigationBar: buildBottomAppBar(),
-    ));
+    return new WillPopScope(
+      onWillPop: _onWillPop,
+      child: SafeArea(
+          child: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        appBar: buildAppBar(),
+        body: buildBody(context),
+        //bottomNavigationBar: buildBottomAppBar(),
+      )),
+    );
   }
 
   AppBar buildAppBar() {
@@ -49,12 +51,11 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     );
   }
 
-  BottomAppBar buildBottomAppBar() {
-    return BottomAppBar(
-      color: Colors.transparent,
-      child: _createSubmitButton(),
-    );
-  }
+  // BottomAppBar buildBottomAppBar() {
+  //   return BottomAppBar(
+  //     color: Colors.transparent,
+  //   );
+  // }
 
   Form _createTodoForm(BuildContext context) {
     return Form(
@@ -83,18 +84,50 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     );
   }
 
-  TextFormField _createDescriptionField() {
-    return TextFormField(
-      decoration: const InputDecoration(
-        hintText: 'Description',
+  // TextFormField _createDescriptionField() {
+  //   return TextFormField(
+  //     decoration: const InputDecoration(
+  //       hintText: 'Description',
+  //     ),
+  //     validator: (value) {
+  //       if (value.isEmpty) {
+  //         return 'Please enter a description'; //TODO: Description sometimes can be null
+  //       }
+  //       description = value;
+  //       return null;
+  //     },
+  //   );
+  // }
+
+  _createDescriptionField() {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Container(
+        width: 400,
+        height: 400,
+        child: Form(
+          autovalidate: true,
+          child: TextFormField(
+            autofocus: false,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter a description';
+              }
+              description = value;
+              return null;
+            },
+            maxLines: 10,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Colors.white,
+              labelText: "Description",
+              labelStyle: TextStyle(fontSize: 15.0),
+              hintText: 'Description',
+            ),
+          ),
+        ),
       ),
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Please enter a description'; //TODO: Description sometimes can be null
-        }
-        description = value;
-        return null;
-      },
     );
   }
 
@@ -163,28 +196,15 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     });
   }
 
-  Padding _createSubmitButton() {
-    TaskStore taskStore = Provider.of<TaskStore>(context);
+  Future<bool> _onWillPop() async {
+    print('lolo');
+    TaskStore taskStore = Provider.of<TaskStore>(context, listen: false);
 
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: RaisedButton(
-          onPressed: () {
-            if (_formKey.currentState.validate()) {
-              Category c = categoryStore.getCategoryByName(category);
-              taskStore.add(Task(
-                  category: c,
-                  name: name,
-                  description: description,
-                  done: false));
-              Navigator.pop(context);
-            }
-          },
-          child: Text('Submit'),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(0.0),
-              side: BorderSide(color: Colors.white, width: 0)),
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-        ));
+    if (_formKey.currentState.validate()) {
+      Category c = categoryStore.getCategoryByName(category);
+      taskStore.add(
+          Task(category: c, name: name, description: description, done: false));
+      Navigator.pop(context);
+    }
   }
 }
