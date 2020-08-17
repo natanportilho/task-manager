@@ -39,7 +39,11 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
 
   AppBar buildAppBar() {
     return AppBar(actions: <Widget>[
-      Observer(builder: (_) => _createDropDown()),
+      Observer(
+          builder: (_) => ButtonTheme(
+                child: _createDropDown(),
+                alignedDropdown: true,
+              )),
       IconButton(
         icon: Icon(
           Icons.settings,
@@ -194,13 +198,14 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
         List<DropdownMenuItem<String>>();
     categoriesNames.add(DropdownMenuItem<String>(
       value: "Add new...",
-      child: Text(
-        "Add new...",
-        style: new TextStyle(
-          fontSize: 12.0,
-          decoration: TextDecoration.none,
-        ),
-      ),
+      // child: Text(
+      //   "Add new...",
+      //   style: new TextStyle(
+      //     fontSize: 12.0,
+      //     decoration: TextDecoration.none,
+      //   ),
+      // ),
+      child: Icon(Icons.add),
     ));
     if (categoryStore.categories != null) {
       categoryStore.categories.data.forEach((c) => {
@@ -208,6 +213,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
               value: c.name,
               child: Text(
                 c.name,
+                textAlign: TextAlign.center,
                 style: new TextStyle(
                   fontSize: 12.0,
                   decoration: TextDecoration.none,
