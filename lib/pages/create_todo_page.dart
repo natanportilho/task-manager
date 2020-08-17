@@ -208,8 +208,11 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
 
     if (description != null && description.isNotEmpty) {
       Category c = categoryStore.getCategoryByName(category);
-      taskStore.add(
-          Task(category: c, name: name, description: description, done: false));
+      taskStore.add(Task(
+          category: c,
+          name: "place holder",
+          description: description,
+          done: false));
       Navigator.pop(context);
     } else {
       Navigator.pop(context);
