@@ -38,9 +38,18 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   }
 
   AppBar buildAppBar() {
-    return AppBar(
-      title: Text('Create todo'),
-    );
+    return AppBar(actions: <Widget>[
+      Observer(builder: (_) => _createDropDown()),
+      IconButton(
+        icon: Icon(
+          Icons.settings,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          // do something
+        },
+      )
+    ]);
   }
 
   Material buildBody(BuildContext context) {
@@ -63,20 +72,20 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              // Text(
-              //   'Category:    ',
-              //   style: TextStyle(fontSize: 16.0),
-              // ),
-              Observer(builder: (_) => _createDropDown()),
-              IconButton(
-                icon: Icon(Icons.add),
-                color: Colors.purpleAccent[700],
-                onPressed: () => {_goToCreateCategoryPage(context)},
-              )
-            ],
-          ),
+          // Row(
+          //   children: <Widget>[
+          //     // Text(
+          //     //   'Category:    ',
+          //     //   style: TextStyle(fontSize: 16.0),
+          //     // ),
+          //     Observer(builder: (_) => _createDropDown()),
+          //     IconButton(
+          //       icon: Icon(Icons.add),
+          //       color: Colors.purpleAccent[700],
+          //       onPressed: () => {_goToCreateCategoryPage(context)},
+          //     )
+          //   ],
+          // ),
           //_createNameField(),
           _createDescriptionField()
         ],
@@ -163,23 +172,36 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
 
   DropdownButton _createDropDown() {
     return DropdownButton<String>(
-      items: _createCategoriesList().toList(),
-      onChanged: (newValue) {
-        category = newValue;
-        updateCategoryName(newValue);
-      },
-      underline: Container(
-        height: 2,
-        color: Colors.green,
-      ),
-      icon: Icon(Icons.arrow_downward),
-      value: category != null ? category : "Personal",
-    );
+        items: _createCategoriesList().toList(),
+        onChanged: (newValue) {
+          if (newValue == "Add new...") {
+            _goToCreateCategoryPage(context);
+          } else {
+            category = newValue;
+            updateCategoryName(newValue);
+          }
+        },
+        icon: Icon(
+          Icons.arrow_drop_down,
+          color: Colors.white,
+        ),
+        value: category != null ? category : "Personal",
+        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold));
   }
 
   List<DropdownMenuItem<String>> _createCategoriesList() {
     List<DropdownMenuItem<String>> categoriesNames =
         List<DropdownMenuItem<String>>();
+    categoriesNames.add(DropdownMenuItem<String>(
+      value: "Add new...",
+      child: Text(
+        "Add new...",
+        style: new TextStyle(
+          fontSize: 12.0,
+          decoration: TextDecoration.none,
+        ),
+      ),
+    ));
     if (categoryStore.categories != null) {
       categoryStore.categories.data.forEach((c) => {
             categoriesNames.add(DropdownMenuItem<String>(
