@@ -32,7 +32,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
         resizeToAvoidBottomPadding: false,
         appBar: buildAppBar(),
         body: buildBody(context),
-        //bottomNavigationBar: buildBottomAppBar(),
       )),
     );
   }
@@ -64,60 +63,22 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     );
   }
 
-  // BottomAppBar buildBottomAppBar() {
-  //   return BottomAppBar(
-  //     color: Colors.transparent,
-  //   );
-  // }
-
   Form _createTodoForm(BuildContext context) {
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // Row(
-          //   children: <Widget>[
-          //     // Text(
-          //     //   'Category:    ',
-          //     //   style: TextStyle(fontSize: 16.0),
-          //     // ),
-          //     Observer(builder: (_) => _createDropDown()),
-          //     IconButton(
-          //       icon: Icon(Icons.add),
-          //       color: Colors.purpleAccent[700],
-          //       onPressed: () => {_goToCreateCategoryPage(context)},
-          //     )
-          //   ],
-          // ),
-          //_createNameField(),
           _createDescriptionField()
         ],
       ),
     );
   }
 
-  // TextFormField _createDescriptionField() {
-  //   return TextFormField(
-  //     decoration: const InputDecoration(
-  //       hintText: 'Description',
-  //     ),
-  //     validator: (value) {
-  //       if (value.isEmpty) {
-  //         return 'Please enter a description'; //TODO: Description sometimes can be null
-  //       }
-  //       description = value;
-  //       return null;
-  //     },
-  //   );
-  // }
-
   _createDescriptionField() {
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Container(
-        //constraints: BoxConstraints.expand(),
-        //width: 400,
         height: 300,
 
         child: Form(
