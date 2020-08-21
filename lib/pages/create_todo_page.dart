@@ -97,12 +97,9 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             },
             maxLines: 100,
             decoration: InputDecoration(
-              //border: OutlineInputBorder(),
               border: InputBorder.none,
-
               filled: true,
               fillColor: Colors.white,
-              //labelText: "Description",
               labelStyle: TextStyle(fontSize: 15.0),
               //hintText: 'Description',
             ),
@@ -159,13 +156,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
         List<DropdownMenuItem<String>>();
     categoriesNames.add(DropdownMenuItem<String>(
       value: "Add new...",
-      // child: Text(
-      //   "Add new...",
-      //   style: new TextStyle(
-      //     fontSize: 12.0,
-      //     decoration: TextDecoration.none,
-      //   ),
-      // ),
       child: Icon(Icons.add),
     ));
     if (categoryStore.categories != null) {
