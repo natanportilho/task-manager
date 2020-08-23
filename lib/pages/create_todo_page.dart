@@ -158,7 +158,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       value: "Add new...",
       child: Icon(Icons.add),
     ));
-    if (categoryStore.categories != null) {
+    if (categoryStore.categories != null && categoryStore.categories.data != null) {
       categoryStore.categories.data.forEach((c) => {
             categoriesNames.add(DropdownMenuItem<String>(
               value: c.name,
