@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   ListTile _buildListTile(Task todo, BuildContext context) {
     return ListTile(
-      title: Text("default"),
+      title: Text(todo.description.substring(0, 10) + '...'),
       onTap: () => {_goToTodoPage(context, todo)},
       subtitle: Text(todo.category.name.toString()),
     );
