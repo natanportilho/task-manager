@@ -153,7 +153,9 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             categoriesNames.add(DropdownMenuItem<String>(
               value: c.name,
               child: Text(
-                c.name,
+                c.name.toString().length >= 10
+                    ? c.name.toString().substring(0, 10) + '...'
+                    : c.name.toString(),
                 textAlign: TextAlign.center,
                 style: new TextStyle(
                   fontSize: 12.0,
