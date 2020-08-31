@@ -37,22 +37,24 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   }
 
   AppBar buildAppBar() {
-    return AppBar(actions: <Widget>[
-      Observer(
-          builder: (_) => ButtonTheme(
-                child: _createDropDown(),
-                alignedDropdown: true,
-              )),
-      IconButton(
-        icon: Icon(
-          Icons.settings,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          //todo: do something
-        },
-      )
-    ]);
+    return AppBar(
+      actions: <Widget>[
+        Observer(
+            builder: (_) => ButtonTheme(
+                  child: _createDropDown(),
+                  alignedDropdown: true,
+                )),
+        IconButton(
+          icon: Icon(
+            Icons.settings,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            //todo: do something
+          },
+        )
+      ],
+    );
   }
 
   Material buildBody(BuildContext context) {
@@ -129,23 +131,28 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
         ));
   }
 
-  DropdownButton _createDropDown() {
-    return DropdownButton<String>(
-        items: _createCategoriesList().toList(),
-        onChanged: (newValue) {
-          if (newValue == "Add new...") {
-            _goToCreateCategoryPage(context);
-          } else {
-            category = newValue;
-            updateCategoryName(newValue);
-          }
-        },
-        icon: Icon(
-          Icons.arrow_drop_down,
-          color: Colors.white,
-        ),
-        value: category != null ? category : "Personal",
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold));
+  DropdownButtonHideUnderline _createDropDown() {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<String>(
+          items: _createCategoriesList().toList(),
+          onChanged: (newValue) {
+            if (newValue == "Add new...") {
+              _goToCreateCategoryPage(context);
+            } else {
+              category = newValue;
+              updateCategoryName(newValue);
+            }
+          },
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: Colors.white,
+          ),
+          value: category != null ? category : "Personal",
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.none)),
+    );
   }
 
   List<DropdownMenuItem<String>> _createCategoriesList() {
@@ -185,10 +192,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
 
     if (description != null && description.isNotEmpty) {
       Category c = categoryStore.getCategoryByName(category);
-      taskStore.add(Task(
-          category: c,
-          description: description,
-          done: false));
+      taskStore.add(Task(category: c, description: description, done: false));
       Navigator.pop(context);
     } else {
       Navigator.pop(context);
