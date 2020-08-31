@@ -99,7 +99,7 @@ class _TodoPageState extends State<TodoPage> {
 
   AppBar buildAppBar() {
     return AppBar(
-      title: Text(todo.name),
+      title: Text("default"),
     );
   }
 

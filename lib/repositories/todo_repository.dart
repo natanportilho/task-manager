@@ -69,7 +69,6 @@ class TodoRepository implements ITodoRepository {
 
   Task fromDocument(DocumentSnapshot doc) {
     return Task(
-        name: doc['name'],
         description: doc['description'],
         done: doc['done'],
         id: doc.reference,

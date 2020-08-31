@@ -9,15 +9,13 @@ abstract class _Task with Store {
   @observable
   DocumentReference id;
   @observable
-  String name;
-  @observable
   String description;
   @observable
   bool done;
   @observable
   Category category;
 
-  _Task({this.id, this.name, this.description, this.done, this.category});
+  _Task({this.id, this.description, this.done, this.category});
 
   // _Task.fromJson(Map<String, dynamic> json) {
   //   id = json['id'];
@@ -32,7 +30,6 @@ abstract class _Task with Store {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['name'] = this.name;
     data['description'] = this.description;
     data['done'] = this.done;
     if (this.category != null) {
@@ -43,7 +40,6 @@ abstract class _Task with Store {
 
   factory _Task.fromDocument(DocumentSnapshot doc) {
     return Task(
-        name: doc['name'],
         description: doc['description'],
         done: doc['done'],
         id: doc.reference);

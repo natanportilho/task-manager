@@ -68,9 +68,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _createDescriptionField()
-        ],
+        children: <Widget>[_createDescriptionField()],
       ),
     );
   }
@@ -80,7 +78,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       padding: EdgeInsets.all(16.0),
       child: Container(
         height: 300,
-
         child: Form(
           autovalidate: true,
           child: TextFormField(
@@ -158,7 +155,8 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       value: "Add new...",
       child: Icon(Icons.add),
     ));
-    if (categoryStore.categories != null && categoryStore.categories.data != null) {
+    if (categoryStore.categories != null &&
+        categoryStore.categories.data != null) {
       categoryStore.categories.data.forEach((c) => {
             categoriesNames.add(DropdownMenuItem<String>(
               value: c.name,
@@ -189,7 +187,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       Category c = categoryStore.getCategoryByName(category);
       taskStore.add(Task(
           category: c,
-          name: "place holder",
           description: description,
           done: false));
       Navigator.pop(context);

@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   ListTile _buildListTile(Task todo, BuildContext context) {
     return ListTile(
-      title: Text(todo.name ?? "default"),
+      title: Text("default"),
       onTap: () => {_goToTodoPage(context, todo)},
       subtitle: Text(todo.category.name.toString()),
     );
@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => TodoPage(todo.name, todo),
+          builder: (context) => TodoPage("", todo),
         ));
   }
 
