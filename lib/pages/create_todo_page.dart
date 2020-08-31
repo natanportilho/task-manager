@@ -108,21 +108,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     );
   }
 
-  TextFormField _createNameField() {
-    return TextFormField(
-      decoration: const InputDecoration(
-        hintText: 'Name',
-      ),
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Please enter a name';
-        }
-        name = value;
-        return null;
-      },
-    );
-  }
-
   Future _goToCreateCategoryPage(BuildContext context) {
     return Navigator.push(
         context,
