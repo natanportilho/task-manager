@@ -9,8 +9,7 @@ import 'package:task_manager/pages/select_category_page.dart';
 import 'package:task_manager/stores/task_store.dart';
 
 class TodoPage extends StatefulWidget {
-  TodoPage(this.title, this.todo);
-  final String title;
+  TodoPage(this.todo);
   final Task todo;
 
   @override
@@ -98,9 +97,7 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   AppBar buildAppBar() {
-    return AppBar(
-      title: Text("default"),
-    );
+    return AppBar();
   }
 
   Row _buildTodoButtons(BuildContext context) {
