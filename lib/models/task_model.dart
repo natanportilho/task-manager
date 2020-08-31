@@ -13,9 +13,11 @@ abstract class _Task with Store {
   @observable
   bool done;
   @observable
-  Category category;
+  Category category; 
+  @observable
+  bool important;
 
-  _Task({this.id, this.description, this.done, this.category});
+  _Task({this.id, this.description, this.done, this.category, this.important});
 
   // _Task.fromJson(Map<String, dynamic> json) {
   //   id = json['id'];
@@ -32,6 +34,7 @@ abstract class _Task with Store {
     data['id'] = this.id;
     data['description'] = this.description;
     data['done'] = this.done;
+    data['important'] = this.important;
     if (this.category != null) {
       data['category'] = this.category.toJson();
     }
@@ -42,6 +45,7 @@ abstract class _Task with Store {
     return Task(
         description: doc['description'],
         done: doc['done'],
-        id: doc.reference);
+        id: doc.reference,
+        important: doc['important']);
   }
 }

@@ -7,6 +7,8 @@ abstract class ITodoRepository {
 
   void toggleTodo(Task task);
 
+  void toggleImportant(Task task);
+
   void updateDescription(Task task);
 
   void updateCategory(Task task);

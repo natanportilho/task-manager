@@ -35,6 +35,19 @@ class TodoRepository implements ITodoRepository {
     }
   }
 
+  void toggleImportant(Task task) {
+    this.firestore = Firestore.instance;
+
+    task.important = !task.important;
+    if (task != null) {
+      this
+          .firestore
+          .collection("task")
+          .document(task.id.documentID)
+          .updateData({'important': task.important});
+    }
+  }
+
   void updateDescription(Task task) {
     this.firestore = Firestore.instance;
 
@@ -71,6 +84,7 @@ class TodoRepository implements ITodoRepository {
     return Task(
         description: doc['description'],
         done: doc['done'],
+        important: doc['important'],
         id: doc.reference,
         category: categoryFromDocument(doc['category']));
   }

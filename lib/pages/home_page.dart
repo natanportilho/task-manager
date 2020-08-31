@@ -96,12 +96,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   ListTile _buildListTile(Task todo, BuildContext context) {
     return ListTile(
-      title: Text(todo.description.length >= 10
-          ? todo.description.substring(0, 10) + '...'
-          : todo.description),
-      onTap: () => {_goToTodoPage(context, todo)},
-      subtitle: Text(todo.category.name.toString()),
-    );
+        title: Text(todo.description.length >= 10
+            ? todo.description.substring(0, 10) + '...'
+            : todo.description),
+        onTap: () => {_goToTodoPage(context, todo)},
+        subtitle: Text(todo.category.name.toString()),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(
+                todo.important ? Icons.star : Icons.star_border,
+                size: 20.0,
+                color: Colors.brown[900],
+              ),
+              onPressed: () {
+                todoRepository
+                    .toggleImportant(todo); //   _onDeleteItemPressed(index);
+              },
+            )
+          ],
+        ));
   }
 
   Future _goToTodoPage(BuildContext context, Task todo) {
