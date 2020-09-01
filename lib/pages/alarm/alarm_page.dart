@@ -27,9 +27,48 @@ class _AlarmPageState extends State<AlarmPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("placeholder"),
-                    Text("placeholder"),
-                    Text("placeholder")
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                          child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "AM",
+                            style: TextStyle(
+                              fontSize: 32.0,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                          Text(
+                            "PM",
+                            style: TextStyle(
+                              fontSize: 32.0,
+                              decoration: TextDecoration.none,
+                            ),
+                          )
+                        ],
+                      )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                          child: Text("01",
+                              style: TextStyle(
+                                fontSize: 32.0,
+                                decoration: TextDecoration.none,
+                              ))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                          child: Text("00",
+                              style: TextStyle(
+                                fontSize: 32.0,
+                                decoration: TextDecoration.none,
+                              ))),
+                    )
                   ],
                 ),
               ),
