@@ -6,6 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/models/task_model.dart';
+import 'package:task_manager/pages/alarm/alarm_page.dart';
 import 'package:task_manager/pages/select_category_page.dart';
 import 'package:task_manager/stores/task_store.dart';
 
@@ -115,6 +116,12 @@ class _TodoPageState extends State<TodoPage> {
           color: todo.done ? Colors.green : Colors.indigo,
         ),
         IconButton(
+          onPressed: () => {
+            _toggleAlarm(todo),
+          },
+          icon: Icon(Icons.alarm_off),
+        ),
+        IconButton(
             onPressed: () => {
                   taskStore.remove(todo),
                   _scheduleNotification(),
@@ -171,6 +178,14 @@ class _TodoPageState extends State<TodoPage> {
         ));
   }
 
+  Future _goToAlarmPage(Task todo) {
+    return Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AlarmPage(todo),
+        ));
+  }
+
   CircleAvatar _getCategoryImage(String imageUrl) {
     if (imageUrl == '')
       return _buildPlaceholderCategoryImage();
@@ -195,6 +210,10 @@ class _TodoPageState extends State<TodoPage> {
 
   _toggleDoneFlag(Task task) {
     taskStore.toggleTodo(task);
+  }
+
+  _toggleAlarm(Task task) {
+    _goToAlarmPage(task);
   }
 
   /// Schedules a notification that specifies a different icon, sound and vibration pattern
