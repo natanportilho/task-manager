@@ -22,11 +22,23 @@ class _AlarmPageState extends State<AlarmPage> {
         child: Scaffold(
             appBar: AppBar(),
             body: Material(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("placeholder"),
+                    Text("placeholder"),
+                    Text("placeholder")
+                  ],
+                ),
               ),
             )));
+
+    //         child: Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //  children: <Widget>[_createDescriptionField()],
+    // )
   }
 
   AppBar buildAppBar() {
