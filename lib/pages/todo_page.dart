@@ -1,12 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/pages/select_category_page.dart';
 import 'package:task_manager/stores/task_store.dart';
+
+import '../main.dart';
 
 class TodoPage extends StatefulWidget {
   TodoPage(this.todo);
@@ -112,7 +115,11 @@ class _TodoPageState extends State<TodoPage> {
           color: todo.done ? Colors.green : Colors.indigo,
         ),
         IconButton(
-            onPressed: () => {taskStore.remove(todo), Navigator.pop(context)},
+            onPressed: () => {
+                  taskStore.remove(todo),
+                  _scheduleNotification(),
+                  Navigator.pop(context)
+                },
             icon: Icon(Icons.delete)),
       ],
     );
@@ -188,5 +195,31 @@ class _TodoPageState extends State<TodoPage> {
 
   _toggleDoneFlag(Task task) {
     taskStore.toggleTodo(task);
+  }
+
+  /// Schedules a notification that specifies a different icon, sound and vibration pattern
+  Future<void> _scheduleNotification() async {
+    var scheduledNotificationDateTime =
+        DateTime.now().add(Duration(seconds: 5));
+
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'alarm_notif',
+      'alarm_notif',
+      'Channel for Alarm notification',
+      icon: 'ic_launcher',
+      sound: RawResourceAndroidNotificationSound('a_long_cold_sting'),
+      largeIcon: DrawableResourceAndroidBitmap('ic_launcher'),
+    );
+
+    var iOSPlatformChannelSpecifics =
+        IOSNotificationDetails(sound: 'slow_spring_board.aiff');
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.schedule(
+        0,
+        'scheduled title',
+        'scheduled body',
+        scheduledNotificationDateTime,
+        platformChannelSpecifics);
   }
 }
