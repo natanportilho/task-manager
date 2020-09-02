@@ -105,10 +105,7 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   Row _buildTodoButtons(BuildContext context) {
-    var selectedTime;
-    var selectedDateTime;
-    var now;
-    var _alarmTime;
+    var selectedTime, selectedDateTime, now;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
@@ -130,11 +127,8 @@ class _TodoPageState extends State<TodoPage> {
                 now = DateTime.now(),
                 selectedDateTime = DateTime(now.year, now.month, now.day,
                     selectedTime.hour, selectedTime.minute),
-                _alarmTime = selectedDateTime,
                 _scheduleNotification(selectedDateTime),
               }
-
-            //_toggleAlarm(todo),
           },
           icon: Icon(Icons.alarm_off),
         ),
@@ -217,7 +211,6 @@ class _TodoPageState extends State<TodoPage> {
     taskStore.toggleTodo(task);
   }
 
-  /// Schedules a notification that specifies a different icon, sound and vibration pattern
   Future<void> _scheduleNotification(DateTime notificationTime) async {
     var scheduledNotificationDateTime = notificationTime;
 
@@ -236,8 +229,8 @@ class _TodoPageState extends State<TodoPage> {
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.schedule(
         0,
-        'scheduled title',
-        'scheduled body',
+        'You have stuff todo!',
+        todo.description,
         scheduledNotificationDateTime,
         platformChannelSpecifics);
   }
