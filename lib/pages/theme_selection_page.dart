@@ -1,5 +1,6 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/persistence/color_theme.dart';
 
 class ThemeSelectionPage extends StatelessWidget {
@@ -44,9 +45,11 @@ class ThemeSelectionPage extends StatelessWidget {
     );
   }
 
-  void _changeColor(BuildContext context, ColorTheme colorTheme) {
+  Future<void> _changeColor(BuildContext context, ColorTheme colorTheme) async {
     DynamicTheme.of(context).setThemeData(new ThemeData(
         primaryColor: colorTheme.primaryColor,
         accentColor: colorTheme.secondaryColor));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('theme', colorTheme.name);
   }
 }
