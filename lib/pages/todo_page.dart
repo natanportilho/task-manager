@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/models/task_model.dart';
@@ -211,7 +212,8 @@ class _TodoPageState extends State<TodoPage> {
     taskStore.toggleTodo(task);
   }
 
-  Future<void> _scheduleNotification(DateTime notificationTime) async {
+  Future<void> _scheduleNotification(
+      DateTime notificationTime) async {
     var scheduledNotificationDateTime = notificationTime;
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
@@ -233,5 +235,14 @@ class _TodoPageState extends State<TodoPage> {
         todo.description,
         scheduledNotificationDateTime,
         platformChannelSpecifics);
+
+    Fluttertoast.showToast(
+        msg: "We will notify you when it's time to do this task :)",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }
