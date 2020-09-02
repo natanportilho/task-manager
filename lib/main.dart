@@ -10,16 +10,17 @@ import 'pages/home_page.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+var providers = [
+  Provider<TaskStore>(create: (_) => TaskStore()),
+  Provider<CategoryStore>(create: (_) => CategoryStore())
+];
 
-void main() => {
-      _initializeLocalNotifications(),
-      runApp(
-        MultiProvider(providers: [
-          Provider<TaskStore>(create: (_) => TaskStore()),
-          Provider<CategoryStore>(create: (_) => CategoryStore())
-        ], child: MyApp()),
-      ),
-    };
+void main() {
+  _initializeLocalNotifications();
+  runApp(
+    MultiProvider(providers: providers, child: MyApp()),
+  );
+}
 
 _initializeLocalNotifications() async {
   NotificationsService notificationsService = NotificationsService();
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
           return new MaterialApp(
             title: 'Task Manager',
             theme: theme,
-            home: MyHomePage(title: 'Home Page'),
+            home: MyHomePage(),
           );
         });
   }

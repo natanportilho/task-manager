@@ -38,7 +38,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      title: Text("Homepage"),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.color_lens),
