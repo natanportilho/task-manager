@@ -11,6 +11,8 @@ class AlarmPage extends StatefulWidget {
 }
 
 class _AlarmPageState extends State<AlarmPage> {
+  int hour = 0;
+
   TaskStore taskStore;
   _AlarmPageState(this.todo);
   Task todo;
@@ -27,48 +29,150 @@ class _AlarmPageState extends State<AlarmPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                          child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "AM",
-                            style: TextStyle(
-                              fontSize: 32.0,
-                              decoration: TextDecoration.none,
+                    Container(
+                        child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              "AM",
+                              style: TextStyle(
+                                fontSize: 32.0,
+                                decoration: TextDecoration.none,
+                              ),
                             ),
                           ),
-                          Text(
-                            "PM",
-                            style: TextStyle(
-                              fontSize: 32.0,
-                              decoration: TextDecoration.none,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                            //
+                            //borderRadius:
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              "PM",
+                              style: TextStyle(
+                                fontSize: 32.0,
+                                decoration: TextDecoration.none,
+                              ),
                             ),
-                          )
-                        ],
-                      )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                          child: Text("01",
-                              style: TextStyle(
-                                fontSize: 32.0,
-                                decoration: TextDecoration.none,
-                              ))),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                          child: Text("00",
-                              style: TextStyle(
-                                fontSize: 32.0,
-                                decoration: TextDecoration.none,
-                              ))),
-                    )
+                          ),
+                        ),
+                      ],
+                    )),
+                    Container(
+                        child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                            child: IconButton(
+                              onPressed: () => {
+                                _changeHour(false),
+                              },
+                              icon: Icon(Icons.arrow_drop_up),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                            child: IconButton(
+                              onPressed: () => {
+                                _changeHour(false),
+                              },
+                              icon: Icon(Icons.arrow_drop_up),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                    Container(
+                        child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                            child: Text("00",
+                                style: TextStyle(
+                                  fontSize: 32.0,
+                                  decoration: TextDecoration.none,
+                                )),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                            child: Text("00",
+                                style: TextStyle(
+                                  fontSize: 32.0,
+                                  decoration: TextDecoration.none,
+                                )),
+                          ),
+                        ),
+                      ],
+                    )),
+                    Container(
+                        child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                            child: IconButton(
+                              onPressed: () => {
+                                _changeHour(false),
+                              },
+                              icon: Icon(Icons.arrow_drop_down),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                            child: IconButton(
+                              onPressed: () => {
+                                _changeHour(false),
+                              },
+                              icon: Icon(Icons.arrow_drop_down),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
                   ],
                 ),
               ),
@@ -78,6 +182,23 @@ class _AlarmPageState extends State<AlarmPage> {
     //   crossAxisAlignment: CrossAxisAlignment.start,
     //  children: <Widget>[_createDescriptionField()],
     // )
+  }
+
+  _changeHour(bool increase) {
+    setState(() {
+      if (increase) {
+        hour += 1;
+        if (hour > 12) {
+          hour = 0;
+        }
+      } else {
+        hour -= 1;
+        if (hour < 0) {
+          hour = 12;
+        }
+      }
+      print(hour);
+    });
   }
 
   AppBar buildAppBar() {
