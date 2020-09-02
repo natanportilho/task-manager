@@ -75,6 +75,7 @@ class _TodoPageState extends State<TodoPage> {
     );
   }
 
+  //todo: check this;
   Future _updateCategory() async {
     var completer = new Completer<String>();
     completer.complete("a");
