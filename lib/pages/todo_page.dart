@@ -105,6 +105,10 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   Row _buildTodoButtons(BuildContext context) {
+    var selectedTime;
+    var selectedDateTime;
+    var now;
+    var _alarmTime;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
@@ -116,17 +120,26 @@ class _TodoPageState extends State<TodoPage> {
           color: todo.done ? Colors.green : Colors.indigo,
         ),
         IconButton(
-          onPressed: () => {
-            _toggleAlarm(todo),
+          onPressed: () async => {
+            selectedTime = await showTimePicker(
+              initialTime: TimeOfDay.now(),
+              context: context,
+            ),
+            if (selectedTime != null)
+              {
+                now = DateTime.now(),
+                selectedDateTime = DateTime(now.year, now.month, now.day,
+                    selectedTime.hour, selectedTime.minute),
+                _alarmTime = selectedDateTime,
+                _scheduleNotification(selectedDateTime),
+              }
+
+            //_toggleAlarm(todo),
           },
           icon: Icon(Icons.alarm_off),
         ),
         IconButton(
-            onPressed: () => {
-                  taskStore.remove(todo),
-                  _scheduleNotification(),
-                  Navigator.pop(context)
-                },
+            onPressed: () => {taskStore.remove(todo), Navigator.pop(context)},
             icon: Icon(Icons.delete)),
       ],
     );
@@ -217,9 +230,8 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   /// Schedules a notification that specifies a different icon, sound and vibration pattern
-  Future<void> _scheduleNotification() async {
-    var scheduledNotificationDateTime =
-        DateTime.now().add(Duration(seconds: 5));
+  Future<void> _scheduleNotification(DateTime notificationTime) async {
+    var scheduledNotificationDateTime = notificationTime;
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'alarm_notif',

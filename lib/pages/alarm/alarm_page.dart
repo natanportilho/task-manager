@@ -12,6 +12,7 @@ class AlarmPage extends StatefulWidget {
 
 class _AlarmPageState extends State<AlarmPage> {
   int hour = 0;
+  int minute = 0;
 
   TaskStore taskStore;
   _AlarmPageState(this.todo);
@@ -84,7 +85,7 @@ class _AlarmPageState extends State<AlarmPage> {
                             padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
                             child: IconButton(
                               onPressed: () => {
-                                _changeHour(false),
+                                _changeHour(true),
                               },
                               icon: Icon(Icons.arrow_drop_up),
                             ),
@@ -116,7 +117,7 @@ class _AlarmPageState extends State<AlarmPage> {
                           margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-                            child: Text("00",
+                            child: Text(hour.toString(),
                                 style: TextStyle(
                                   fontSize: 32.0,
                                   decoration: TextDecoration.none,
@@ -188,6 +189,23 @@ class _AlarmPageState extends State<AlarmPage> {
     setState(() {
       if (increase) {
         hour += 1;
+        if (hour > 12) {
+          hour = 0;
+        }
+      } else {
+        hour -= 1;
+        if (hour < 0) {
+          hour = 12;
+        }
+      }
+      print(hour);
+    });
+  }
+
+   _changeMinute(bool increase) {
+    setState(() {
+      if (increase) {
+        minute += 1;
         if (hour > 12) {
           hour = 0;
         }
