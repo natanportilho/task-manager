@@ -76,12 +76,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
           child: TextFormField(
             autofocus: true,
             validator: (value) {
-              if (value.isEmpty) {
-                print(value);
-                return 'Please enter a description';
-              } else {
-                print(value);
-              }
               description = value;
               return null;
             },
