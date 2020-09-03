@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/models/color_theme_model.dart';
 
-class ColorTheme {
-  String name;
-  MaterialColor primaryColor;
-  Color secondaryColor;
-  Color thirdColor;
+class ThemeService {
+  ColorTheme currentColorTheme;
 
   List<ColorTheme> createColorsList() {
     final List<ColorTheme> colors = <ColorTheme>[];

@@ -160,7 +160,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     });
   }
 
-  void _onWillPop() async {
+  Future<bool> _onWillPop() async {
     if (description != null && description.isNotEmpty) {
       _createTask();
     }

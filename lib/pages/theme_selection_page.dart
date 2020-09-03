@@ -1,13 +1,14 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_manager/persistence/color_theme.dart';
+import 'package:task_manager/models/color_theme_model.dart';
+import 'package:task_manager/services/theme_service.dart';
 
 class ThemeSelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ColorTheme colorTheme = ColorTheme();
-    final List<ColorTheme> colors = colorTheme.createColorsList();
+    ThemeService themeService = ThemeService();
+    final List<ColorTheme> colors = themeService.createColorsList();
 
     return SafeArea(
         child: Scaffold(
