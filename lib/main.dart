@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
         defaultBrightness: Brightness.light,
         data: (brightness) => new ThemeData(
               primarySwatch: colorTheme.primaryColor,
+              accentColor: colorTheme.secondaryColor,
               brightness: brightness,
             ),
         themedWidgetBuilder: (context, theme) {
