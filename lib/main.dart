@@ -14,8 +14,6 @@ import 'pages/home_page.dart';
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 var theme;
-ThemeData themeData;
-ColorTheme colorTheme;
 var providers = [
   Provider<TaskStore>(create: (_) => TaskStore()),
   Provider<CategoryStore>(create: (_) => CategoryStore())
@@ -38,36 +36,23 @@ _initializeLocalNotifications() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return _buildApp();
-  }
-
-  DynamicTheme _buildApp() {
+    ColorTheme colorTheme = ColorTheme();
     ThemeService themeService = ThemeService();
     colorTheme =
         themeService.createColorsList().where((c) => c.name == theme).first;
-
     return new DynamicTheme(
         defaultBrightness: Brightness.light,
-        data: (brightness) => _buildThemeData(brightness),
+        data: (brightness) => new ThemeData(
+              primarySwatch: colorTheme.primaryColor,
+              accentColor: colorTheme.secondaryColor,
+              brightness: brightness,
+            ),
         themedWidgetBuilder: (context, theme) {
-          return _buildMaterialApp(themeData);
+          return new MaterialApp(
+            title: 'Task Manager',
+            theme: theme,
+            home: MyHomePage(),
+          );
         });
-  }
-
-  ThemeData _buildThemeData(Brightness brightness) {
-    themeData = new ThemeData(
-      primarySwatch: colorTheme.primaryColor,
-      accentColor: colorTheme.secondaryColor,
-      brightness: brightness,
-    );
-    return themeData;
-  }
-
-  MaterialApp _buildMaterialApp(ThemeData themeData) {
-    return new MaterialApp(
-      title: 'Task Manager',
-      theme: themeData,
-      home: MyHomePage(),
-    );
   }
 }
