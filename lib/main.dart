@@ -32,7 +32,7 @@ _initializeLocalNotifications() async {
   NotificationsService notificationsService = NotificationsService();
   notificationsService.initializeLocalNotifications();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  theme = prefs.getString("theme");
+  theme = prefs.getString("theme") != null ? prefs.getString("theme") : "green";
 }
 
 class MyApp extends StatelessWidget {
