@@ -44,15 +44,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
                   child: _createDropDown(),
                   alignedDropdown: true,
                 )),
-        IconButton(
-          icon: Icon(
-            Icons.settings,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            //todo: do something
-          },
-        )
       ],
     );
   }
@@ -179,7 +170,11 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
 
     if (description != null && description.isNotEmpty) {
       Category c = categoryStore.getCategoryByName(category);
-      taskStore.add(Task(category: c, description: description, done: false, important: false));
+      taskStore.add(Task(
+          category: c,
+          description: description,
+          done: false,
+          important: false));
       Navigator.pop(context);
     } else {
       Navigator.pop(context);
