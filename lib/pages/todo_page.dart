@@ -40,7 +40,7 @@ class _TodoPageState extends State<TodoPage> {
                     Observer(builder: (_) => _buildTodoInfoSection(context))),
             bottomNavigationBar: BottomAppBar(
               color: Colors.transparent,
-              child: Observer(builder: (_) => _buildTodoButtons(context)),
+              child: Observer(builder: (_) => _buildActionsButtons(context)),
               elevation: 0,
             ),
           );
@@ -105,38 +105,51 @@ class _TodoPageState extends State<TodoPage> {
     return AppBar();
   }
 
-  Row _buildTodoButtons(BuildContext context) {
-    var selectedTime, selectedDateTime, now;
+  Row _buildActionsButtons(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        IconButton(
-          onPressed: () => {
-            _toggleDoneFlag(todo),
-          },
-          icon: Icon(Icons.done),
-          color: todo.done ? Colors.green : Colors.indigo,
-        ),
-        IconButton(
-          onPressed: () async => {
-            selectedTime = await showTimePicker(
-              initialTime: TimeOfDay.now(),
-              context: context,
-            ),
-            if (selectedTime != null)
-              {
-                now = DateTime.now(),
-                selectedDateTime = DateTime(now.year, now.month, now.day,
-                    selectedTime.hour, selectedTime.minute),
-                _scheduleNotification(selectedDateTime),
-              }
-          },
-          icon: Icon(Icons.alarm_off),
-        ),
-        IconButton(
-            onPressed: () => {taskStore.remove(todo), Navigator.pop(context)},
-            icon: Icon(Icons.delete)),
+        _buildDoneButton(),
+        _buildAlarmButton(),
+        _buildRemoveButton(context),
       ],
+    );
+  }
+
+  IconButton _buildRemoveButton(BuildContext context) {
+    return IconButton(
+        onPressed: () => {taskStore.remove(todo), Navigator.pop(context)},
+        icon: Icon(Icons.delete));
+  }
+
+  IconButton _buildDoneButton() {
+    return IconButton(
+      onPressed: () => {
+        _toggleDoneFlag(todo),
+      },
+      icon: Icon(Icons.done),
+      color: todo.done ? Colors.green : Colors.indigo,
+    );
+  }
+
+  IconButton _buildAlarmButton() {
+    var selectedTime, selectedDateTime, now;
+
+    return IconButton(
+      onPressed: () async => {
+        selectedTime = await showTimePicker(
+          initialTime: TimeOfDay.now(),
+          context: context,
+        ),
+        if (selectedTime != null)
+          {
+            now = DateTime.now(),
+            selectedDateTime = DateTime(now.year, now.month, now.day,
+                selectedTime.hour, selectedTime.minute),
+            _scheduleNotification(selectedDateTime),
+          }
+      },
+      icon: Icon(Icons.alarm_off),
     );
   }
 
@@ -213,9 +226,7 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   Future<void> _scheduleNotification(
-      DateTime notificationTime) async {
-    var scheduledNotificationDateTime = notificationTime;
-
+      DateTime scheduledNotificationDateTime) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'alarm_notif',
       'alarm_notif',
@@ -229,6 +240,7 @@ class _TodoPageState extends State<TodoPage> {
         IOSNotificationDetails(sound: 'slow_spring_board.aiff');
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+
     await flutterLocalNotificationsPlugin.schedule(
         0,
         'You have stuff todo!',
@@ -236,6 +248,10 @@ class _TodoPageState extends State<TodoPage> {
         scheduledNotificationDateTime,
         platformChannelSpecifics);
 
+    _showFeedbackMessage();
+  }
+
+  _showFeedbackMessage() {
     Fluttertoast.showToast(
         msg: "We will notify you when it's time to do this task :)",
         toastLength: Toast.LENGTH_SHORT,
