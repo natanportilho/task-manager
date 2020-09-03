@@ -132,6 +132,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       value: "Add new...",
       child: Icon(Icons.add),
     ));
+
     if (categoryStore.categories != null &&
         categoryStore.categories.data != null) {
       categoryStore.categories.data.forEach((c) => {
@@ -159,19 +160,17 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     });
   }
 
-  Future<bool> _onWillPop() async {
-    TaskStore taskStore = Provider.of<TaskStore>(context, listen: false);
-
+  void _onWillPop() async {
     if (description != null && description.isNotEmpty) {
-      Category c = categoryStore.getCategoryByName(category);
-      taskStore.add(Task(
-          category: c,
-          description: description,
-          done: false,
-          important: false));
-      Navigator.pop(context);
-    } else {
-      Navigator.pop(context);
+      _createTask();
     }
+    Navigator.pop(context);
+  }
+
+  void _createTask() {
+    TaskStore taskStore = Provider.of<TaskStore>(context, listen: false);
+    Category c = categoryStore.getCategoryByName(category);
+    taskStore.add(Task(
+        category: c, description: description, done: false, important: false));
   }
 }
