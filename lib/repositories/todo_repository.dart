@@ -5,7 +5,6 @@ import 'package:task_manager/repositories/todo_repository_interface.dart';
 
 class TodoRepository implements ITodoRepository {
   Firestore firestore;
-  CollectionReference _userReference;
 
   @override
   Stream<List<Task>> getTodos() {

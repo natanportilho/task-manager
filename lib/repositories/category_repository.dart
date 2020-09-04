@@ -4,7 +4,7 @@ import 'package:task_manager/repositories/category_repository_interface.dart';
 
 class CategoryRepository implements ICategoryRepository {
   Firestore firestore;
-  CollectionReference _userReference;
+  
   @override
   Future<DocumentReference> addCategory(Category category) {
     this.firestore = Firestore.instance;
