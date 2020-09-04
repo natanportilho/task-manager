@@ -4,16 +4,16 @@ import 'package:task_manager/repositories/category_repository_interface.dart';
 
 class CategoryRepository implements ICategoryRepository {
   Firestore firestore;
-  
+
+  CategoryRepository(this.firestore);
+
   @override
   Future<DocumentReference> addCategory(Category category) {
-    this.firestore = Firestore.instance;
     return this.firestore.collection('category').add(category.toJson());
   }
 
   @override
   Stream<List<Category>> getCategories() {
-    this.firestore = Firestore.instance;
     return this.firestore.collection('category').snapshots().map((query) {
       return query.documents.map((doc) {
         return fromDocument(doc);

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TaskStore taskStore;
 
-  ITodoRepository todoRepository = TodoRepository();
+  ITodoRepository todoRepository = TodoRepository(Firestore.instance);
 
   @override
   Widget build(BuildContext context) {

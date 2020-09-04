@@ -9,7 +9,7 @@ part 'task_store.g.dart';
 class TaskStore = _TaskStore with _$TaskStore;
 
 abstract class _TaskStore with Store {
-  ITodoRepository todoRepository = TodoRepository();
+  ITodoRepository todoRepository = TodoRepository(Firestore.instance);
 
   @observable
   ObservableStream<List<Task>> todos;

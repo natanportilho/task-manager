@@ -4,6 +4,7 @@ import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/repositories/todo_repository_interface.dart';
 
 class TodoRepository implements ITodoRepository {
+  TodoRepository(this.firestore);
   Firestore firestore;
 
   @override

@@ -8,7 +8,7 @@ part 'store_category.g.dart';
 class CategoryStore = _CategoryStore with _$CategoryStore;
 
 abstract class _CategoryStore with Store {
-  ICategoryRepository categoryRepository = CategoryRepository();
+  ICategoryRepository categoryRepository = CategoryRepository(Firestore.instance);
 
   @observable
   ObservableStream<List<Category>> categories;
