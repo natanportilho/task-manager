@@ -159,8 +159,11 @@ class _TodoPageState extends State<TodoPage> {
         child: Padding(
           padding: EdgeInsets.all(8.0),
           child: TextFormField(
+            keyboardType: TextInputType.multiline,
+            minLines: 1,
+            maxLines: 5,
             initialValue: todo.description,
-            textInputAction: TextInputAction.done,
+            textInputAction: TextInputAction.newline,
             onChanged: (text) {
               taskStore.updateDescription(todo, text);
             },
