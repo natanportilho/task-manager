@@ -28,9 +28,9 @@ abstract class _Category with Store {
     return data;
   }
 
-// try to use this fromDocument to fill category when getting todo 
-  factory _Category.fromDocument(DocumentSnapshot doc) {
-    return Category(
-        name: doc['name'], imageUrl: doc['imageUrl'], id: doc.reference);
-  }
+// try to use this fromDocument to fill category when getting todo
+  // factory _Category.fromDocument(DocumentSnapshot doc) {
+  //   return Category(
+  //       name: doc['name'], imageUrl: doc['imageUrl'], id: doc.reference);
+  // }
 }

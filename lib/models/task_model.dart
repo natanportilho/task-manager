@@ -13,7 +13,7 @@ abstract class _Task with Store {
   @observable
   bool done;
   @observable
-  Category category; 
+  Category category;
   @observable
   bool important;
 
@@ -41,11 +41,11 @@ abstract class _Task with Store {
     return data;
   }
 
-  factory _Task.fromDocument(DocumentSnapshot doc) {
-    return Task(
-        description: doc['description'],
-        done: doc['done'],
-        id: doc.reference,
-        important: doc['important']);
-  }
+  // factory _Task.fromDocument(DocumentSnapshot doc) {
+  //   return Task(
+  //       description: doc['description'],
+  //       done: doc['done'],
+  //       id: doc.reference,
+  //       important: doc['important']);
+  // }
 }
