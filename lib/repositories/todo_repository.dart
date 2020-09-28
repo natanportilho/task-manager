@@ -5,88 +5,88 @@ import 'package:task_manager/repositories/todo_repository_interface.dart';
 
 class TodoRepository implements ITodoRepository {
   TodoRepository(this.firestore);
-  Firestore firestore;
+  FirebaseFirestore firestore;
 
   @override
   Stream<List<Task>> getTodos() {
-    this.firestore = Firestore.instance;
+    this.firestore = FirebaseFirestore.instance;
     return this.firestore.collection('task').snapshots().map((query) {
-      return query.documents.map((doc) {
+      return query.docs.map((doc) {
         return fromDocument(doc);
       }).toList();
     });
   }
 
   void addTodo(Task task) {
-    this.firestore = Firestore.instance;
+    this.firestore = FirebaseFirestore.instance;
     this.firestore.collection('task').add(task.toJson());
   }
 
   void toggleTodo(Task task) {
-    this.firestore = Firestore.instance;
+    this.firestore = FirebaseFirestore.instance;
 
     task.done = !task.done;
     if (task != null) {
       this
           .firestore
           .collection("task")
-          .document(task.id.documentID)
-          .updateData({'done': task.done});
+          .doc(task.id.id)
+          .update({'done': task.done});
     }
   }
 
   void toggleImportant(Task task) {
-    this.firestore = Firestore.instance;
+    this.firestore = FirebaseFirestore.instance;
 
     task.important = !task.important;
     if (task != null) {
       this
           .firestore
           .collection("task")
-          .document(task.id.documentID)
-          .updateData({'important': task.important});
+          .doc(task.id.id)
+          .update({'important': task.important});
     }
   }
 
   void updateDescription(Task task) {
-    this.firestore = Firestore.instance;
+    this.firestore = FirebaseFirestore.instance;
 
     if (task != null) {
       this
           .firestore
           .collection("task")
-          .document(task.id.documentID)
-          .updateData({'description': task.description});
+          .doc(task.id.id)
+          .update({'description': task.description});
     }
   }
 
   void updateCategory(Task task) {
-    this.firestore = Firestore.instance;
+    this.firestore = FirebaseFirestore.instance;
 
     if (task != null) {
       this
           .firestore
           .collection("task")
-          .document(task.id.documentID)
-          .updateData({'category': task.category.toJson()});
+          .doc(task.id.id)
+          .update({'category': task.category.toJson()});
     }
   }
 
   void remove(Task task) {
-    this.firestore = Firestore.instance;
+    this.firestore = FirebaseFirestore.instance;
 
     if (task != null) {
-      this.firestore.collection("task").document(task.id.documentID).delete();
+      this.firestore.collection("task").doc(task.id.id).delete();
     }
   }
 
   Task fromDocument(DocumentSnapshot doc) {
     return Task(
-        description: doc['description'],
-        done: doc['done'],
-        important: doc['important'],
+        description: doc.get("description"),
+        done: doc.get("done"),
+        important: doc.get("Important"),
         id: doc.reference,
-        category: categoryFromDocument(doc['category']));
+        category: categoryFromDocument(doc.get("category")));
   }
 
   Category categoryFromDocument(Map<String, dynamic> doc) {

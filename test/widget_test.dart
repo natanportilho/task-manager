@@ -5,6 +5,7 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -32,38 +33,68 @@ class CollectionReferenceMock extends Mock implements CollectionReference {}
 
 void main() {
   group("group: tasks", () {
-    test('get tasks', () {
-      //@observable
-      //ObservableStream<List<Task>> todos;
+    // test('get tasks', () {
+    //   //@observable
+    //   //ObservableStream<List<Task>> todos;
 
-      WidgetsFlutterBinding.ensureInitialized();
-      final firestore = FirestoreMock();
-      final taskStore = TaskStoreMock();
+    //   WidgetsFlutterBinding.ensureInitialized();
+    //   final firestore = FirestoreMock();
+    //   final taskStore = TaskStoreMock();
 
-      final CollectionReference mockCollectionReference =
-          CollectionReferenceMock();
-      //ITodoRepository todoRepository = TodoRepository(Firestore.instance);
+    //   final CollectionReference mockCollectionReference =
+    //       CollectionReferenceMock();
+    //   //ITodoRepository todoRepository = TodoRepository(Firestore.instance);
 
-      ITodoRepository todoRepository = TodoRepository(firestore);
-      final DocumentReferenceMock mockDocumentRef = DocumentReferenceMock();
-      TaskMock task = TaskMock();
+    //   ITodoRepository todoRepository = TodoRepository(firestore);
+    //   final DocumentReferenceMock mockDocumentRef = DocumentReferenceMock();
+    //   TaskMock task = TaskMock();
+
+    //   when(task.id).thenReturn(mockDocumentRef);
+    //   when(task.description).thenReturn("description");
+
+    //   print(task.description);
+
+    //   when(firestore.collection("task")).thenReturn(mockCollectionReference);
+    //   when(taskStore.todoRepository).thenReturn(todoRepository);
+    //   when(taskStore.todos)
+    //       .thenAnswer((_) => todoRepository.getTodos().asObservable());
+
+    //   taskStore.add(task);
+    //   List<TaskMock> myTodos = taskStore.todos.data;
+
+    //   expect(myTodos.length, 1);
+    // });
+
+    // const TasksCollection = 'task';
+    // test('get tasks', () async {
+    //   //https://pub.dev/packages/cloud_firestore_mocks
+
+    //   final firestore = MockFirestoreInstance();
+    //   final DocumentReferenceMock mockDocumentRef = DocumentReferenceMock();
+
+    //   TaskMock task = TaskMock();
+    //   when(task.id).thenReturn(mockDocumentRef);
+    //   when(task.description).thenReturn("description");
+
+    //   ITodoRepository todoRepository = TodoRepository(firestore);
+
+    //    final taskStore = TaskStoreMock();
 
 
-      when(task.id).thenReturn(mockDocumentRef);
-      when(task.description).thenReturn("description");
+    //   final collection = firestore.collection(TasksCollection);
 
-      print(task.description);
+    //   await collection.add(task.toJson());
 
-      when(firestore.collection("task")).thenReturn(mockCollectionReference);
-      when(taskStore.todoRepository).thenReturn(todoRepository);
-      when(taskStore.todos)
-          .thenAnswer((_) => todoRepository.getTodos().asObservable());
+    //   when(firestore.collection("task")).thenReturn(collection);
+    //   when(taskStore.todoRepository).thenReturn(todoRepository);
+    //   when(taskStore.todos)
+    //       .thenAnswer((_) => todoRepository.getTodos().asObservable());
 
-      taskStore.add(task);
-      List<TaskMock> myTodos = taskStore.todos.data;
+    //   taskStore.add(task);
+    //   List<TaskMock> myTodos = taskStore.todos.data;
 
-      expect(myTodos.length, 1);
-    });
+    //   expect(myTodos.length, 1);
+    // });
   });
 }
 

@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:task_manager/repositories/category_repository_interface.dart';
 
 class CategoryRepository implements ICategoryRepository {
-  Firestore firestore;
+  FirebaseFirestore firestore;
 
   CategoryRepository(this.firestore);
 
@@ -15,7 +15,7 @@ class CategoryRepository implements ICategoryRepository {
   @override
   Stream<List<Category>> getCategories() {
     return this.firestore.collection('category').snapshots().map((query) {
-      return query.documents.map((doc) {
+      return query.docs.map((doc) {
         return fromDocument(doc);
       }).toList();
     });
@@ -24,6 +24,8 @@ class CategoryRepository implements ICategoryRepository {
 // Why cant I have this in the model?
   Category fromDocument(DocumentSnapshot doc) {
     return Category(
-        name: doc['name'], imageUrl: doc['imageUrl'], id: doc.reference);
+        name: doc.get("name"),
+        imageUrl: doc.get("imageUrl"),
+        id: doc.reference);
   }
 }
