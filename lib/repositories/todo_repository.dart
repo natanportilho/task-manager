@@ -72,7 +72,7 @@ class TodoRepository implements ITodoRepository {
     return Task(
         description: doc.get("description"),
         done: doc.get("done"),
-        important: doc.get("Important"),
+        important: doc.get("important"),
         id: doc.reference,
         category: categoryFromDocument(doc.get("category")));
   }
