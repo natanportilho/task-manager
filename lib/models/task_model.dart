@@ -31,7 +31,6 @@ abstract class _Task with Store {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
     data['description'] = this.description;
     data['done'] = this.done;
     data['important'] = this.important;

@@ -21,7 +21,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TaskStore taskStore;
 
-  ITodoRepository todoRepository = TodoRepository(Firestore.instance);
+  ITodoRepository todoRepository = TodoRepository(FirebaseFirestore.instance);
 
   @override
   Widget build(BuildContext context) {
