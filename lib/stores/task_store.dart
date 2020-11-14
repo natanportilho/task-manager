@@ -12,7 +12,6 @@ class TaskStore = _TaskStore with _$TaskStore;
 abstract class _TaskStore with Store {
   FirebaseService firebaseService;
 
-  // FirebaseService firebaseService = FirebaseService();
   ITodoRepository todoRepository;
   @observable
   ObservableStream<List<Task>> todos;
