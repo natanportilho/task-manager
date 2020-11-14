@@ -32,70 +32,7 @@ class TaskStoreMock extends Mock implements TaskStore {}
 class CollectionReferenceMock extends Mock implements CollectionReference {}
 
 void main() {
-  group("group: tasks", () {
-    // test('get tasks', () {
-    //   //@observable
-    //   //ObservableStream<List<Task>> todos;
-
-    //   WidgetsFlutterBinding.ensureInitialized();
-    //   final firestore = FirestoreMock();
-    //   final taskStore = TaskStoreMock();
-
-    //   final CollectionReference mockCollectionReference =
-    //       CollectionReferenceMock();
-    //   //ITodoRepository todoRepository = TodoRepository(Firestore.instance);
-
-    //   ITodoRepository todoRepository = TodoRepository(firestore);
-    //   final DocumentReferenceMock mockDocumentRef = DocumentReferenceMock();
-    //   TaskMock task = TaskMock();
-
-    //   when(task.id).thenReturn(mockDocumentRef);
-    //   when(task.description).thenReturn("description");
-
-    //   print(task.description);
-
-    //   when(firestore.collection("task")).thenReturn(mockCollectionReference);
-    //   when(taskStore.todoRepository).thenReturn(todoRepository);
-    //   when(taskStore.todos)
-    //       .thenAnswer((_) => todoRepository.getTodos().asObservable());
-
-    //   taskStore.add(task);
-    //   List<TaskMock> myTodos = taskStore.todos.data;
-
-    //   expect(myTodos.length, 1);
-    // });
-
-    // const TasksCollection = 'task';
-    // test('get tasks', () async {
-    //   //https://pub.dev/packages/cloud_firestore_mocks
-
-    //   final firestore = MockFirestoreInstance();
-    //   final DocumentReferenceMock mockDocumentRef = DocumentReferenceMock();
-
-    //   TaskMock task = TaskMock();
-    //   when(task.id).thenReturn(mockDocumentRef);
-    //   when(task.description).thenReturn("description");
-
-    //   ITodoRepository todoRepository = TodoRepository(firestore);
-
-    //    final taskStore = TaskStoreMock();
-
-
-    //   final collection = firestore.collection(TasksCollection);
-
-    //   await collection.add(task.toJson());
-
-    //   when(firestore.collection("task")).thenReturn(collection);
-    //   when(taskStore.todoRepository).thenReturn(todoRepository);
-    //   when(taskStore.todos)
-    //       .thenAnswer((_) => todoRepository.getTodos().asObservable());
-
-    //   taskStore.add(task);
-    //   List<TaskMock> myTodos = taskStore.todos.data;
-
-    //   expect(myTodos.length, 1);
-    // });
+  group("Test Pages", () {
+    testWidgets("Test Todo Page", (WidgetTester tester) async {});
   });
 }
-
-asyncFunction() {}
