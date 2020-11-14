@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_manager/services/firebase_service.dart';
 import 'package:task_manager/services/notifications_service.dart';
 import 'package:task_manager/services/theme_service.dart';
 import 'package:task_manager/stores/store_category.dart';
@@ -14,9 +16,10 @@ import 'pages/home_page.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+var firestore = FirebaseFirestore.instance;
 var theme;
 var providers = [
-  Provider<TaskStore>(create: (_) => TaskStore()),
+  Provider<TaskStore>(create: (_) => TaskStore(FirebaseService())),
   Provider<CategoryStore>(create: (_) => CategoryStore())
 ];
 
@@ -53,7 +56,7 @@ class MyApp extends StatelessWidget {
           return new MaterialApp(
             title: 'Task Manager',
             theme: theme,
-            home: MyHomePage(),
+            home: MyHomePage(FirebaseService()),
           );
         });
   }

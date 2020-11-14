@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:task_manager/models/task_model.dart';
 
 abstract class ITodoRepository {
+  FirebaseFirestore firestore;
+
   Stream<List<Task>> getTodos();
 
   void addTodo(Task task);

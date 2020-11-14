@@ -5,27 +5,36 @@ import 'package:provider/provider.dart';
 import 'package:task_manager/pages/create_todo_page.dart';
 import 'package:task_manager/pages/theme_selection_page.dart';
 import 'package:task_manager/pages/todo_page.dart';
-import 'package:task_manager/repositories/todo_repository.dart';
-import 'package:task_manager/repositories/todo_repository_interface.dart';
+import 'package:task_manager/services/firebase_service.dart';
 import 'package:task_manager/stores/task_store.dart';
 import 'package:task_manager/models/task_model.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  FirebaseService firebaseService;
+  MyHomePage(FirebaseService firebaseService) {
+    this.firebaseService = firebaseService;
+  }
+
+  // MyHomePage(FirebaseFirestore instance, {Key key, this.title})
+  //     : super(key: key);
+  // final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(firebaseService);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TaskStore taskStore;
+  FirebaseService firebaseService;
+  _MyHomePageState(FirebaseService firebaseService) {
+    this.firebaseService = firebaseService;
+  }
 
-  ITodoRepository todoRepository = TodoRepository(FirebaseFirestore.instance);
+  TaskStore taskStore;
 
   @override
   Widget build(BuildContext context) {
     taskStore = Provider.of<TaskStore>(context);
+    // taskStore.firebase = firebase;
 
     return Scaffold(
       appBar: _buildAppBar(context),
@@ -111,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.brown[900],
               ),
               onPressed: () {
-                todoRepository
+                taskStore
                     .toggleImportant(todo); //   _onDeleteItemPressed(index);
               },
             )

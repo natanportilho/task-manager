@@ -4,17 +4,27 @@ import 'package:task_manager/models/category_model.dart';
 import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/repositories/todo_repository.dart';
 import 'package:task_manager/repositories/todo_repository_interface.dart';
+import 'package:task_manager/services/firebase_service.dart';
 part 'task_store.g.dart';
 
 class TaskStore = _TaskStore with _$TaskStore;
 
 abstract class _TaskStore with Store {
-  ITodoRepository todoRepository = TodoRepository(FirebaseFirestore.instance);
+  FirebaseService firebaseService;
 
+  // FirebaseService firebaseService = FirebaseService();
+  ITodoRepository todoRepository;
   @observable
   ObservableStream<List<Task>> todos;
 
-  _TaskStore() {
+  _TaskStore(FirebaseService firebaseService) {
+    this.firebaseService = firebaseService;
+    todoRepository = TodoRepository(this.firebaseService.instance);
+    getTodos();
+  }
+
+  _TaskStore.testConstructor(FirebaseFirestore firebaseFirestore) {
+    todoRepository = TodoRepository(firebaseFirestore);
     getTodos();
   }
 
@@ -26,6 +36,11 @@ abstract class _TaskStore with Store {
   @action
   toggleTodo(Task task) {
     todoRepository.toggleTodo(task);
+  }
+
+  @action
+  toggleImportant(Task task) {
+    todoRepository.toggleImportant(task);
   }
 
   @action
