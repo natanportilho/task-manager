@@ -32,11 +32,16 @@ class FirebaseServiceMock extends Mock {
 void main() {
   group("CRUD Tests", () {
     FirebaseServiceMock firebaseServiceMock;
+    TaskStore taskStore;
 
     setUp(() async => {
           firebaseServiceMock = FirebaseServiceMock(),
-          await firebaseServiceMock.instance.collection('task').add(
-              {'description': 'Hello world!', 'done': false, 'important': true})
+          await firebaseServiceMock.instance.collection('task').add({
+            'description': 'Hello world!',
+            'done': false,
+            'important': true
+          }),
+          taskStore = TaskStore.testConstructor(firebaseServiceMock.instance)
         });
 
     test('Should add Task', () async {
@@ -46,9 +51,6 @@ void main() {
       task.description = 'Pickup product in store';
       task.done = true;
       task.important = false;
-
-      final TaskStore taskStore =
-          TaskStore.testConstructor(firebaseServiceMock.instance);
 
       taskStore.add(task);
 
