@@ -56,15 +56,19 @@ class FirebaseServiceMock extends Mock {
 
 void main() {
   group("CRUD Tests", () {
-    test('Should add Task', () async {
-      FirebaseServiceMock firebaseServiceMock = FirebaseServiceMock();
-      await firebaseServiceMock.instance.collection('task').add(
-          {'description': 'Hello world!', 'done': false, 'important': true});
+    FirebaseServiceMock firebaseServiceMock;
 
+    setUp(() async => {
+          firebaseServiceMock = FirebaseServiceMock(),
+          await firebaseServiceMock.instance.collection('task').add(
+              {'description': 'Hello world!', 'done': false, 'important': true})
+        });
+
+    test('Should add Task', () async {
       final DocumentReferenceMock mockDocumentRef = DocumentReferenceMock();
       Task task = Task();
       task.id = mockDocumentRef;
-      task.description = 'lololo';
+      task.description = 'Pickup product in store';
       task.done = true;
       task.important = false;
 
@@ -73,16 +77,11 @@ void main() {
 
       taskStore.add(task);
 
-      var todos = await taskStore.todos.data;
-
-      // this is null but task store has the values. Why is it null?
-      print(todos);
-
       final snapshot =
           await firebaseServiceMock.instance.collection('task').get();
-      print(snapshot.docs.length); // 1
-      print(snapshot.docs.first['description']); // 'Bob'
-      print(firebaseServiceMock.instance.dump());
+
+      expect(snapshot.docs.toList()[1].data()['description'],
+          'Pickup product in store');
     });
   });
 }
