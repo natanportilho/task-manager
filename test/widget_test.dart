@@ -1,27 +1,12 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
 import 'package:task_manager/models/task_model.dart';
-import 'package:task_manager/pages/home_page.dart';
 import 'package:task_manager/repositories/category_repository_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:task_manager/repositories/todo_repository.dart';
 import 'package:task_manager/repositories/todo_repository_interface.dart';
-import 'package:task_manager/services/firebase_service.dart';
 import 'package:task_manager/stores/store_category.dart';
 import 'package:task_manager/stores/task_store.dart';
-
-//class TodoRepositoryMock extends Mock implements ITodoRepository {}
 
 class CategoryRepositoyMock extends Mock implements ICategoryRepository {
   CategoryRepositoyMock(FirestoreMock firestore);
