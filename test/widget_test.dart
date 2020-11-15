@@ -55,10 +55,9 @@ class FirebaseServiceMock extends Mock {
 }
 
 void main() {
-  group("Test Pages", () {
-    test('get tasks', () async {
+  group("CRUD Tests", () {
+    test('Should add Task', () async {
       FirebaseServiceMock firebaseServiceMock = FirebaseServiceMock();
-
       await firebaseServiceMock.instance.collection('task').add(
           {'description': 'Hello world!', 'done': false, 'important': true});
 
