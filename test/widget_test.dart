@@ -27,6 +27,10 @@ class FirebaseServiceMock extends Mock {
   }
 
   FirebaseServiceMock._internal();
+
+  Future getTasks() async {
+    return await this.instance.collection('task').get();
+  }
 }
 
 void main() {
@@ -54,13 +58,12 @@ void main() {
 
       taskStore.add(task);
 
-      final snapshot =
-          await firebaseServiceMock.instance.collection('task').get();
+      final taskCollection = await firebaseServiceMock.getTasks();
 
-      expect(snapshot.docs.toList()[1].data()['description'],
+      expect(taskCollection.docs.toList()[1].data()['description'],
           'Pickup product in store');
-      expect(snapshot.docs.toList()[1].data()['done'], true);
-      expect(snapshot.docs.toList()[1].data()['important'], false);
+      expect(taskCollection.docs.toList()[1].data()['done'], true);
+      expect(taskCollection.docs.toList()[1].data()['important'], false);
     });
   });
 }
