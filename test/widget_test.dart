@@ -2,19 +2,9 @@ import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:task_manager/models/task_model.dart';
-import 'package:task_manager/repositories/category_repository_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:task_manager/repositories/todo_repository_interface.dart';
 import 'package:task_manager/stores/store_category.dart';
 import 'package:task_manager/stores/task_store.dart';
-
-class CategoryRepositoyMock extends Mock implements ICategoryRepository {
-  CategoryRepositoyMock(FirestoreMock firestore);
-}
-
-class TodoRepositoryMock extends Mock implements ITodoRepository {
-  TodoRepositoryMock(MockFirestoreInstance firestore);
-}
 
 class DocumentReferenceMock extends Mock implements DocumentReference {}
 
