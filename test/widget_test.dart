@@ -78,6 +78,12 @@ void main() {
 
       // this is null but task store has the values. Why is it null?
       print(todos);
+
+      final snapshot =
+          await firebaseServiceMock.instance.collection('task').get();
+      print(snapshot.docs.length); // 1
+      print(snapshot.docs.first['description']); // 'Bob'
+      print(firebaseServiceMock.instance.dump());
     });
   });
 }
