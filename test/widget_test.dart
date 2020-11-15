@@ -82,6 +82,8 @@ void main() {
 
       expect(snapshot.docs.toList()[1].data()['description'],
           'Pickup product in store');
+      expect(snapshot.docs.toList()[1].data()['done'], true);
+      expect(snapshot.docs.toList()[1].data()['important'], false);
     });
   });
 }
